@@ -23,6 +23,13 @@ import org.eclipse.kapua.qa.common.cucumber.CucumberWithProperties;
 import org.eclipse.kapua.service.authorization.AuthorizationService;
 import org.eclipse.kapua.service.authorization.permission.Permission;
 import org.eclipse.kapua.service.authorization.permission.PermissionFactory;
+import org.eclipse.kapua.service.authorization.role.RoleFactory;
+import org.eclipse.kapua.service.authorization.role.RolePermissionFactory;
+import org.eclipse.kapua.service.authorization.role.RoleService;
+import org.eclipse.kapua.service.authorization.role.shiro.RoleFactoryImpl;
+import org.eclipse.kapua.service.authorization.role.shiro.RolePermissionFactoryImpl;
+import org.eclipse.kapua.service.authorization.role.shiro.RoleServiceImpl;
+import org.eclipse.kapua.service.authorization.shiro.AuthorizationEntityManagerFactory;
 import org.junit.runners.model.InitializationError;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
@@ -63,11 +70,12 @@ public class CucumberWithPropertiesForSecurity extends CucumberWithProperties {
                 // Set KapuaMetatypeFactory for Metatype configuration
                 bind(KapuaMetatypeFactory.class).toInstance(new KapuaMetatypeFactoryImpl());
 
-                // Inject actual Tag service related services
-//                TagEntityManagerFactory tagEntityManagerFactory = TagEntityManagerFactory.getInstance();
-//                bind(TagEntityManagerFactory.class).toInstance(tagEntityManagerFactory);
-//                bind(TagService.class).toInstance(new TagServiceImpl());
-//                bind(TagFactory.class).toInstance(new TagFactoryImpl());
+                // Inject actual Role service related services
+                AuthorizationEntityManagerFactory authorizationEntityManagerFactory = AuthorizationEntityManagerFactory.getInstance();
+                bind(AuthorizationEntityManagerFactory.class).toInstance(authorizationEntityManagerFactory);
+                bind(RoleService.class).toInstance(new RoleServiceImpl());
+                bind(RoleFactory.class).toInstance(new RoleFactoryImpl());
+                bind(RolePermissionFactory.class).toInstance(new RolePermissionFactoryImpl());
             }
         };
 

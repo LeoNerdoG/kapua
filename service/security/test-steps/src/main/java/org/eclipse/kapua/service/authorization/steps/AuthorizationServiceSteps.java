@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.kapua.service.authorization.steps;
 
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -2126,7 +2127,7 @@ public class AuthorizationServiceSteps extends TestBase {
 
         stepData.remove("RoleListResult");
         stepData.remove("Role");
-            RoleListResult roleListResult = roleService.query(roleQuery);
+        RoleListResult roleListResult = roleService.query(roleQuery);
         stepData.put("RoleListResult", roleListResult);
         stepData.put("Role", roleListResult.getFirstItem());
 
@@ -2533,5 +2534,29 @@ public class AuthorizationServiceSteps extends TestBase {
             }
         }
         stepData.put("AccessInfoList", accessInfoList);
+    }
+
+    @Given("^I prepare a role creator with name \"([^\"]*)\" and description \"([^\"]*)\"$")
+    public void iPrepareARoleCreatorWithNameAndDescription(String name, String description) {
+        RoleCreator roleCreator = roleFactory.newCreator(SYS_SCOPE_ID);
+        roleCreator.setName(name);
+        roleCreator.setDescription(description);
+
+        stepData.put("RoleCreator", roleCreator);
+    }
+
+    @When("^I create a new role entity from the existing creator$")
+    public void iCreateANewRoleEntityFromTheExistingCreator() throws Exception {
+        RoleCreator roleCreator = (RoleCreator) stepData.get("RoleCreator");
+        primeException();
+        try {
+            stepData.remove("Role");
+            stepData.remove("CurrentRoleId");
+            Role role = roleService.create(roleCreator);
+            stepData.put("Role", role);
+            stepData.put("CurrentRoleId", role.getId());
+        } catch (KapuaException ex){
+            verifyException(ex);
+        }
     }
 }

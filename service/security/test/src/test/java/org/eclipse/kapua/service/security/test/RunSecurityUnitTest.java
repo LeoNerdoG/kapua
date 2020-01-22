@@ -19,7 +19,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = { "classpath:features/RoleServiceUnitTests.feature"
                    },
-        glue = { "org.eclipse.kapua.service.tag.steps",
+        glue = { "org.eclipse.kapua.service.authorization.steps",
                  "org.eclipse.kapua.qa.common"
                },
         plugin = { "pretty", 
