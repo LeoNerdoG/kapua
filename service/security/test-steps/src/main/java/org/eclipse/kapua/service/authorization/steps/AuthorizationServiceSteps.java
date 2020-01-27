@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.kapua.service.authorization.steps;
 
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -2556,6 +2555,49 @@ public class AuthorizationServiceSteps extends TestBase {
             stepData.put("Role", role);
             stepData.put("CurrentRoleId", role.getId());
         } catch (KapuaException ex){
+            verifyException(ex);
+        }
+    }
+
+    @Given("^I create (\\d+) roles$")
+    public void iCreateRoles(int num) throws Exception {
+        primeException();
+        try {
+            for (int i = 0; i < num; i++) {
+                RoleCreator tmpCreator = roleFactory.newCreator(getCurrentScopeId());
+                tmpCreator.setName(String.format("TestRoleNum%d", i));
+                roleService.create(tmpCreator);
+            }
+        } catch (KapuaException ex) {
+            verifyException(ex);
+        }
+    }
+
+    @When("^I count the roles in the database$")
+    public void iCountTheRolesInTheDatabase() throws Exception {
+        RoleQuery tmpQuery = roleFactory.newQuery(getCurrentScopeId());
+
+        primeException();
+        try {
+            stepData.remove("Count");
+            Long count = roleService.count(tmpQuery);
+            stepData.put("Count", count-1);
+        } catch (KapuaException ex) {
+            verifyException(ex);
+        }
+    }
+
+    @And("^I update the role description to \"([^\"]*)\"$")
+    public void iUpdateTheRoleDescriptionTo(String newRoleDesc) throws Exception {
+        Role role = (Role) stepData.get("Role");
+        role.setDescription(newRoleDesc);
+
+        try {
+            primeException();
+            stepData.remove("Role");
+            Role newRole = roleService.update(role);
+            stepData.put("Role", newRole);
+        } catch (KapuaException ex) {
             verifyException(ex);
         }
     }
