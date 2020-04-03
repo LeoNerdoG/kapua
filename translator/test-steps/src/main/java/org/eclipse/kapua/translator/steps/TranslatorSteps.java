@@ -210,9 +210,13 @@ public class TranslatorSteps extends TestBase {
 
     @And("^I try to translate kura data message to mqtt message$")
     public void iTryToTranslateKuraDataMessageToMqttMessage() throws Exception {
-        KuraDataMessage kuraDataMessage = (KuraDataMessage) stepData.get("KuraDataMessage");
-        MqttMessage mqttMessage = translatorDataKuraMqtt.translate(kuraDataMessage);
-        stepData.put("MqttMessage", mqttMessage);
+        try {
+            KuraDataMessage kuraDataMessage = (KuraDataMessage) stepData.get("KuraDataMessage");
+            MqttMessage mqttMessage = translatorDataKuraMqtt.translate(kuraDataMessage);
+            stepData.put("MqttMessage", mqttMessage);
+        } catch (Exception ex) {
+            verifyException(ex);
+        }
     }
 
     @Then("^I got mqtt message with channel with scope \"([^\"]*)\", client id \"([^\"]*)\" and (?:empty body|non empty body)$")
@@ -266,9 +270,13 @@ public class TranslatorSteps extends TestBase {
 
     @Given("^I try to translate mqtt message to kura data message$")
     public void iTryToTranslateMqttMessageToKuraMessage() throws Exception {
-        MqttMessage mqttMessage = (MqttMessage) stepData.get("MqttMessage");
-        KuraDataMessage kuraDataMessage = translatorDataMqttKura.translate(mqttMessage);
-        stepData.put("KuraDataMessage", kuraDataMessage);
+        try {
+            MqttMessage mqttMessage = (MqttMessage) stepData.get("MqttMessage");
+            KuraDataMessage kuraDataMessage = translatorDataMqttKura.translate(mqttMessage);
+            stepData.put("KuraDataMessage", kuraDataMessage);
+        } catch (Exception ex){
+            verifyException(ex);
+        }
     }
 
     @Then("^I got kura data message with \"([^\"]*)\" payload body$")
@@ -290,7 +298,8 @@ public class TranslatorSteps extends TestBase {
     public void iGotKuraDataMessageWithProperPayloadMetrics() {
         KuraDataMessage kuraDataMessage = (KuraDataMessage) stepData.get("KuraDataMessage");
 
-        assertTrue(kuraDataMessage.getPayload().getMetrics() != null);
+        assertTrue(kuraDataMessage.getPayload().getMetrics().containsKey("response.code"));
+        assertTrue(kuraDataMessage.getPayload().getMetrics().containsValue(200));
     }
 
     @Then("^I got kura data message with empty payload$")
@@ -321,7 +330,6 @@ public class TranslatorSteps extends TestBase {
     @And("^I try to translate jms message to kura data message$")
     public void iTryToTranslateJmsMessageToKuraMessage() throws Exception {
         JmsMessage jmsMessage = (JmsMessage) stepData.get("JmsMessage");
-
         try {
             KuraDataMessage kuraDataMessage = translatorDataJmsKura.translate(jmsMessage);
             stepData.put("KuraDataMessage", kuraDataMessage);
@@ -332,9 +340,13 @@ public class TranslatorSteps extends TestBase {
 
     @And("^I try to translate kura data message to jms message$")
     public void iTryToTranslateKuraDataMessageToJmsMessage() throws Exception {
+        try {
         KuraDataMessage kuraDataMessage = (KuraDataMessage) stepData.get("KuraDataMessage");
         JmsMessage jmsMessage = translatorDataKuraJms.translate(kuraDataMessage);
         stepData.put("JmsMessage", jmsMessage);
+        } catch (Exception ex){
+            verifyException(ex);
+        }
     }
 
     @Then("^I got kura data message channel with \"([^\"]*)\" scope, \"([^\"]*)\" client id and proper semanticPart$")
@@ -359,6 +371,66 @@ public class TranslatorSteps extends TestBase {
             assertTrue(jmsMessage.getPayload().getBody().length == 0);
         } else {
             assertTrue(jmsMessage.getPayload().getBody().length != 0);
+        }
+    }
+
+    @When("^I try to translate mqtt null message to kura data message$")
+    public void iTryToTranslateMqttNullMessageToKuraDataMessage() throws Exception {
+        try {
+            MqttMessage mqttMessage = (MqttMessage) stepData.get("MqttMessage");
+            KuraDataMessage kuraDataMessage = translatorDataMqttKura.translate(null);
+            stepData.put("KuraDataMessage", kuraDataMessage);
+        } catch (Exception ex){
+            verifyException(ex);
+        }
+    }
+
+    @Given("^I create kura data message with channel with scope \"([^\"]*)\", client id \"([^\"]*)\" and null payload$")
+    public void iCreateKuraDataMessageWithChannelWithScopeClientIdAndNullPayload(String scope, String clientId) {
+        KuraDataChannel kuraDataChannel = new KuraDataChannel(scope, clientId);
+        Date date = new Date();
+        KuraDataMessage kuraDataMessage = new KuraDataMessage(kuraDataChannel, date, null);
+        stepData.put("KuraDataMessage", kuraDataMessage);
+    }
+
+    @Given("^I create kura data message with null channel and payload without body and with metrics$")
+    public void iCreateKuraDataMessageWithNullChannelAndPayloadWithoutBodyAndWithMetrics() {
+        Date date = new Date();
+        KuraDataPayload kuraDataPayload = new KuraDataPayload();
+        kuraDataPayload.getMetrics().put("response.code", 200);
+        KuraDataMessage kuraDataMessage = new KuraDataMessage(null, date, kuraDataPayload);
+
+        stepData.put("KuraDataMessage", kuraDataMessage);
+    }
+
+    @And("^I try to translate invalid kura data message to mqtt message$")
+    public void iTryToTranslateInvalidKuraDataMessageToMqttMessage() throws Exception {
+        try {
+            KuraDataMessage kuraDataMessage = (KuraDataMessage) stepData.get("KuraDataMessage");
+            MqttMessage mqttMessage = translatorDataKuraMqtt.translate(null);
+            stepData.put("MqttMessage", mqttMessage);
+        } catch (Exception ex) {
+            verifyException(ex);
+        }
+    }
+
+    @When("^I try to translate invalid jms message to kura data message$")
+    public void iTryToTranslateInvalidJmsMessageToKuraDataMessage() throws Exception{
+        try {
+            KuraDataMessage kuraDataMessage = translatorDataJmsKura.translate(null);
+            stepData.put("KuraDataMessage", kuraDataMessage);
+        } catch (KapuaException ex) {
+            verifyException(ex);
+        }
+    }
+
+    @When("^I try to translate invalid kura data message to jms message$")
+    public void iTryToTranslateInvalidKuraDataMessageToJmsMessage() throws Exception {
+        try {
+            JmsMessage jmsMessage = translatorDataKuraJms.translate(null);
+            stepData.put("JmsMessage", jmsMessage);
+        } catch (Exception ex){
+            verifyException(ex);
         }
     }
 }
