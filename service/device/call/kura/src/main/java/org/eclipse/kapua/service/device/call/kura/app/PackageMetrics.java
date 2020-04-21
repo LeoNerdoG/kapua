@@ -133,6 +133,13 @@ public enum PackageMetrics implements DeviceMetrics {
     APP_METRIC_PACKAGE_DOWNLOAD_INSTALL_VERIFIER_URI("dp.install.verifier.uri"),
 
     /**
+     * Download package download force metric name.
+     *
+     * @since 1.2.0
+     */
+    APP_METRIC_PACKAGE_DOWNLOAD_FORCE("dp.download.force"),
+
+    /**
      * Download package download block size metric name.
      *
      * @since 1.1.0

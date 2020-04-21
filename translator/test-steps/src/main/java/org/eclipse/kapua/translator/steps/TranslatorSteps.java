@@ -297,7 +297,6 @@ public class TranslatorSteps extends TestBase {
     @Then("^I got kura data message with proper payload metrics$")
     public void iGotKuraDataMessageWithProperPayloadMetrics() {
         KuraDataMessage kuraDataMessage = (KuraDataMessage) stepData.get("KuraDataMessage");
-
         assertTrue(kuraDataMessage.getPayload().getMetrics().containsKey("response.code"));
         assertTrue(kuraDataMessage.getPayload().getMetrics().containsValue(200));
     }

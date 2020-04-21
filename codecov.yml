@@ -31,3 +31,4 @@ ignore:
     - "qa"
     - "**/test/"
     - "**/test-steps/"
+    - "translator/kapua/kura/src/main/java/org/eclipse/kapua/translator/ExampleTranslator.java"
