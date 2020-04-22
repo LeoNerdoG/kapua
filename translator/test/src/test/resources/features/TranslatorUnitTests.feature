@@ -24,6 +24,19 @@ Feature: Translator Service
     Then Translator "TranslatorAppCommandKapuaKura" is found
     And No exception was thrown
 
+  # Please add additional scenarios:
+  Scenario: Finding translator "TranslatorAppAssetKapuaKura"
+    When I try to translate from "org.eclipse.kapua.service.device.management.bundle.message.internal.BundleRequestMessage" to "org.eclipse.kapua.service.device.call.message.kura.app.request.KuraRequestMessage"
+    Then Translator "TranslatorAppBundleKapuaKura" is found
+    And No exception was thrown
+  # Scenario: Finding translator "TranslatorAppBundleKapuaKura"
+  # Scenario: Finding translator "TranslatorAppConfigurationKapuaKura"
+  # Scenario: Finding translator "TranslatorAppPackageKapuaKura"
+  # Scenario: Finding translator "TranslatorAppRequestKapuaKura"
+  # Scenario: Finding translator "TranslatorAppSnapshotKapuaKura"
+  # Scenario: Finding translator "TranslatorDataKapuaKura"
+  # Scenario: Finding translator "TranslatorKapuaKuraUtils"
+
   Scenario: Finding existing translator to null translator
   Trying to make translation from CommandRequestMessage to null message.
   NullPointerException should be thrown.
