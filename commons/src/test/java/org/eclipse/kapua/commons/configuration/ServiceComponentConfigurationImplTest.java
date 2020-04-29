@@ -19,8 +19,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 @Category(JUnitTests.class)
 public class ServiceComponentConfigurationImplTest extends Assert {
@@ -62,6 +63,12 @@ public class ServiceComponentConfigurationImplTest extends Assert {
     }
 
     @Test
+    public void setIdToRegularValueTest() {
+        serviceComponentConfiguration.setId("2");
+        assertEquals(serviceComponentConfiguration.getId(), "2");
+    }
+
+    @Test
     public void setIdToSymbolsTest() {
         serviceComponentConfiguration.setId("@!#");
         assertEquals(serviceComponentConfiguration.getId(), "@!#");
@@ -88,6 +95,12 @@ public class ServiceComponentConfigurationImplTest extends Assert {
     public void setNameToNullTest() {
         serviceComponentConfiguration.setName(null);
         assertNull(serviceComponentConfiguration.getName());
+    }
+
+    @Test
+    public void setNameToRegularValueTest() {
+        serviceComponentConfiguration.setName("regularName");
+        assertEquals(serviceComponentConfiguration.getName(), "regularName");
     }
 
     @Test
@@ -123,12 +136,69 @@ public class ServiceComponentConfigurationImplTest extends Assert {
 
     @Test
     public void setPropertiesToRegularValueTest() {
-        Map<String, Object> properties = new HashMap<>();
+        Map<String, Object> properties = new Map<String, Object>() {
+            @Override
+            public int size() {
+                return 0;
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+
+            @Override
+            public boolean containsKey(Object key) {
+                return false;
+            }
+
+            @Override
+            public boolean containsValue(Object value) {
+                return false;
+            }
+
+            @Override
+            public Object get(Object key) {
+                return null;
+            }
+
+            @Override
+            public Object put(String key, Object value) {
+                return null;
+            }
+
+            @Override
+            public Object remove(Object key) {
+                return null;
+            }
+
+            @Override
+            public void putAll(Map<? extends String, ?> m) {
+
+            }
+
+            @Override
+            public void clear() {
+
+            }
+
+            @Override
+            public Set<String> keySet() {
+                return null;
+            }
+
+            @Override
+            public Collection<Object> values() {
+                return null;
+            }
+
+            @Override
+            public Set<Entry<String, Object>> entrySet() {
+                return null;
+            }
+        };
         properties.put("property1", 10);
-        properties.put("property2", "string");
-        properties.put("property3", 'c');
-        properties.put("property4", (double)10);
         serviceComponentConfiguration.setProperties(properties);
-        assertEquals(properties, serviceComponentConfiguration.getProperties());
+        assertEquals(serviceComponentConfiguration.getProperties(), properties);
     }
 }
