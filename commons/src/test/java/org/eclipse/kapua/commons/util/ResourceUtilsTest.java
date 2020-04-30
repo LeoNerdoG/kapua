@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 Red Hat Inc and others
+ * Copyright (c) 2017, 2020 Red Hat Inc and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,48 +13,112 @@ package org.eclipse.kapua.commons.util;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.lang.reflect.Constructor;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
 import org.junit.Assert;
+import org.junit.ComparisonFailure;
 import org.junit.Test;
 
 import com.google.common.io.CharStreams;
 import org.junit.experimental.categories.Category;
 
 @Category(JUnitTests.class)
-public class ResourceUtilsTest {
+public class ResourceUtilsTest extends Assert {
 
-    /**
-     * Test a successful resource resolve call and a successful read
-     */
     @Test
-    public void testRead1() throws IOException {
-        final URL url = ResourceUtils.getResource("test.properties");
-        Assert.assertNotNull(url);
+    public void testConstructor() throws Exception {
+        Constructor<ResourceUtils> resourceUtils = ResourceUtils.class.getDeclaredConstructor();
+        resourceUtils.setAccessible(true);
+        resourceUtils.newInstance();
+    }
 
-        try (final Reader reader = ResourceUtils.openAsReader(url, StandardCharsets.UTF_8)) {
-            final String string = CharStreams.toString(reader);
-            Assert.assertNotNull(string);
-            Assert.assertFalse(string.isEmpty());
+    @Test
+    public void getResourceTest() {
+        String resource = "test.properties";
+        String noResource = "file:/does-not-exist";
+
+        ClassLoader classloaderTest = Thread.currentThread().getContextClassLoader();
+        URL url = classloaderTest.getResource(resource);
+
+        //Positive test
+        try {
+            assertEquals(url, ResourceUtils.getResource(resource));
+        } catch (AssertionError ex) {
+            fail("AssertionError not expected");
+        }
+
+        //Negative test
+        try {
+            assertEquals(url, ResourceUtils.getResource(noResource));
+        } catch (AssertionError error) {
+            // Expected
         }
     }
 
-    /**
-     * Test locating a resource which does not exist
-     */
     @Test
-    public void testRead2() {
-        final URL url = ResourceUtils.getResource("does-not-exist");
-        Assert.assertNull(url);
-    }
+    public void openAsReaderTest() throws IOException {
+        final URL urlWithResource = ResourceUtils.getResource("test.properties");
+        final URL urlNoResource = ResourceUtils.getResource("file:/does-not-exist");
+        Charset[] validCharsetList = new Charset[]{StandardCharsets.UTF_8, StandardCharsets.US_ASCII, StandardCharsets.ISO_8859_1};
+        Charset[] invalidCharsetList = new Charset[]{StandardCharsets.UTF_16, StandardCharsets.UTF_16BE, StandardCharsets.UTF_16LE,};
+        String expectedString = "###############################################################################\n" +
+                "# Copyright (c) 2011, 2016 Red Hat and/or its affiliates and others\n" +
+                "#\n" +
+                "# All rights reserved. This program and the accompanying materials\n" +
+                "# are made available under the terms of the Eclipse Public License v1.0\n" +
+                "# which accompanies this distribution, and is available at\n" +
+                "# http://www.eclipse.org/legal/epl-v10.html\n" +
+                "#\n" +
+                "###############################################################################";
 
-    /**
-     * Test reading a resource which does not exists
-     */
-    @Test(expected = IOException.class)
-    public void testRead3() throws IOException {
-        ResourceUtils.openAsReader(new URL("file:/does-not-exists"), StandardCharsets.UTF_8);
+        //Positive tests
+        for (int i = 0; i < validCharsetList.length; i++) {
+            try (final Reader reader = ResourceUtils.openAsReader(urlWithResource, validCharsetList[i])) {
+                final String string = CharStreams.toString(reader);
+                assertEquals(expectedString, string);
+            } catch (ComparisonFailure fail) {
+                fail("ComparisonFailure not expected");
+            }
+        }
+
+        //Negative tests
+        for (int i = 0; i < invalidCharsetList.length; i++) {
+            try (final Reader reader = ResourceUtils.openAsReader(urlWithResource, invalidCharsetList[i])) {
+                final String string = CharStreams.toString(reader);
+                assertEquals(expectedString, string);
+            } catch (ComparisonFailure fail) {
+                //Expected
+            }
+        }
+
+        for (int i = 0; i < validCharsetList.length; i++) {
+            try (final Reader reader = ResourceUtils.openAsReader(urlNoResource, validCharsetList[i])) {
+                final String string = CharStreams.toString(reader);
+                assertNotNull(string);
+                assertFalse(string.isEmpty());
+            } catch (Exception e) {
+                //Expected
+            }
+        }
+
+        try (final Reader reader = ResourceUtils.openAsReader(urlWithResource, null)) {
+            final String string = CharStreams.toString(reader);
+            assertNotNull(string);
+            assertFalse(string.isEmpty());
+        } catch (Exception e) {
+            //Expected
+        }
+
+        try (final Reader reader = ResourceUtils.openAsReader(urlNoResource, null)) {
+            final String string = CharStreams.toString(reader);
+            assertNotNull(string);
+            assertFalse(string.isEmpty());
+        } catch (Exception e) {
+            //Expected
+        }
     }
 }
