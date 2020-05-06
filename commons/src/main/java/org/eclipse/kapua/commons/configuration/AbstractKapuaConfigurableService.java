@@ -50,6 +50,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Configurable service definition abstract reference implementation.
@@ -107,7 +109,10 @@ public abstract class AbstractKapuaConfigurableService extends AbstractKapuaServ
 
             // build a map of all the attribute definitions
             Map<String, KapuaTad> attrDefs = new HashMap<>();
-            List<KapuaTad> defs = ocd.getAD();
+
+            //First of all, remove all non available properties
+            List<KapuaTad> defs = ocd.getAD().stream().filter(this::isAvailableProperty).collect(Collectors.toList());
+
             for (KapuaTad def : defs) {
                 attrDefs.put(def.getId(), def);
             }
@@ -266,11 +271,17 @@ public abstract class AbstractKapuaConfigurableService extends AbstractKapuaServ
             if (metadata != null && metadata.getOCD() != null && !metadata.getOCD().isEmpty()) {
                 for (KapuaTocd ocd : metadata.getOCD()) {
                     if (ocd.getId() != null && ocd.getId().equals(pid)) {
+                        if (!isAvailableService()) {
+                            throw new KapuaConfigurationException(KapuaConfigurationErrorCodes.SERVICE_UNAVAILABLE, ocd.getId());
+                        }
+                        ocd.getAD().removeIf(((Predicate<KapuaTad>) this::isAvailableProperty).negate());
                         return ocd;
                     }
                 }
             }
             return null;
+        } catch (KapuaConfigurationException e) {
+            throw e;
         } catch (Exception e) {
             throw KapuaException.internalError(e);
         }
@@ -343,4 +354,13 @@ public abstract class AbstractKapuaConfigurableService extends AbstractKapuaServ
             updateConfig(serviceConfig);
         }
     }
+
+    protected boolean isAvailableService() {
+        return true;
+    }
+
+    protected boolean isAvailableProperty(KapuaTad ad) {
+        return true;
+    }
+
 }
