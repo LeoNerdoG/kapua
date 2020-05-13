@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 Eurotech and/or its affiliates and others
+ * Copyright (c) 2017, 2020 Eurotech and/or its affiliates and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -44,6 +44,8 @@ public class CucUser {
     private String password;
 
     private String expirationDate;
+
+    private String externalId;
 
     public String getName() {
         return name;
@@ -107,6 +109,14 @@ public class CucUser {
 
     public void setScopeId(BigInteger scopeId) {
         this.scopeId = scopeId;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 
     public Date getExpirationDate() {
