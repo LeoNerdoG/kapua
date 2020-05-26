@@ -12,6 +12,7 @@
 package org.eclipse.kapua.commons.model;
 
 import org.eclipse.kapua.commons.model.id.KapuaEid;
+import org.eclipse.kapua.commons.service.internal.cache.EntityCache;
 import org.eclipse.kapua.commons.util.RandomUtils;
 import org.eclipse.kapua.model.id.KapuaId;
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
@@ -81,5 +82,59 @@ public class KapuaEidTest {
 
         Assert.assertTrue(parsedKapuaIdAny != kapuaIdAny);
         Assert.assertEquals(parsedKapuaIdAny.getId(), kapuaIdAny.getId());
+    }
+
+    @Test
+    public void hashCodeTest() {
+        KapuaEid kapuaEid = new KapuaEid(eid);
+
+        int actualHash = kapuaEid.hashCode();
+        int expectedHash = 31 + eid.hashCode();
+        Assert.assertEquals("eid.hashCode()", expectedHash, actualHash);
+
+    }
+
+    @Test
+    public void equalsSameReferanceTest() {
+        KapuaEid kapuaEid = new KapuaEid(eid);
+        Assert.assertTrue("Expected true", kapuaEid.equals(kapuaEid));
+    }
+
+    @Test
+    public void equalsNullTest() {
+        KapuaEid kapuaEid = new KapuaEid(eid);
+        Assert.assertFalse("Expected false", kapuaEid.equals(null));
+    }
+
+    @Test
+    public void equalsTypeTest() {
+        KapuaEid kapuaEid = new KapuaEid(eid);
+        EntityCache entityCache = new EntityCache("idName");
+        Object[] values = new Object[]{"name", 1, 's', 1.25, entityCache};
+        for (Object o : values) {
+            Assert.assertFalse("Expected false", kapuaEid.equals(o));
+        }
+    }
+
+    @Test
+    public void equalsEidNullTest() {
+        KapuaEid kapuaEidNull = new KapuaEid();
+        KapuaEid kapuaEid = new KapuaEid(eid);
+        Assert.assertFalse("Expected false", kapuaEidNull.equals(kapuaEid));
+    }
+
+    @Test
+    public void equalsDifferentEidValuesTest() {
+        KapuaEid kapuaEid = new KapuaEid(eid);
+        BigInteger otherId = new BigInteger(64, RANDOM);
+        KapuaEid kapuaEidOtherId = new KapuaEid(otherId);
+        Assert.assertFalse("Expected false", kapuaEid.equals(kapuaEidOtherId));
+    }
+
+    @Test
+    public void equalsSameEidValuesTest() {
+        KapuaEid kapuaEid = new KapuaEid(eid);
+        KapuaEid kapuaEidSameId = new KapuaEid(eid);
+        Assert.assertTrue("Expected true", kapuaEid.equals(kapuaEidSameId));
     }
 }
