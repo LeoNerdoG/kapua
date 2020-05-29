@@ -118,7 +118,6 @@ public class KapuaEidTest extends Assert {
         KapuaEid kapuaEidOtherId = new KapuaEid(otherId);
         KapuaEid kapuaEidSameId = new KapuaEid(eid);
 
-
         assertTrue("Expected true", kapuaEid.equals(kapuaEid));
         assertFalse("Expected false", kapuaEid.equals(null));
 
