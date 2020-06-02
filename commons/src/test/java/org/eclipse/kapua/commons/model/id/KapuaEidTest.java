@@ -23,7 +23,6 @@ import org.junit.runners.Parameterized.Parameters;
 
 import java.math.BigInteger;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Random;
 
 @Category(JUnitTests.class)
@@ -34,21 +33,15 @@ public class KapuaEidTest extends Assert {
 
     private final BigInteger eid;
 
-    // bug in eclipse cannot convert this to a single parameter test
-    // https://github.com/junit-team/junit4/wiki/Parameterized-tests
-    private final long notUsed;
-
     @Parameters
-    public static Collection<Object[]> eids() {
-        return Arrays.asList(new Object[][]{
-                {new BigInteger(64, RANDOM), 0L},
-                {new BigInteger(64, RANDOM), 0L},
-        });
+    public static Iterable<Object[]> eids() {
+        return Arrays.asList(
+                new Object[] {new BigInteger(64, RANDOM)},
+                new Object[] {new BigInteger(64, RANDOM)});
     }
 
-    public KapuaEidTest(BigInteger eid, long notUsed) {
+    public KapuaEidTest(BigInteger eid) {
         this.eid = eid;
-        this.notUsed = notUsed;
     }
 
     @Test
@@ -73,9 +66,8 @@ public class KapuaEidTest extends Assert {
 
     @Test
     public void toStringTest(){
-        BigInteger eid = new BigInteger("123");
         KapuaEid kapuaEid = new KapuaEid(eid);
-        assertEquals("123", kapuaEid.toString());
+        assertEquals(eid.toString(), kapuaEid.toString());
     }
 
     @Test
@@ -112,7 +104,7 @@ public class KapuaEidTest extends Assert {
     @Test
     public void equalsTest() {
         KapuaEid kapuaEid = new KapuaEid(eid);
-        short s = 10000;
+        short shortNum = 10000;
         KapuaEid kapuaEidNull = new KapuaEid();
         BigInteger otherId = new BigInteger(64, RANDOM);
         KapuaEid kapuaEidOtherId = new KapuaEid(otherId);
@@ -121,7 +113,7 @@ public class KapuaEidTest extends Assert {
         assertTrue("Expected true", kapuaEid.equals(kapuaEid));
         assertFalse("Expected false", kapuaEid.equals(null));
 
-        Object[] values = new Object[]{"name", 1, 's', 1.25f, 1.50d, 3L, s, false};
+        Object[] values = new Object[]{"name", 1, 's', 1.25f, 1.50d, 3L, shortNum, false};
         for (Object object : values) {
             assertFalse("Expected false", kapuaEid.equals(object));
         }
