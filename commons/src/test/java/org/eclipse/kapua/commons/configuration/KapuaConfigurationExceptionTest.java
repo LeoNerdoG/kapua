@@ -17,7 +17,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 @Category(JUnitTests.class)
-public class KapuaConfigurationExceptionTest {
+public class KapuaConfigurationExceptionTest extends Assert {
 
     @Test(expected = KapuaConfigurationException.class)
     public void testKapuaConfigurationExceptionWithIllegalArgument() throws KapuaConfigurationException {
@@ -44,7 +44,7 @@ public class KapuaConfigurationExceptionTest {
         try {
             throw new KapuaConfigurationException(KapuaConfigurationErrorCodes.ILLEGAL_ARGUMENT, new Throwable("Some message"), KapuaConfigurationErrorCodes.INTERNAL_ERROR);
         } catch (KapuaConfigurationException e) {
-            Assert.assertEquals("kapua-configuration-service-error-messages", e.getKapuaErrorMessagesBundle());
+            assertEquals("kapua-configuration-service-error-messages", e.getKapuaErrorMessagesBundle());
         }
     }
 }

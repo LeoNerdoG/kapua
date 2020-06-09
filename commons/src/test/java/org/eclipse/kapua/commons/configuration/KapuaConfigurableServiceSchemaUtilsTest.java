@@ -21,82 +21,82 @@ import org.junit.experimental.categories.Category;
 public class KapuaConfigurableServiceSchemaUtilsTest extends Assert {
 
     @Test(expected = NullPointerException.class)
-    public void testScriptSessionWithNullArguments() {
+    public void scriptSessionWithNullArgumentsTest() {
         KapuaConfigurableServiceSchemaUtils.scriptSession(null, null);
     }
 
     @Test(expected = NullPointerException.class)
-    public void testScriptSessionWithNullPath() {
+    public void scriptSessionWithNullPathTest() {
         KapuaConfigurableServiceSchemaUtils.scriptSession(null, KapuaConfigurableServiceSchemaUtils.DEFAULT_FILTER);
     }
 
     @Test(expected = NullPointerException.class)
-    public void testScriptSessionWithNullFilter() {
+    public void scriptSessionWithNullFilterTest() {
         KapuaConfigurableServiceSchemaUtils.scriptSession(KapuaConfigurableServiceSchemaUtils.DEFAULT_PATH, null);
     }
 
     @Test
-    public void testScriptSessionWithDefaultValues() {
+    public void scriptSessionWithDefaultValuesTest() {
         KapuaConfigurableServiceSchemaUtils.scriptSession(KapuaConfigurableServiceSchemaUtils.DEFAULT_PATH, KapuaConfigurableServiceSchemaUtils.DEFAULT_FILTER);
     }
 
     @Test
-    public void testScriptSessionWithEmptyPathValue() {
+    public void scriptSessionWithEmptyPathValueTest() {
         KapuaConfigurableServiceSchemaUtils.scriptSession("", KapuaConfigurableServiceSchemaUtils.DEFAULT_FILTER);
     }
 
     @Test
-    public void testScriptSessionWithWrongPathValue() {
+    public void scriptSessionWithWrongPathValueTest() {
         KapuaConfigurableServiceSchemaUtils.scriptSession("wrong/path", KapuaConfigurableServiceSchemaUtils.DEFAULT_FILTER);
     }
 
     @Test
-    public void testScriptSessionWithEmptyFilterValue() {
+    public void scriptSessionWithEmptyFilterValueTest() {
         KapuaConfigurableServiceSchemaUtils.scriptSession(KapuaConfigurableServiceSchemaUtils.DEFAULT_PATH, "");
     }
 
     @Test
-    public void testScriptSessionWithWrongFilterValue() {
+    public void scriptSessionWithWrongFilterValueTest() {
         KapuaConfigurableServiceSchemaUtils.scriptSession(KapuaConfigurableServiceSchemaUtils.DEFAULT_PATH, "*.wrong");
     }
 
     @Test
-    public void testCreateSchemaObjectsWithDefaultPath() throws KapuaException {
+    public void createSchemaObjectsWithDefaultPathTest() throws KapuaException {
         KapuaConfigurableServiceSchemaUtils.createSchemaObjects(KapuaConfigurableServiceSchemaUtils.DEFAULT_PATH);
     }
 
     @Test
-    public void testCreateSchemaObjectsWithWrongPath() throws KapuaException {
+    public void createSchemaObjectsWithWrongPathTest() throws KapuaException {
         KapuaConfigurableServiceSchemaUtils.createSchemaObjects("wrong/path");
     }
 
     @Test
-    public void testCreateSchemaObjectsWithEmptyPath() throws KapuaException {
+    public void createSchemaObjectsWithEmptyPathTest() throws KapuaException {
         KapuaConfigurableServiceSchemaUtils.createSchemaObjects("");
     }
 
     @Test(expected = NullPointerException.class)
-    public void testCreateSchemaObjectsWithNullPath() throws KapuaException {
+    public void createSchemaObjectsWithNullPathTest() throws KapuaException {
         KapuaConfigurableServiceSchemaUtils.createSchemaObjects(null);
     }
 
     @Test
-    public void testDropSchemaObjectsWithDefaultPath() {
+    public void dropSchemaObjectsWithDefaultPathTest() {
         KapuaConfigurableServiceSchemaUtils.dropSchemaObjects(KapuaConfigurableServiceSchemaUtils.DEFAULT_PATH);
     }
 
     @Test
-    public void testDropSchemaObjectsWithWrongPath() {
+    public void dropSchemaObjectsWithWrongPathTest() {
         KapuaConfigurableServiceSchemaUtils.dropSchemaObjects("wrong/path");
     }
 
     @Test
-    public void testDropSchemaObjectsWithEmptyPath() {
+    public void dropSchemaObjectsWithEmptyPathTest() {
         KapuaConfigurableServiceSchemaUtils.dropSchemaObjects("");
     }
 
     @Test(expected = NullPointerException.class)
-    public void testDropSchemaObjectsWithNullPath() {
+    public void dropSchemaObjectsWithNullPathTest() {
         KapuaConfigurableServiceSchemaUtils.dropSchemaObjects(null);
     }
 }

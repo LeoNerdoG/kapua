@@ -29,7 +29,7 @@ public class ServiceConfigurationImplTest {
     }
 
     @Test
-    public void testGetComponentConfigurations() {
+    public void getComponentConfigurationsTest() {
         Assert.assertNotNull(configuration.getComponentConfigurations());
     }
 }

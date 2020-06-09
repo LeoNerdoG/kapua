@@ -21,7 +21,7 @@ import org.junit.experimental.categories.Category;
 import java.util.Properties;
 
 @Category(JUnitTests.class)
-public class ServiceConfigCreatorImplTest {
+public class ServiceConfigurationCreatorImplTest extends Assert {
     ServiceConfigCreatorImpl configCreator;
 
     @Before
@@ -31,23 +31,37 @@ public class ServiceConfigCreatorImplTest {
     }
 
     @Test
-    public void testSetPid() {
+    public void setPidTest() {
         configCreator.setPid("1");
-        Assert.assertEquals(configCreator.getPid(), "1");
+        assertEquals(configCreator.getPid(), "1");
     }
 
     @Test
-    public void testGetPid() {
+    public void getPidTest() {
         Assert.assertNull(configCreator.getPid());
         configCreator.setPid("123");
-        Assert.assertEquals(configCreator.getPid(), "123");
+        assertEquals(configCreator.getPid(), "123");
     }
 
     @Test
-    public void testSetConfigurations() {
+    public void setPidToStringTest() {
+        Assert.assertNull(configCreator.getPid());
+        configCreator.setPid("asdf");
+        assertEquals(configCreator.getPid(), "asdf");
+    }
+
+    @Test
+    public void setPidToSymbolsTest() {
+        Assert.assertNull(configCreator.getPid());
+        configCreator.setPid("@!#$%&");
+        assertEquals(configCreator.getPid(), "@!#$%&");
+    }
+
+    @Test
+    public void setAndGetConfigurationsTest() {
         Properties properties = new Properties();
         properties.setProperty("prop1", "value1");
         configCreator.setConfigurations(properties);
-        Assert.assertEquals(configCreator.getConfigurations(), properties);
+        assertEquals(configCreator.getConfigurations(), properties);
     }
 }

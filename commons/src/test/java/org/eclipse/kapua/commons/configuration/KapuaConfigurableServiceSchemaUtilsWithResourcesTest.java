@@ -20,37 +20,37 @@ import org.junit.experimental.categories.Category;
 public class KapuaConfigurableServiceSchemaUtilsWithResourcesTest extends Assert {
 
     @Test(expected = NullPointerException.class)
-    public void testScriptSessionWithNullArguments() {
+    public void scriptSessionWithNullArgumentsTest() {
         KapuaConfigurableServiceSchemaUtilsWithResources.scriptSession(null, null);
     }
 
     @Test(expected = NullPointerException.class)
-    public void testScriptSessionWithNullPath() {
+    public void scriptSessionWithNullPathTest() {
         KapuaConfigurableServiceSchemaUtilsWithResources.scriptSession(null, KapuaConfigurableServiceSchemaUtils.DEFAULT_FILTER);
     }
 
     @Test(expected = NullPointerException.class)
-    public void testScriptSessionWithNullFilter() {
+    public void scriptSessionWithNullFilterTest() {
         KapuaConfigurableServiceSchemaUtilsWithResources.scriptSession(KapuaConfigurableServiceSchemaUtils.DEFAULT_PATH, null);
     }
 
     @Test(expected = NullPointerException.class)
-    public void testScriptSessionWithEmptyPathValue() {
+    public void scriptSessionWithEmptyPathValueTest() {
         KapuaConfigurableServiceSchemaUtilsWithResources.scriptSession("", KapuaConfigurableServiceSchemaUtils.DEFAULT_FILTER);
     }
 
     @Test(expected = NullPointerException.class)
-    public void testScriptSessionWithWrongPathValue() {
+    public void scriptSessionWithWrongPathValueTest() {
         KapuaConfigurableServiceSchemaUtilsWithResources.scriptSession("wrong/path", KapuaConfigurableServiceSchemaUtils.DEFAULT_FILTER);
     }
 
     @Test(expected = NullPointerException.class)
-    public void testScriptSessionWithEmptyFilterValue() {
+    public void scriptSessionWithEmptyFilterValueTest() {
         KapuaConfigurableServiceSchemaUtilsWithResources.scriptSession(KapuaConfigurableServiceSchemaUtils.DEFAULT_PATH, "");
     }
 
     @Test(expected = NullPointerException.class)
-    public void testScriptSessionWithWrongFilterValue() {
+    public void scriptSessionWithWrongFilterValueTest() {
         KapuaConfigurableServiceSchemaUtilsWithResources.scriptSession(KapuaConfigurableServiceSchemaUtils.DEFAULT_PATH, "*.wrong");
     }
 }

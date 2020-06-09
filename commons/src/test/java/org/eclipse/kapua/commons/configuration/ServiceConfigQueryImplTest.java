@@ -13,16 +13,18 @@ package org.eclipse.kapua.commons.configuration;
 
 import org.eclipse.kapua.model.id.KapuaId;
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 
 @Category(JUnitTests.class)
-public class ServiceConfigQueryImplTest {
+public class ServiceConfigQueryImplTest extends Assert {
 
     @Test
     public void createInstanceTest() {
         ServiceConfigQueryImpl query = new ServiceConfigQueryImpl(KapuaId.ONE);
+        assertEquals(query.getScopeId(), KapuaId.ONE);
     }
 
 }

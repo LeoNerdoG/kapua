@@ -11,8 +11,7 @@
  *******************************************************************************/
 package org.eclipse.kapua.commons.configuration;
 
-import org.eclipse.kapua.model.config.metatype.KapuaTad;
-import org.eclipse.kapua.model.config.metatype.KapuaTicon;
+import org.eclipse.kapua.commons.configuration.metatype.TocdImpl;
 import org.eclipse.kapua.model.config.metatype.KapuaTocd;
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
 import org.junit.Assert;
@@ -20,14 +19,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import javax.xml.namespace.QName;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 @Category(JUnitTests.class)
-public class ServiceComponentConfigurationImplTest {
+public class ServiceComponentConfigurationImplTest extends Assert {
 
     ServiceComponentConfigurationImpl serviceComponentConfiguration;
 
@@ -37,155 +34,108 @@ public class ServiceComponentConfigurationImplTest {
     }
 
     @Test
-    public void createInstanceWithOtherConstructor() {
+    public void createInstanceWithSecondConstructorTest() {
         ServiceComponentConfigurationImpl componentConfiguration = new ServiceComponentConfigurationImpl("12");
+        assertEquals(componentConfiguration.getId(), "12");
     }
 
     @Test
-    public void testGetIdIfNull() {
-        Assert.assertNull(serviceComponentConfiguration.getId());
+    public void getIdIfNullTest() {
+        assertNull(serviceComponentConfiguration.getId());
     }
 
     @Test
-    public void testGetIdIfIsSet() {
+    public void getIdIfIsSetTest() {
         serviceComponentConfiguration.setId("1");
-        Assert.assertEquals(serviceComponentConfiguration.getId(), "1");
+        assertEquals(serviceComponentConfiguration.getId(), "1");
     }
 
     @Test
-    public void testSetIdToNullValue() {
+    public void setIdToNullValueTest() {
         serviceComponentConfiguration.setId(null);
+        assertNull(serviceComponentConfiguration.getId());
     }
 
     @Test
-    public void testSetIdToLargeValue() {
+    public void setIdToLargeValueTest() {
         serviceComponentConfiguration.setId("12312312312312331232313123123123");
+        assertEquals(serviceComponentConfiguration.getId(), "12312312312312331232313123123123");
     }
 
     @Test
-    public void testSetIdToRegularValue() {
+    public void setIdToRegularValueTest() {
         serviceComponentConfiguration.setId("2");
+        assertEquals(serviceComponentConfiguration.getId(), "2");
     }
 
     @Test
-    public void testGetNameIfNull() {
-        Assert.assertNull(serviceComponentConfiguration.getName());
+    public void setIdToSymbolsTest() {
+        serviceComponentConfiguration.setId("@!#");
+        assertEquals(serviceComponentConfiguration.getId(), "@!#");
     }
 
     @Test
-    public void testGetNameIfNotNull() {
+    public void setIdToEmptyStringTest() {
+        serviceComponentConfiguration.setId("");
+        assertEquals(serviceComponentConfiguration.getId(), "");
+    }
+
+    @Test
+    public void getNameIfNullTest() {
+        assertNull(serviceComponentConfiguration.getName());
+    }
+
+    @Test
+    public void setNameIfNotNullTest() {
         serviceComponentConfiguration.setName("name");
-        Assert.assertEquals(serviceComponentConfiguration.getName(), "name");
+        assertEquals(serviceComponentConfiguration.getName(), "name");
     }
 
     @Test
-    public void testSetNameToNull() {
+    public void setNameToNullTest() {
         serviceComponentConfiguration.setName(null);
-        Assert.assertNull(serviceComponentConfiguration.getName());
+        assertNull(serviceComponentConfiguration.getName());
     }
 
     @Test
-    public void testSetNameToRegularValue() {
+    public void setNameToRegularValueTest() {
         serviceComponentConfiguration.setName("regularName");
-        Assert.assertEquals(serviceComponentConfiguration.getName(), "regularName");
+        assertEquals(serviceComponentConfiguration.getName(), "regularName");
     }
 
     @Test
-    public void testSetNameToNameThatContainsSpaces() {
+    public void setNameToNameThatContainsSpacesTest() {
         serviceComponentConfiguration.setName("regular Name");
-        Assert.assertEquals(serviceComponentConfiguration.getName(), "regular Name");
+        assertEquals(serviceComponentConfiguration.getName(), "regular Name");
     }
 
     @Test
-    public void testSetDefinitionToNull() {
+    public void setNameToNameThatContainsSymbolsTest() {
+        serviceComponentConfiguration.setName("regular Name !$%&/&@");
+        assertEquals(serviceComponentConfiguration.getName(), "regular Name !$%&/&@");
+    }
+
+    @Test
+    public void setDefinitionToNullTest() {
         serviceComponentConfiguration.setDefinition(null);
-        Assert.assertNull(serviceComponentConfiguration.getDefinition());
+        assertNull(serviceComponentConfiguration.getDefinition());
     }
 
-    public void testSetDefinitionToRegularValue() {
-        KapuaTocd tocd = new KapuaTocd() {
-            @Override
-            public List<KapuaTad> getAD() {
-                return null;
-            }
-
-            @Override
-            public void setAD(List<? extends KapuaTad> icon) {
-
-            }
-
-            @Override
-            public List<KapuaTicon> getIcon() {
-                return null;
-            }
-
-            @Override
-            public void setIcon(List<? extends KapuaTicon> icon) {
-
-            }
-
-            @Override
-            public List<Object> getAny() {
-                return null;
-            }
-
-            @Override
-            public void setAny(List<Object> any) {
-
-            }
-
-            @Override
-            public String getName() {
-                return null;
-            }
-
-            @Override
-            public void setName(String value) {
-
-            }
-
-            @Override
-            public String getDescription() {
-                return null;
-            }
-
-            @Override
-            public void setDescription(String value) {
-
-            }
-
-            @Override
-            public String getId() {
-                return null;
-            }
-
-            @Override
-            public void setId(String value) {
-
-            }
-
-            @Override
-            public Map<QName, String> getOtherAttributes() {
-                return null;
-            }
-
-            @Override
-            public void setOtherAttributes(Map<QName, String> otherAttributes) {
-
-            }
-        };
+    @Test
+    public void setDefinitionToRegularValueTest() {
+        KapuaTocd tocd = new TocdImpl();
         serviceComponentConfiguration.setDefinition(tocd);
-        Assert.assertEquals(serviceComponentConfiguration.getDefinition(), tocd);
+        assertEquals(serviceComponentConfiguration.getDefinition(), tocd);
     }
 
     @Test
-    public void testSetPropertiesToNull() {
+    public void setPropertiesToNullTest() {
         serviceComponentConfiguration.setProperties(null);
-        Assert.assertNull(serviceComponentConfiguration.getProperties());
+        assertNull(serviceComponentConfiguration.getProperties());
     }
 
     @Test
-    public void testSetPropertiesToRegularValue() {
+    public void setPropertiesToRegularValueTest() {
         Map<String, Object> properties = new Map<String, Object>() {
             @Override
             public int size() {
@@ -249,6 +199,6 @@ public class ServiceComponentConfigurationImplTest {
         };
         properties.put("property1", 10);
         serviceComponentConfiguration.setProperties(properties);
-        Assert.assertEquals(serviceComponentConfiguration.getProperties(), properties);
+        assertEquals(serviceComponentConfiguration.getProperties(), properties);
     }
 }

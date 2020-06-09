@@ -20,19 +20,33 @@ import org.junit.experimental.categories.Category;
 
 
 @Category(JUnitTests.class)
-public class ServiceConfigurationFactoryImplTest {
+public class ServiceConfigurationFactoryImplTest extends Assert {
 
     @Test
-    public void testNewComponentConfigurationInstance() {
+    public void newComponentConfigurationInstanceWithStringTest() {
         ServiceConfigurationFactoryImpl configurationFactory = new ServiceConfigurationFactoryImpl();
         ServiceComponentConfiguration componentConfiguration = configurationFactory.newComponentConfigurationInstance("testInstance");
-        Assert.assertNotNull(componentConfiguration);
+        assertEquals(componentConfiguration.getId(), "testInstance");
     }
 
     @Test
-    public void testNewConfigurationInstance() {
+    public void newComponentConfigurationInstanceWithNumberTest() {
+        ServiceConfigurationFactoryImpl configurationFactory = new ServiceConfigurationFactoryImpl();
+        ServiceComponentConfiguration componentConfiguration = configurationFactory.newComponentConfigurationInstance("1");
+        assertEquals(componentConfiguration.getId(), "1");
+    }
+
+    @Test
+    public void newComponentConfigurationInstanceWithSymbolTest() {
+        ServiceConfigurationFactoryImpl configurationFactory = new ServiceConfigurationFactoryImpl();
+        ServiceComponentConfiguration componentConfiguration = configurationFactory.newComponentConfigurationInstance("@");
+        assertEquals(componentConfiguration.getId(), "@");
+    }
+
+    @Test
+    public void newConfigurationInstanceTest() {
         ServiceConfigurationFactoryImpl configurationFactory = new ServiceConfigurationFactoryImpl();
         ServiceConfiguration configuration = configurationFactory.newConfigurationInstance();
-        Assert.assertNotNull(configuration);
+        assertNotNull(configuration);
     }
 }

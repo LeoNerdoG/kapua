@@ -22,49 +22,49 @@ import org.junit.experimental.categories.Category;
 import java.util.Properties;
 
 @Category(JUnitTests.class)
-public class ServiceConfigImplTest {
-    ServiceConfigImpl serviceConfig;
+public class ServiceConfigImplTest extends Assert {
+    ServiceConfigImpl serviceConfigImpl;
 
     @Before
     public void createInstenceOfClass() {
         KapuaId id = KapuaId.ONE;
-        serviceConfig = new ServiceConfigImpl(id);
+        serviceConfigImpl = new ServiceConfigImpl(id);
     }
 
     @Test
-    public void testConstructorWithNoValues() {
+    public void constructorWithNoValuesTest() {
         ServiceConfigImpl config = new ServiceConfigImpl();
-        Assert.assertNull(config.getPid());
+        assertNull(config.getPid());
     }
 
     @Test
-    public void testSetPidRegular() {
-        serviceConfig.setPid("123");
-        Assert.assertEquals(serviceConfig.getPid(), "123");
+    public void setPidRegularTest() {
+        serviceConfigImpl.setPid("123");
+        assertEquals(serviceConfigImpl.getPid(), "123");
     }
 
     @Test
-    public void testSetPidNullValue() {
-        serviceConfig.setPid(null);
-        Assert.assertNull(serviceConfig.getPid());
+    public void setPidNullValueTest() {
+        serviceConfigImpl.setPid(null);
+        assertNull(serviceConfigImpl.getPid());
     }
 
     @Test
-    public void testSetConfigurationsNullValue() throws KapuaException {
-        serviceConfig.setConfigurations(null);
-        Assert.assertEquals(serviceConfig.getConfigurations(), new Properties());
+    public void setConfigurationsNullValueTest() throws KapuaException {
+        serviceConfigImpl.setConfigurations(null);
+        assertEquals(serviceConfigImpl.getConfigurations(), new Properties());
     }
 
     @Test
-    public void testSetConfigurationsRegular() throws KapuaException {
+    public void setConfigurationsRegularTest() throws KapuaException {
         Properties properties = new Properties();
         properties.setProperty("prop1", "value1");
-        serviceConfig.setConfigurations(properties);
-        Assert.assertEquals(serviceConfig.getConfigurations(), properties);
+        serviceConfigImpl.setConfigurations(properties);
+        assertEquals(serviceConfigImpl.getConfigurations(), properties);
     }
 
     @Test
-    public void testGetType() {
-        Assert.assertEquals(serviceConfig.getType(), "scfg");
+    public void getTypeTest() {
+        assertEquals(serviceConfigImpl.getType(), ServiceConfig.TYPE);
     }
 }
