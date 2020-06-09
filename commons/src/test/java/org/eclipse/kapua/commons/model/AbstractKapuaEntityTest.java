@@ -12,6 +12,8 @@
 package org.eclipse.kapua.commons.model;
 
 import org.eclipse.kapua.commons.model.id.KapuaEid;
+import org.eclipse.kapua.commons.security.KapuaSecurityUtils;
+import org.eclipse.kapua.commons.security.KapuaSession;
 import org.eclipse.kapua.model.KapuaEntity;
 import org.eclipse.kapua.model.id.KapuaId;
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
@@ -19,7 +21,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.math.BigInteger;
 import java.util.Date;
 
 @Category(JUnitTests.class)
@@ -57,9 +58,10 @@ public class AbstractKapuaEntityTest extends Assert {
 
     @Test
     public void prePersistsActionTest() {
-        BigInteger bigInteger = new BigInteger("12");
-        KapuaId scopeId = new KapuaEid(bigInteger);
+        KapuaId scopeId = new KapuaEid();
+        KapuaSession kapuaSession = new KapuaSession();
         AbstractKapuaEntity kapuaEntity = new ConcreteKapuaEntity(scopeId);
+        KapuaSecurityUtils.setSession(kapuaSession);
         kapuaEntity.prePersistsAction();
         AbstractKapuaEntity kapuaCopyEntity = new ConcreteKapuaEntity(kapuaEntity);
         assertEquals("kapuaCopyEntity.getId()", kapuaEntity.getId(), kapuaCopyEntity.getId());
