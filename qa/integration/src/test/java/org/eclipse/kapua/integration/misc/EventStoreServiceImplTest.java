@@ -13,7 +13,6 @@
 package org.eclipse.kapua.integration.misc;
 
 import org.eclipse.kapua.KapuaException;
-
 import org.eclipse.kapua.commons.jpa.EntityManagerFactory;
 import org.eclipse.kapua.commons.model.id.KapuaEid;
 import org.eclipse.kapua.commons.service.event.store.api.EventStoreRecord;
@@ -21,15 +20,15 @@ import org.eclipse.kapua.commons.service.event.store.api.EventStoreRecordCreator
 import org.eclipse.kapua.commons.service.event.store.internal.EventStoreRecordCreatorImpl;
 import org.eclipse.kapua.commons.service.event.store.internal.EventStoreRecordImpl;
 import org.eclipse.kapua.commons.service.event.store.internal.EventStoreServiceImpl;
-
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 
 import java.math.BigInteger;
+
+import static org.mockito.Mockito.spy;
 
 
 @Category(JUnitTests.class)
@@ -43,7 +42,9 @@ public class EventStoreServiceImplTest extends Assert {
         assertNotNull(eventStoreServiceImpl);
     }
 
-    @Test
+    // COMMENT: Add: (expected = UnsupportedOperationException.class) and
+    // then delete the part in line 52 (creating new unsupported Exception)
+    @Test ()
     public void createTest() {
         EntityManagerFactory entityManagerFactory = Mockito.mock(EntityManagerFactory.class);
         EventStoreServiceImpl eventStoreServiceImpl = new EventStoreServiceImpl(entityManagerFactory);
@@ -59,10 +60,12 @@ public class EventStoreServiceImplTest extends Assert {
 
     @Test
     public void updateTest() throws KapuaException {
+        EntityManagerFactory entityManagerFactory = spy(EntityManagerFactory.class);
+        EventStoreServiceImpl eventStoreServiceImpl = new EventStoreServiceImpl(entityManagerFactory);
+        EventStoreRecordCreator creator = new EventStoreRecordCreatorImpl(new KapuaEid(BigInteger.TEN));
+
         EventStoreRecord eventStoreRecord = new EventStoreRecordImpl();
         eventStoreRecord.setId(new KapuaEid(BigInteger.ONE));
-        EntityManagerFactory entityManagerFactory = Mockito.mock(EntityManagerFactory.class);
-        EventStoreServiceImpl eventStoreServiceImpl = new EventStoreServiceImpl(entityManagerFactory);
         eventStoreServiceImpl.update(eventStoreRecord);
     }
 }
