@@ -1,3 +1,16 @@
+// COMMENT: Please delete all the "RedHat" stuff from the header:
+///*******************************************************************************
+// * Copyright (c) 2020 Eurotech and/or its affiliates and others
+// *
+// * All rights reserved. This program and the accompanying materials
+// * are made available under the terms of the Eclipse Public License v1.0
+// * which accompanies this distribution, and is available at
+// * http://www.eclipse.org/legal/epl-v10.html
+// *
+// * Contributors:
+// *     Eurotech - initial API and implementation
+// *******************************************************************************/
+
 /*******************************************************************************
  * Copyright (c) 2020 Red Hat Inc and others.
  *
@@ -31,13 +44,17 @@ import java.util.Date;
 public class EventStoreRecordImplTest extends Assert {
 
     @Test
+    // COMMENT: Please rename the test to EventStoreRecordImplTest1()
     public void constructor1Test() {
         EventStoreRecordImpl eventStoreRecordImpl = new EventStoreRecordImpl();
         assertNotNull(eventStoreRecordImpl);
         assertEquals(ServiceEvent.EventStatus.TRIGGERED, eventStoreRecordImpl.getStatus());
+        // COMMENT: Can you check with assertThat that the created object is of the right class? With
+        // assertThat of instanceof.
     }
 
     @Test
+    // COMMENT: Please rename the test to EventStoreRecordImplTest2()
     public void constructor2Test() {
         KapuaId[] scopeIdList = {null, new KapuaIdStatic(BigInteger.ONE), new KapuaIdStatic(BigInteger.TEN), new KapuaIdStatic(BigInteger.ZERO)};
 
@@ -45,11 +62,15 @@ public class EventStoreRecordImplTest extends Assert {
             EventStoreRecordImpl eventStoreRecordImpl = new EventStoreRecordImpl(scopeIdList[i]);
             assertNotNull(eventStoreRecordImpl);
             assertEquals(scopeIdList[i], eventStoreRecordImpl.getScopeId());
+            // COMMENT: Can you check with assertThat that the created object is of the right class? With
+            // assertThat of instanceof.
         }
     }
 
     @Test
+    // COMMENT: Please rename the test to EventStoreRecordImplTest3()
     public void constructor3Test() throws KapuaException {
+        // COMMENT: using mockito - #soProud :D
         EventStoreRecord eventStoreRecord = Mockito.mock(EventStoreRecord.class);
 
         Mockito.when(eventStoreRecord.getContextId()).thenReturn("contextId");
@@ -66,7 +87,10 @@ public class EventStoreRecordImplTest extends Assert {
 
         EventStoreRecordImpl eventStoreRecordImpl = new EventStoreRecordImpl(eventStoreRecord);
 
+        // COMMENT: Can you check with assertThat that the created object is of the right class? With
+        // assertThat of instanceof.
         assertNotNull(eventStoreRecordImpl);
+
         assertEquals("contextId", eventStoreRecordImpl.getContextId());
         assertEquals(new Date().toString(), eventStoreRecordImpl.getTimestamp().toString());
         assertEquals(new KapuaEid(BigInteger.TEN), eventStoreRecordImpl.getUserId());

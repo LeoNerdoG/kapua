@@ -1,3 +1,16 @@
+// COMMENT: Please delete all the "RedHat" stuff from the header:
+///*******************************************************************************
+// * Copyright (c) 2020 Eurotech and/or its affiliates and others
+// *
+// * All rights reserved. This program and the accompanying materials
+// * are made available under the terms of the Eclipse Public License v1.0
+// * which accompanies this distribution, and is available at
+// * http://www.eclipse.org/legal/epl-v10.html
+// *
+// * Contributors:
+// *     Eurotech - initial API and implementation
+// *******************************************************************************/
+
 /*******************************************************************************
  * Copyright (c) 2020 Red Hat Inc and others.
  *
@@ -23,6 +36,9 @@ import java.util.ArrayList;
 public class LocalCacheTest extends Assert {
 
     @Test
+    // COMMENT: Please rename the test to LocalCache1Test - you should always use the original method name
+    // with the keyword "test" in the end (if you have several constructors, just name them 1,2,3...or
+    // something similar.
     public void constructor1Test() {
         int[] sizeMax = new int[]{0, 10, 1000, 10000, 2147483647};
         int[] expireAfter = new int[]{0, 10, 1000, 10000, 2147483647};
@@ -32,15 +48,21 @@ public class LocalCacheTest extends Assert {
         IllegalArgumentException illegalArgumentExceptionSizeMax = new IllegalArgumentException("maximum size must not be negative");
         IllegalArgumentException illegalArgumentExceptionExpireAfter = new IllegalArgumentException("duration cannot be negative: " + invalidExpireAfter + " SECONDS");
 
+        // COMMENT: Can you use the shorter version of for loop? for (int i: sizeMax)
         for (int i = 0; i < sizeMax.length; i++) {
+            // COMMENT: Can you use the shorter version of for loop? for (int j: expireAfter)
             for (int j = 0; j < expireAfter.length; j++) {
+                // COMMENT: Can you use the shorter version of for loop? for (int k: defaultValue)
                 for (int k = 0; k < defaultValue.length; k++) {
                     LocalCache<Object, Object> localCache = new LocalCache<>(sizeMax[i], expireAfter[j], defaultValue[k]);
+                    // COMMENT: can you use getter method to retrieve the actual values of "defaultValue" and "cache"?
                     assertNotNull(localCache);
                 }
             }
         }
+        // COMMENT: Can you use the shorter version of for loop? for (int i: expireAfter)
         for (int i = 0; i < expireAfter.length; i++) {
+            // COMMENT: Can you use the shorter version of for loop? for (int j: defaultValue)
             for (int j = 0; j < defaultValue.length; j++) {
                 try {
                     LocalCache<Object, Object> localCache = new LocalCache<>(invalidSizeMax, expireAfter[i], defaultValue[j]);
@@ -49,7 +71,9 @@ public class LocalCacheTest extends Assert {
                 }
             }
         }
+        // COMMENT: Can you use the shorter version of for loop? for (int i: sizeMax)
         for (int i = 0; i < sizeMax.length; i++) {
+            // COMMENT: Can you use the shorter version of for loop? for (int j: defaultValue)
             for (int j = 0; j < defaultValue.length; j++) {
                 try {
                     LocalCache<Object, Object> localCache = new LocalCache<>(sizeMax[i], invalidExpireAfter, defaultValue[j]);
@@ -61,18 +85,22 @@ public class LocalCacheTest extends Assert {
     }
 
     @Test
+    // COMMENT: Please rename the test to LocalCache2Test
     public void constructor2Test() {
         int[] sizeMax = new int[]{0, 10, 1000, 10000, 2147483647};
         Object[] defaultValue = new Object[]{0, 10, 100000, "String", 'c', -10, -1000000000, -100000000000L, 10L, 10.0f, null, 10.10d, true, false,};
         int invalidSizeMax = -1;
         IllegalArgumentException illegalArgumentExceptionSizeMax = new IllegalArgumentException("maximum size must not be negative");
-
+        // COMMENT: Can you use the shorter version of for loop? for (int i: sizeMax)
         for (int i = 0; i < sizeMax.length; i++) {
+            // COMMENT: Can you use the shorter version of for loop? for (int j: defaultValue)
             for (int j = 0; j < defaultValue.length; j++) {
-                LocalCache<Object, Object> localCache = new LocalCache<>(sizeMax[i], defaultValue[j]);
+                LocalCache<Object, Object> localCache = new LocalCache<>(sizeMax[i], defaultValue[j]);                    // COMMENT: can you use getter method to retrieve the actual values of "defaultValue" and "cache"?
+                // COMMENT: can you use getter method to retrieve the actual values of "defaultValue" and "cache"?
                 assertNotNull(localCache);
             }
         }
+        // COMMENT: Can you use the shorter version of for loop? for (int i: defaultValue)
         for (int i = 0; i < defaultValue.length; i++) {
             try {
                 LocalCache<Object, Object> localCache = new LocalCache<>(invalidSizeMax, defaultValue[i]);
@@ -82,11 +110,12 @@ public class LocalCacheTest extends Assert {
         }
     }
 
+    // COMMENT: This test is basically the same then the first one. Can you please use this getter in the first
+    // test and we can leave this one out, as it is just a copy of the first test?
     @Test
     public void getNamespaceTest() {
         int[] sizeMax = new int[]{0, 10, 1000, 10000, 2147483647};
         Object[] defaultValue = new Object[]{0, 10, 100000, "String", 'c', -10, -1000000000, -100000000000L, 10L, 10.0f, null, 10.10d, true, false,};
-
         for (int i = 0; i < sizeMax.length; i++) {
             for (int j = 0; j < defaultValue.length; j++) {
                 LocalCache<Object, Object> localCache = new LocalCache<>(sizeMax[i], defaultValue[j]);
@@ -100,8 +129,9 @@ public class LocalCacheTest extends Assert {
         int[] sizeMax = new int[]{0, 10, 1000, 10000, 2147483647};
         Object[] defaultValue = new Object[]{0, 10, 100000, "String", 'c', -10, -1000000000, 1000000000000L, 1000000, -100000000000L, 10L, 10.0f, null, 10.10d, true, false,};
         String namespace = "namespace";
-
+        // COMMENT: Can you use the shorter version of for loop? for (int i: sizeMax)
         for (int i = 0; i < sizeMax.length; i++) {
+            // COMMENT: Can you use the shorter version of for loop? for (int j: defaultValue)
             for (int j = 0; j < defaultValue.length; j++) {
                 LocalCache<Object, Object> localCache = new LocalCache<>(sizeMax[i], defaultValue[j]);
                 localCache.setNamespace(namespace);
@@ -119,8 +149,9 @@ public class LocalCacheTest extends Assert {
 
         String[] key = {"Key", "Second Key"};
         String[] keyValue = {"Key Value", "Second Key Value"};
-
+        // COMMENT: Can you use the shorter version of for loop? for (int i: sizeMax)
         for (int i = 0; i < sizeMax.length; i++) {
+            // COMMENT: Can you use the shorter version of for loop? for (int j: defaultValue)
             for (int j = 0; j < defaultValue.length; j++) {
                 LocalCache<Object, Object> localCache = new LocalCache<>(sizeMax[i], defaultValue[j]);
                 assertEquals(defaultValue[j], localCache.get("Key"));
@@ -144,7 +175,9 @@ public class LocalCacheTest extends Assert {
         expectedKeyList.add("Third Key");
         expectedKeyList.add("Key");
 
+        // COMMENT: Can you use the shorter version of for loop? for (int i: sizeMax)
         for (int i = 0; i < sizeMax.length; i++) {
+            // COMMENT: Can you use the shorter version of for loop? for (int j: defaultValue)
             for (int j = 0; j < defaultValue.length; j++) {
                 LocalCache<Object, Object> localCache = new LocalCache<>(sizeMax[i], defaultValue[j]);
                 localCache.put(key[0], keyValue[0]);
@@ -162,11 +195,15 @@ public class LocalCacheTest extends Assert {
         String[] key = {"Key", "Second Key", "Third Key"};
         String[] keyValue = {"Key Value", "Second Key Value", "Third Key Value"};
 
+        // COMMENT: Can you use the shorter version of for loop? for (int i: sizeMax)
         for (int i = 0; i < sizeMax.length; i++) {
+            // COMMENT: Can you use the shorter version of for loop? for (int j: defaultValue)
             for (int j = 0; j < defaultValue.length; j++) {
                 LocalCache<Object, Object> localCache = new LocalCache<>(sizeMax[i], defaultValue[j]);
                 for (int k = 0; k < key.length; k++) {
                     localCache.put(key[k], keyValue[k]);
+                    // COMMENT: There is no assertion here, you are just calling the method, which is
+                    // basically the same as the original thing does - please add an assertion.
                 }
             }
         }
@@ -179,7 +216,9 @@ public class LocalCacheTest extends Assert {
         String[] key = {"Key", "Second Key", "Third Key"};
         String[] keyValue = {"Key Value", "Second Key Value", "Third Key Value"};
 
+        // COMMENT: Can you use the shorter version of for loop? for (int i: sizeMax)
         for (int i = 0; i < sizeMax.length; i++) {
+            // COMMENT: Can you use the shorter version of for loop? for (int j: defaultValue)
             for (int j = 0; j < defaultValue.length; j++) {
                 LocalCache<Object, Object> localCache = new LocalCache<>(sizeMax[i], defaultValue[j]);
                 localCache.put(key[2], keyValue[2]);
@@ -209,10 +248,13 @@ public class LocalCacheTest extends Assert {
         int[] sizeMax = new int[]{10, 1000, 10000, 2147483647};
         Object[] defaultValue = new Object[]{0, 10, 100000, "String", 'c', -10, -1000000000, 1000000000000L, 1000000, -100000000000L, 10L, 10.0f, null, 10.10d, true, false,};
 
+        // COMMENT: Can you use the shorter version of for loop? for (int i: sizeMax)
         for (int i = 0; i < sizeMax.length; i++) {
+            // COMMENT: Can you use the shorter version of for loop? for (int j: defaultValue)
             for (int j = 0; j < defaultValue.length; j++) {
                 LocalCache<Object, Object> localCache = new LocalCache<>(sizeMax[i], defaultValue[j]);
                 localCache.invalidateAll();
+                // COMMENT: Please check if the "cache" variable is empty after this operation.
             }
         }
     }

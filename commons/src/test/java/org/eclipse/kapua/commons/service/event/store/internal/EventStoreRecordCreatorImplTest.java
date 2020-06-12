@@ -26,11 +26,13 @@ public class EventStoreRecordCreatorImplTest extends Assert {
     @Test
     public void constructorTest() {
         KapuaId[] scopeIdList = {null, new KapuaIdStatic(BigInteger.ONE), new KapuaIdStatic(BigInteger.TEN), new KapuaIdStatic(BigInteger.ZERO)};
-
+        // COMMENT: Can you use the shorter version of for loop? for (int i: scopeIdList)
         for (int i = 0; i < scopeIdList.length; i++) {
             EventStoreRecordCreatorImpl eventStoreRecordCreatorImpl = new EventStoreRecordCreatorImpl(scopeIdList[i]);
             assertNotNull(eventStoreRecordCreatorImpl);
             assertEquals(scopeIdList[i],eventStoreRecordCreatorImpl.getScopeId());
+            // COMMENT: Can you check with assertThat that the created object is of the right class? With
+            // assertThat of instanceof.
         }
     }
 }
