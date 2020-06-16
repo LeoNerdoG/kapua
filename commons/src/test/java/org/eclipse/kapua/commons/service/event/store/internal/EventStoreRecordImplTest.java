@@ -43,6 +43,7 @@ import java.util.Date;
 @Category(JUnitTests.class)
 public class EventStoreRecordImplTest extends Assert {
 
+
     @Test
     // COMMENT: Please rename the test to EventStoreRecordImplTest1()
     public void constructor1Test() {
@@ -107,6 +108,8 @@ public class EventStoreRecordImplTest extends Assert {
     @Test
     public void getContextIdTest() {
         EventStoreRecordImpl eventStoreRecordImpl = new EventStoreRecordImpl();
+        // COMMENT: Can you add additional tests with different constructors to see if the
+        // contextId is set properly?
         assertNull(eventStoreRecordImpl.getContextId());
     }
 
@@ -125,6 +128,8 @@ public class EventStoreRecordImplTest extends Assert {
     @Test
     public void getTimestampTest() {
         EventStoreRecordImpl eventStoreRecordImpl = new EventStoreRecordImpl();
+        // COMMENT: Can you add additional tests with different constructors to see if the
+        // timestamp is set properly?
         assertNull(eventStoreRecordImpl.getTimestamp());
     }
 
@@ -143,13 +148,15 @@ public class EventStoreRecordImplTest extends Assert {
     @Test
     public void getUserIdTest() {
         EventStoreRecordImpl eventStoreRecordImpl = new EventStoreRecordImpl();
+        // COMMENT: Can you add additional tests with different constructors to see if the
+        // userId is set properly?
         assertNull(eventStoreRecordImpl.getUserId());
     }
 
     @Test
     public void setUserIdTest() {
         KapuaId[] userIdList = {new KapuaIdStatic(BigInteger.ONE), new KapuaIdStatic(BigInteger.TEN), new KapuaIdStatic(BigInteger.ZERO)};
-
+        // COMMENT: Can you please reformat this for loop into: for (int i: userIdList)
         for (int i = 0; i < userIdList.length; i++) {
             EventStoreRecordImpl eventStoreRecordImpl = new EventStoreRecordImpl();
 
@@ -164,6 +171,8 @@ public class EventStoreRecordImplTest extends Assert {
     @Test
     public void getServiceTest() {
         EventStoreRecordImpl eventStoreRecordImpl = new EventStoreRecordImpl();
+        // COMMENT: Can you add additional tests with different constructors to see if the
+        // service is set properly?
         assertNull(eventStoreRecordImpl.getService());
     }
 
@@ -182,6 +191,8 @@ public class EventStoreRecordImplTest extends Assert {
     @Test
     public void getEntityTypeTest() {
         EventStoreRecordImpl eventStoreRecordImpl = new EventStoreRecordImpl();
+        // COMMENT: Can you add additional tests with different constructors to see if the
+        // entityType is set properly?
         assertNull(eventStoreRecordImpl.getEntityType());
     }
 
@@ -201,13 +212,15 @@ public class EventStoreRecordImplTest extends Assert {
     @Test
     public void getScopeIdTest() {
         EventStoreRecordImpl eventStoreRecordImpl = new EventStoreRecordImpl();
+        // COMMENT: Can you add additional tests with different constructors to see if the
+        // scopeId is set properly?
         assertNull(eventStoreRecordImpl.getScopeId());
     }
 
     @Test
     public void setScopeIdTest() {
         KapuaId[] scopeIdList = {new KapuaIdStatic(BigInteger.ONE), new KapuaIdStatic(BigInteger.TEN), new KapuaIdStatic(BigInteger.ZERO)};
-
+        // COMMENT: Can you please reformat this for loop into: for (int i: scopeIdList)
         for (int i = 0; i < scopeIdList.length; i++) {
             EventStoreRecordImpl eventStoreRecordImpl = new EventStoreRecordImpl();
 
@@ -222,13 +235,15 @@ public class EventStoreRecordImplTest extends Assert {
     @Test
     public void getEntityIdTest() {
         EventStoreRecordImpl eventStoreRecordImpl = new EventStoreRecordImpl();
+        // COMMENT: Can you add additional tests with different constructors to see if the
+        // entityId is set properly?
         assertNull(eventStoreRecordImpl.getEntityId());
     }
 
     @Test
     public void setEntityIdTest() {
         KapuaId[] entityIdList = {new KapuaIdStatic(BigInteger.ONE), new KapuaIdStatic(BigInteger.TEN), new KapuaIdStatic(BigInteger.ZERO)};
-
+        // COMMENT: Can you please reformat this for loop into: for (int i: entityIdList)
         for (int i = 0; i < entityIdList.length; i++) {
             EventStoreRecordImpl eventStoreRecordImpl = new EventStoreRecordImpl();
 
@@ -243,6 +258,8 @@ public class EventStoreRecordImplTest extends Assert {
     @Test
     public void getOperationTest() {
         EventStoreRecordImpl eventStoreRecordImpl = new EventStoreRecordImpl();
+        // COMMENT: Can you add additional tests with different constructors to see if the
+        // operation is set properly?
         assertNull(eventStoreRecordImpl.getOperation());
     }
 
@@ -261,6 +278,8 @@ public class EventStoreRecordImplTest extends Assert {
     @Test
     public void getInputsTest() {
         EventStoreRecordImpl eventStoreRecordImpl = new EventStoreRecordImpl();
+        // COMMENT: Can you add additional tests with different constructors to see if the
+        // inputs is set properly?
         assertNull(eventStoreRecordImpl.getInputs());
     }
 
@@ -279,6 +298,8 @@ public class EventStoreRecordImplTest extends Assert {
     @Test
     public void getOutputsTest() {
         EventStoreRecordImpl eventStoreRecordImpl = new EventStoreRecordImpl();
+        // COMMENT: Can you add additional tests with different constructors to see if the
+        // outputs is set properly?
         assertNull(eventStoreRecordImpl.getOutputs());
     }
 
@@ -321,6 +342,8 @@ public class EventStoreRecordImplTest extends Assert {
     @Test
     public void getNoteTest() {
         EventStoreRecordImpl eventStoreRecordImpl = new EventStoreRecordImpl();
+        // COMMENT: Can you add additional tests with different constructors to see if the
+        // note is set properly?
         assertNull(eventStoreRecordImpl.getNote());
     }
 
