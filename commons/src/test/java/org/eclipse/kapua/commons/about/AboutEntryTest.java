@@ -46,6 +46,8 @@ public class AboutEntryTest extends Assert {
             for (String text : texts) {
                 for (URL url : urls) {
                     AboutEntry.License license = new AboutEntry.License(name, text, url);
+                    // COMMENT: Can you please add a message (e.g. "Actual and expected values not the same"
+                    // if the tests fails? Plese do for all assertEquals' in this file.
                     assertEquals(name, license.getName());
                     assertEquals(text, license.getText());
                     assertEquals(url, license.getUrl());
@@ -56,6 +58,7 @@ public class AboutEntryTest extends Assert {
         }
     }
 
+    // COMMENT: Please change method name to: "licenseGetNameTest"
     @Test
     public void getNameTest() {
         for (String name : names) {
@@ -75,6 +78,7 @@ public class AboutEntryTest extends Assert {
         }
     }
 
+    // COMMENT: Please change method name to: "licenseGetTextTest"
     @Test
     public void getTextTest() {
         for (String text : texts) {
@@ -93,6 +97,7 @@ public class AboutEntryTest extends Assert {
         }
     }
 
+    // COMMENT: Please change method name to: "licenseGetUrlTest"
     @Test
     public void getUrlTest() {
         for (URL url : urls) {
