@@ -28,9 +28,6 @@ import org.mockito.Mockito;
 
 import java.math.BigInteger;
 
-import static org.mockito.Mockito.spy;
-
-
 @Category(JUnitTests.class)
 public class EventStoreServiceImplTest extends Assert {
 
@@ -60,7 +57,7 @@ public class EventStoreServiceImplTest extends Assert {
 
     @Test
     public void updateTest() throws KapuaException {
-        EntityManagerFactory entityManagerFactory = spy(EntityManagerFactory.class);
+        EntityManagerFactory entityManagerFactory = Mockito.spy(EntityManagerFactory.class);
         EventStoreServiceImpl eventStoreServiceImpl = new EventStoreServiceImpl(entityManagerFactory);
         EventStoreRecordCreator creator = new EventStoreRecordCreatorImpl(new KapuaEid(BigInteger.TEN));
 
