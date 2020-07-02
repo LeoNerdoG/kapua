@@ -12,13 +12,10 @@
  *******************************************************************************/
 package org.eclipse.kapua.integration.misc;
 
-import org.eclipse.kapua.KapuaException;
 import org.eclipse.kapua.commons.jpa.EntityManagerFactory;
 import org.eclipse.kapua.commons.model.id.KapuaEid;
-import org.eclipse.kapua.commons.service.event.store.api.EventStoreRecord;
 import org.eclipse.kapua.commons.service.event.store.api.EventStoreRecordCreator;
 import org.eclipse.kapua.commons.service.event.store.internal.EventStoreRecordCreatorImpl;
-import org.eclipse.kapua.commons.service.event.store.internal.EventStoreRecordImpl;
 import org.eclipse.kapua.commons.service.event.store.internal.EventStoreServiceImpl;
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
 import org.junit.Assert;
@@ -53,16 +50,5 @@ public class EventStoreServiceImplTest extends Assert {
         } catch (Exception e) {
             assertEquals(unsupportedOperationException.toString(), e.toString());
         }
-    }
-
-    @Test
-    public void updateTest() throws KapuaException {
-        EntityManagerFactory entityManagerFactory = Mockito.spy(EntityManagerFactory.class);
-        EventStoreServiceImpl eventStoreServiceImpl = new EventStoreServiceImpl(entityManagerFactory);
-        EventStoreRecordCreator creator = new EventStoreRecordCreatorImpl(new KapuaEid(BigInteger.TEN));
-
-        EventStoreRecord eventStoreRecord = new EventStoreRecordImpl();
-        eventStoreRecord.setId(new KapuaEid(BigInteger.ONE));
-        eventStoreServiceImpl.update(eventStoreRecord);
     }
 }
