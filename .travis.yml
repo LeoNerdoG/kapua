@@ -6,6 +6,9 @@ jdk:
 sudo: false
 dist: trusty
 
+services:
+  - docker
+
 # The cache is stored per-branch
 
 cache:
