@@ -47,6 +47,9 @@ jobs:
       - node --version
       - npm --version
       - node_modules/.bin/newman --version
+ - name: sleep for 120 seconds and continue with tests
+          wait_for:
+            timeout: 120
     script:
       - node_modules/.bin/newman run rest-api/tests/KapuaApiTesting.postman_collection.json
     after_script:
