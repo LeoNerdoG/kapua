@@ -44,9 +44,6 @@ jobs:
         - npm install newman
       before_script:
         - ./deployment/docker/unix/docker-deploy.sh
-        - node --version
-        - npm --version
-        - node_modules/.bin/newman --version
     - stage: junit Tests
       script:
         - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='org.eclipse.kapua.qa.markers.junit.JUnitTests' verify
@@ -57,6 +54,10 @@ jobs:
       script:
         - $M2_HOME/bin/mvn -B -DskipTests install javadoc:jar
     - stage: api-test Execution
+      before_script:
+        - node --version
+        - npm --version
+        - node_modules/.bin/newman --version
       script:
         - node_modules/.bin/newman run rest-api/tests/KapuaApiTesting.postman_collection.json
       after_script:
