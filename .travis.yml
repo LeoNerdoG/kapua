@@ -1,7 +1,7 @@
 language: java
 
 jdk:
-- openjdk8
+  - openjdk8
 
 sudo: false
 dist: trusty
@@ -10,18 +10,18 @@ dist: trusty
 
 cache:
   directories:
-  - $HOME/.m2
+    - $HOME/.m2
 
 install:
-- echo ==== Setting up toolchain.xml ====
-- ls /usr/lib/jvm
-- ls
-- cp build-tools/src/main/toolchains/travis-ci.xml ~/.m2/toolchains.xml
-- echo ==== Setting up Maven 3.3 for Travis ====
-- wget -T 30 -t 3 -O maven.tar.gz http://www-eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz || wget -T 30 -t 3 -O maven.tar.gz http://www-us.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
-- mkdir maven
-- cd maven ; tar --strip-components 1 -xzf ../maven.tar.gz ; cd ..
-- chmod a+x maven/bin/mvn
+  - echo ==== Setting up toolchain.xml ====
+  - ls /usr/lib/jvm
+  - ls
+  - cp build-tools/src/main/toolchains/travis-ci.xml ~/.m2/toolchains.xml
+  - echo ==== Setting up Maven 3.3 for Travis ====
+  - wget -T 30 -t 3 -O maven.tar.gz http://www-eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz || wget -T 30 -t 3 -O maven.tar.gz http://www-us.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
+  - mkdir maven
+  - cd maven ; tar --strip-components 1 -xzf ../maven.tar.gz ; cd ..
+  - chmod a+x maven/bin/mvn
 
 before_script:
   - export M2_HOME=$PWD/maven
@@ -33,81 +33,34 @@ before_script:
 
 jobs:
   include:
-  - stage: build
-    script:
-    - $M2_HOME/bin/mvn -v
-    - $M2_HOME/bin/mvn -B ${BUILD_OPTS} -DskipTests clean install
-  - stage: api-test
-    language: node_js
-    node_js: "12.0"
-    install:
-      - npm install newman
-    before_script:
-      - ./deployment/docker/unix/docker-deploy.sh
-      - node --version
-      - npm --version
-      - node_modules/.bin/newman --version
-    script:
-      - travis_wait 2 node_modules/.bin/newman run rest-api/tests/KapuaApiTesting.postman_collection.json
-    after_script:
-      - ./deployment/docker/unix/docker-undeploy.sh
-  - stage: test
-    script:
-    - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @brokerAcl" verify
-  - stage: test
-    script:
-    - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @tag" verify
-  - stage: test
-    script:
-    - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @broker" verify
-  - stage: test
-    script:
-    - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @device" verify
-  - stage: test
-    script:
-    - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @connection" verify
-  - stage: test
-    script:
-    - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @datastore" verify
-  - stage: test
-    script:
-    - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @user" verify
-  - stage: test
-    script:
-    - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @security" verify
-  - stage: test
-    script:
-    - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobs" verify
-  - stage: test
-    script:
-    - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @triggerService" verify
-  - stage: test
-    script:
-    - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @account" verify
-  - stage: test
-    script:
-    - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineStartOfflineDevice" verify
-  - stage: test
-    script:
-    - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineStartOnlineDevice" verify
-  - stage: test
-    script:
-    - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineRestartOfflineDevice" verify
-  - stage: test
-    script:
-    - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineRestartOnlineDevice" verify
-  - stage: test
-    script:
-    - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineRestartOnlineDeviceSecondPart" verify
-  - stage: test
-    script:
-    - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineServiceStop" verify
-  - stage: test
-    script:
-    - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='org.eclipse.kapua.qa.markers.junit.JUnitTests' verify
-  - stage: test
-    script:
-    - $M2_HOME/bin/mvn -B -DskipTests install javadoc:jar
+    - stage: build
+      script:
+        - $M2_HOME/bin/mvn -v
+        - $M2_HOME/bin/mvn -B ${BUILD_OPTS} -DskipTests clean install
+    - stage: api-test Environment
+      language: node_js
+      node_js: "12.0"
+      install:
+        - npm install newman
+      before_script:
+        - ./deployment/docker/unix/docker-deploy.sh
+        - node --version
+        - npm --version
+        - node_modules/.bin/newman --version
+    - stage: junit Tests
+      script:
+        - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='org.eclipse.kapua.qa.markers.junit.JUnitTests' verify
+    - stage: test
+      script:
+        - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @user" verify
+    - stage: Javadocs
+      script:
+        - $M2_HOME/bin/mvn -B -DskipTests install javadoc:jar
+    - stage: api-test Execution
+      script:
+        - node_modules/.bin/newman run rest-api/tests/KapuaApiTesting.postman_collection.json
+      after_script:
+        - ./deployment/docker/unix/docker-undeploy.sh
 
 # The following upgrades Java during the build in
 # order to work around an older Java 8 compiler issue
@@ -117,7 +70,7 @@ jobs:
 addons:
   apt:
     packages:
-    - openjdk-8-jdk
+      - openjdk-8-jdk
 
 after_script:
   - bash <(curl -s https://codecov.io/bash)
