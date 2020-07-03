@@ -43,7 +43,6 @@ jobs:
       install:
         - npm install newman
         - ./deployment/docker/unix/docker-deploy.sh
-    - stage: api-test Environment
       script:
         - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='org.eclipse.kapua.qa.markers.junit.JUnitTests' verify
     - stage: api-test Environment
