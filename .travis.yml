@@ -12,9 +12,6 @@ cache:
   directories:
     - $HOME/.m2
 
-before_install:
-  - ./deployment/docker/unix/docker-deploy.sh
-
 install:
   - echo ==== Setting up toolchain.xml ====
   - ls /usr/lib/jvm
@@ -40,6 +37,8 @@ jobs:
       script:
         - $M2_HOME/bin/mvn -v
         - $M2_HOME/bin/mvn -B ${BUILD_OPTS} -DskipTests clean install
+        - ./deployment/docker/unix/docker-deploy.sh
+        - docker ps -a
     - stage: api-test
       language: node_js
       node_js: "12.0"
