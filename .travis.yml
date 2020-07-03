@@ -37,7 +37,7 @@ jobs:
       script:
         - $M2_HOME/bin/mvn -v
         - $M2_HOME/bin/mvn -B ${BUILD_OPTS} -DskipTests clean install
-    - stage: api-test Environment
+    - stage: tests
       language: node_js
       node_js: "12.0"
       install:
@@ -45,15 +45,10 @@ jobs:
         - ./deployment/docker/unix/docker-deploy.sh
       script:
         - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='org.eclipse.kapua.qa.markers.junit.JUnitTests' verify
-    - stage: api-test Environment
-      script:
-        - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @user" verify
-    - stage: api-test Environment
+    - stage: tests
       script:
         - $M2_HOME/bin/mvn -B -DskipTests install javadoc:jar
-    - stage: api-test Execution
-      language: node_js
-      node_js: "12.0"
+    - stage: tests
       before_script:
         - node --version
         - npm --version
