@@ -61,6 +61,8 @@ docker_compose || {
     echo "Deploying Eclipse Kapua... ERROR!"
     exit 1
 }
+echo "Please wait two minutes for docker containers to properly run........."
+sleep 120s
 echo "Deploying Eclipse Kapua... DONE!"
 
 if [[ -z "$1" ]]; then
