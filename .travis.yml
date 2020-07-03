@@ -12,6 +12,9 @@ cache:
   directories:
     - $HOME/.m2
 
+before_install:
+  - ./deployment/docker/unix/docker-deploy.sh
+
 install:
   - echo ==== Setting up toolchain.xml ====
   - ls /usr/lib/jvm
@@ -37,26 +40,25 @@ jobs:
       script:
         - $M2_HOME/bin/mvn -v
         - $M2_HOME/bin/mvn -B ${BUILD_OPTS} -DskipTests clean install
-    - stage: tests
+    - stage: api-test
       language: node_js
       node_js: "12.0"
       install:
         - npm install newman
-        - ./deployment/docker/unix/docker-deploy.sh
-      script:
-        - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='org.eclipse.kapua.qa.markers.junit.JUnitTests' verify
-    - stage: tests
-      script:
-        - $M2_HOME/bin/mvn -B -DskipTests install javadoc:jar
-    - stage: tests
       before_script:
         - node --version
         - npm --version
         - node_modules/.bin/newman --version
       script:
-        - node_modules/.bin/newman run rest-api/tests/KapuaApiTesting.postman_collection.json
+        - travis_wait 2 node_modules/.bin/newman run rest-api/tests/KapuaApiTesting.postman_collection.json
       after_script:
         - ./deployment/docker/unix/docker-undeploy.sh
+    - stage: tests
+      script:
+        - ./travis.sh $M2_HOME/bin/mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='org.eclipse.kapua.qa.markers.junit.JUnitTests' verify
+    - stage: tests
+      script:
+        - $M2_HOME/bin/mvn -B -DskipTests install javadoc:jar
 
 # The following upgrades Java during the build in
 # order to work around an older Java 8 compiler issue
