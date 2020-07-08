@@ -1,0 +1,749 @@
+{
+	"info": {
+		"_postman_id": "f9019533-2ae3-4941-aed9-d048151376b6",
+		"name": "Demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login - Username and password",
+			"item": [
+				{
+					"name": "Login with correct username and password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5fc3f08d-ad52-4135-8b38-3133d0402b2e",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"type\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"tokenId\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"userId\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"expiresOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"refreshToken\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"refreshExpiresOn\");\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"kapua-sys\",\r\n  \"password\": \"kapua-password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localBasedUrl}}/user",
+							"protocol": "http",
+							"host": [
+								"{{localBasedUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login with wrong username and password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1485c46c-aeef-495a-af80-7c26d631d134",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"type\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"httpErrorCode\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"kapuaErrorCode\");\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"\r",
+									"    pm.test(\"Verify type\", function () { \r",
+									"        pm.expect(jsonData.type).is.to.equal(\"exceptionInfo\"); \r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Verify httpErrorCode\", function () { \r",
+									"        pm.expect(jsonData.httpErrorCode).is.to.equal(500); \r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Verify message\", function () { \r",
+									"        pm.expect(jsonData.message).is.to.equal(\"An internal error occurred: org.apache.shiro.ShiroException: Error while find user!.\"); \r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Verify kapuaErrorCode\", function () { \r",
+									"        pm.expect(jsonData.kapuaErrorCode).is.to.equal(\"INTERNAL_ERROR\"); \r",
+									"    });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"strictSSL": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"message\": \"string\",\r\n  \"kapuaErrorCode\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localBasedUrl}}/user",
+							"protocol": "http",
+							"host": [
+								"{{localBasedUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login with correct username and wrong password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "205de853-011d-4e59-a2f0-792a6c65b380",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"kapua-sys\",\r\n  \"password\": \"wrong-password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localBasedUrl}}/user",
+							"protocol": "http",
+							"host": [
+								"{{localBasedUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login with wrong username and correct password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3db9fbca-6747-445c-bbac-92687ffbd2ba",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"kapua-username\",\r\n  \"password\": \"kapua-password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localBasedUrl}}/user",
+							"protocol": "http",
+							"host": [
+								"{{localBasedUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login with empty username and correct password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d6f0a04d-2ca7-498f-a719-d1703970f277",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"type\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"httpErrorCode\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"kapuaErrorCode\");\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"\r",
+									"    pm.test(\"Verify type\", function () { \r",
+									"        pm.expect(jsonData.type).is.to.equal(\"exceptionInfo\"); \r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Verify httpErrorCode\", function () { \r",
+									"        pm.expect(jsonData.httpErrorCode).is.to.equal(500); \r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Verify message\", function () { \r",
+									"        pm.expect(jsonData.message).is.to.equal(\"An internal error occurred: org.apache.shiro.ShiroException: Error while find user!.\"); \r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Verify kapuaErrorCode\", function () { \r",
+									"        pm.expect(jsonData.kapuaErrorCode).is.to.equal(\"INTERNAL_ERROR\"); \r",
+									"    });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"\",\r\n  \"password\": \"kapua-password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localBasedUrl}}/user",
+							"protocol": "http",
+							"host": [
+								"{{localBasedUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login with correct username and empty password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eeebe0cf-0d7e-463f-9459-effcb9ad08ab",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"kapua-sys\",\r\n  \"password\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localBasedUrl}}/user",
+							"protocol": "http",
+							"host": [
+								"{{localBasedUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login with empty username and password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cb2b6bee-bc2b-40e3-a5f7-043e623ddc99",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"type\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"httpErrorCode\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"kapuaErrorCode\");\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"\r",
+									"    pm.test(\"Verify type\", function () { \r",
+									"        pm.expect(jsonData.type).is.to.equal(\"exceptionInfo\"); \r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Verify httpErrorCode\", function () { \r",
+									"        pm.expect(jsonData.httpErrorCode).is.to.equal(500); \r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Verify message\", function () { \r",
+									"        pm.expect(jsonData.message).is.to.equal(\"An internal error occurred: org.apache.shiro.ShiroException: Error while find user!.\"); \r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Verify kapuaErrorCode\", function () { \r",
+									"        pm.expect(jsonData.kapuaErrorCode).is.to.equal(\"INTERNAL_ERROR\"); \r",
+									"    });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"\",\r\n  \"password\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localBasedUrl}}/user",
+							"protocol": "http",
+							"host": [
+								"{{localBasedUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "deaf1a07-c5f2-46f3-bdff-49061be8db27",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "aac80a70-68f4-46b1-b182-298be1a788f3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Creating a group",
+			"item": [
+				{
+					"name": "Unique name without desciption",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0ba7d3e4-ebd7-4ee6-93f8-70aad62c3f6a",
+								"exec": [
+									"pm.test(\"Status code is 201 A group has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"groupName\",\r\n  \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/groups",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Non-unique name without description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2eb868f0-50e5-4920-bcd3-c36f420f94b7",
+								"exec": [
+									"pm.test(\"Status code is 500. An entity with the same name already exists.\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"groupName\",\r\n    \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/groups",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Without name and description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "18521792-1a4f-4fb9-b317-3f41750279bd",
+								"exec": [
+									"pm.test(\"Status code is 400. An illegal null value was provided for the argument groupCreator.name.\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"\",\r\n    \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/groups",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Short name without description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "61c9900d-d94a-48ec-9dba-ec2ec759c1ff",
+								"exec": [
+									"pm.test(\"Status code is 201. A group has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"abc\",\r\n    \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/groups",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Too short name without description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1e182999-9e2e-4e32-af00-259faed6f4a5",
+								"exec": [
+									"pm.test(\"Status code is 400. An illegal value was provided for the argument groupCreator.name: Value less than allowed min length. Min length is 3.\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"a\",\r\n    \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/groups",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all groups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dca30ab1-f631-4898-a8a4-6b1ab2f8ede6",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/v1/_/groups?limit=50&offset=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"groups"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "50"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL3d3dy5lY2xpcHNlLm9yZy9rYXB1YSIsImlhdCI6MTU5NDIxMjgzMSwiZXhwIjoxNTk0MjE0NjMxLCJzdWIiOiJBUSIsInNJZCI6IkFRIn0.fre_rsuvan7MqPo1sAfcGxR9sxVCedT_KPi-sm2VijunOItXNSDVFW1dtzGHzyIZwWyXk6LxuV5YS5eVfKfDyz_HrNBfN-w4Mt-cMV4uSTyDPMRLzqCCavKwd_Un8P14h1PmJ0VkqX45xAdkOlxNUydbofkfZkY9vCnvYfppjfJHR4TdfE4zeTOKsa1CbyIH6_b1SE06ke8TPZfTqIGQIP8LyGpIACn80tBSoIVLJgpB5-XBOydx5e0T4ejZej9Cp9ajweOewSJUUoEqw4WGq0duHz76MLbmT4GsGB1wU31O_uVpNIzEtyjk7w2KepZXf2bO9xpNcrYYhg8kK9orPIyfTu2uvontBingZQkskToGPv4aWA5V2GxpBstvHqgzGfbV9IgZe6O4GWJqGYZtWrMBzwX-MdnjZfnVZgriONdpCPL7iUu6fS3rEV_K9iSl6H_PXm4127ErZyupIsUqjOK13PrYYqRHtLJdMM4JJVS2UsWpXRAzw29Dvdbnyh97EtftU2CYOXMttoGTw_0IdbilkedF1unYaOQqmjnxBaM3-nCH6aYhvEWT4TAbGPLzbRm9UaMgXa2h1PN-Urg89gZKJf3RBcjZaOAJo3yetrX-EZiENkTr6jVfDG6FPN8bnC9dPthWvzCh7R8qXNZKLXYlPXMXCfDVcF8s6huEGWE",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "1990bfab-b6b6-4824-85de-bdaec337b7fe",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "e6f379d8-3571-4327-abb3-f023b574b7b0",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
