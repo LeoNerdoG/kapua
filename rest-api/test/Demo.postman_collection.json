@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f9019533-2ae3-4941-aed9-d048151376b6",
+		"_postman_id": "90847948-be9c-41c5-b13c-0564b836422e",
 		"name": "Demo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,7 +14,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5fc3f08d-ad52-4135-8b38-3133d0402b2e",
+								"id": "16102ddb-cc37-4410-978e-ad5da17accf1",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -34,7 +34,9 @@
 									"    pm.expect(pm.response.text()).to.include(\"refreshToken\");\r",
 									"    pm.expect(pm.response.text()).to.include(\"refreshExpiresOn\");\r",
 									"\r",
-									"});"
+									"});\r",
+									"pm.globals.set(\"tokenId\", pm.response.tokenId);\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -56,12 +58,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{localBasedUrl}}/user",
+							"raw": "http://localhost:8081/v1/authentication/user",
 							"protocol": "http",
 							"host": [
-								"{{localBasedUrl}}"
+								"localhost"
 							],
+							"port": "8081",
 							"path": [
+								"v1",
+								"authentication",
 								"user"
 							]
 						}
@@ -74,7 +79,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1485c46c-aeef-495a-af80-7c26d631d134",
+								"id": "2c6db04b-146e-4e21-86a6-52c6460c56c3",
 								"exec": [
 									"pm.test(\"Status code is 500\", function () {\r",
 									"    pm.response.to.have.status(500);\r",
@@ -124,12 +129,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{localBasedUrl}}/user",
+							"raw": "http://localhost:8081/v1/authentication/user",
 							"protocol": "http",
 							"host": [
-								"{{localBasedUrl}}"
+								"localhost"
 							],
+							"port": "8081",
 							"path": [
+								"v1",
+								"authentication",
 								"user"
 							]
 						}
@@ -142,7 +150,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "205de853-011d-4e59-a2f0-792a6c65b380",
+								"id": "e3f06466-34ab-421f-a0ed-66b1b7ac1c92",
 								"exec": [
 									"pm.test(\"Status code is 401\", function () {\r",
 									"    pm.response.to.have.status(401);\r",
@@ -165,12 +173,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{localBasedUrl}}/user",
+							"raw": "http://localhost:8081/v1/authentication/user",
 							"protocol": "http",
 							"host": [
-								"{{localBasedUrl}}"
+								"localhost"
 							],
+							"port": "8081",
 							"path": [
+								"v1",
+								"authentication",
 								"user"
 							]
 						}
@@ -183,7 +194,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3db9fbca-6747-445c-bbac-92687ffbd2ba",
+								"id": "b89edcba-14b3-4bb1-93b9-045ec4ac8921",
 								"exec": [
 									"pm.test(\"Status code is 401\", function () {\r",
 									"    pm.response.to.have.status(401);\r",
@@ -206,12 +217,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{localBasedUrl}}/user",
+							"raw": "http://localhost:8081/v1/authentication/user",
 							"protocol": "http",
 							"host": [
-								"{{localBasedUrl}}"
+								"localhost"
 							],
+							"port": "8081",
 							"path": [
+								"v1",
+								"authentication",
 								"user"
 							]
 						}
@@ -224,7 +238,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d6f0a04d-2ca7-498f-a719-d1703970f277",
+								"id": "80d32002-659c-4144-ac6d-914631acd9b7",
 								"exec": [
 									"pm.test(\"Status code is 500\", function () {\r",
 									"    pm.response.to.have.status(500);\r",
@@ -271,12 +285,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{localBasedUrl}}/user",
+							"raw": "http://localhost:8081/v1/authentication/user",
 							"protocol": "http",
 							"host": [
-								"{{localBasedUrl}}"
+								"localhost"
 							],
+							"port": "8081",
 							"path": [
+								"v1",
+								"authentication",
 								"user"
 							]
 						}
@@ -289,7 +306,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "eeebe0cf-0d7e-463f-9459-effcb9ad08ab",
+								"id": "f6f16bc6-eab4-45f3-a6e9-f2e5cc33dd90",
 								"exec": [
 									"pm.test(\"Status code is 401\", function () {\r",
 									"    pm.response.to.have.status(401);\r",
@@ -312,12 +329,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{localBasedUrl}}/user",
+							"raw": "http://localhost:8081/v1/authentication/user",
 							"protocol": "http",
 							"host": [
-								"{{localBasedUrl}}"
+								"localhost"
 							],
+							"port": "8081",
 							"path": [
+								"v1",
+								"authentication",
 								"user"
 							]
 						}
@@ -330,7 +350,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cb2b6bee-bc2b-40e3-a5f7-043e623ddc99",
+								"id": "4efd4479-6b9a-4e0e-a531-959bb59d78d6",
 								"exec": [
 									"pm.test(\"Status code is 500\", function () {\r",
 									"    pm.response.to.have.status(500);\r",
@@ -377,13 +397,47 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{localBasedUrl}}/user",
+							"raw": "http://localhost:8081/v1/authentication/user",
 							"protocol": "http",
 							"host": [
-								"{{localBasedUrl}}"
+								"localhost"
 							],
+							"port": "8081",
 							"path": [
+								"v1",
+								"authentication",
 								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL3d3dy5lY2xpcHNlLm9yZy9rYXB1YSIsImlhdCI6MTU5NDI3ODUyMCwiZXhwIjoxNTk0MjgwMzIwLCJzdWIiOiJBUSIsInNJZCI6IkFRIn0.mR94ryTTkXGg1Ks2z8Gz80dyc79Nl6tOvul-ib29atgV0dHpvcf53b44WTw2AIgd31j9Kw2SeBZorQg-DYyVseW7l_QUXmK1Qe9ycK6E5FDHKV3HFBdXAlQP7O51GfuP4bBG7A5Qmlm6b1Zr_Ba5g0d32Gg2M8oHZsPfO50m8dM-1hG_tjoIo_jzBQwNDOL2SxzCe85S7M7TOWqriFnu5GzGE1ubvx-qHJisaFbzKiRE_PmdTa7peHLFkL6mhE2mhq_m6t6YE2E_ZYqQyEw3NOm78loyHQkpgsO5me1NpinLv_UiBborGdrQl-G2TxMl0mgPHx9m8kYy1syXgXmYf1cQSGhSJPXxoeZGl9Vfad3n6Jns67vBJMzgNl-5iZ2MTfwCbSnq3ied91lSpx8r_SNcHHxdIesC4TXbtm2Zfr6Nm3FdLkMhigaCjnD5LFHDPGj_RSM3gUv_S-IDjYSPE-nnYLpmRnNsdxoSQ1H3ZAHwRojTKOhTe-bFWqMG-54ryLH2b-ggqWyrzVUa64OYGcogMwwzyOzoBncsadi3SU_Rg9TSpBzPIralkR2wUH-8rWZnfloJOTt_OgICshbk_KODQlMJglwpMFEmm4Wdxxd1qImNVp4TWrVV_nUOMPIgIm_jWKlf8Zci173BARqKJSsJf6u7exnS_KUD-EIVjIM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/v1/authentication/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"authentication",
+								"logout"
 							]
 						}
 					},
@@ -397,7 +451,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "deaf1a07-c5f2-46f3-bdff-49061be8db27",
+						"id": "95f728bc-5cd2-4dff-ab74-1d9c3a947514",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -407,7 +461,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "aac80a70-68f4-46b1-b182-298be1a788f3",
+						"id": "a443a496-b4fe-4ee4-a1d9-267fe349e248",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -426,8 +480,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0ba7d3e4-ebd7-4ee6-93f8-70aad62c3f6a",
+								"id": "a65518c2-94a5-442b-8e28-9cf27fb0cc9e",
 								"exec": [
+									"pm.globals.get(\"tokenId\");\r",
+									"\r",
 									"pm.test(\"Status code is 201 A group has been created.\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
 									"});\r",
@@ -446,14 +502,101 @@
 								],
 								"type": "text/javascript"
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "92cc524c-70d2-47d8-963b-a8589692d1e0",
+								"exec": [
+									"var authServiceUrl = pm.environment.get('authService');",
+									"var gatewayBaseUrl = pm.environment.get('gatewayBaseUrl');",
+									"var username = pm.environment.get('username');",
+									"var password = pm.environment.get('password');",
+									"",
+									"var sdk = require('postman-collection');",
+									"",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    url: gatewayBaseUrl + \"/v1/_/groups\", // Use an endpoint that requires being authenticated",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"});",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: authServiceUrl,",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().token);",
+									"      console.log(`New token has been set: ${response.json().token}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"groupName\",\r\n  \"description\": \"\"\r\n}",
+							"raw": "{\r\n  \"name\": \"group21\",\r\n  \"description\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -482,7 +625,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2eb868f0-50e5-4920-bcd3-c36f420f94b7",
+								"id": "c8384d9a-5388-46b0-96ff-a849b778255e",
 								"exec": [
 									"pm.test(\"Status code is 500. An entity with the same name already exists.\", function () {\r",
 									"    pm.response.to.have.status(500);\r",
@@ -526,7 +669,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "18521792-1a4f-4fb9-b317-3f41750279bd",
+								"id": "10b5d4d4-c40a-497c-9650-699ffd4827dd",
 								"exec": [
 									"pm.test(\"Status code is 400. An illegal null value was provided for the argument groupCreator.name.\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
@@ -570,7 +713,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "61c9900d-d94a-48ec-9dba-ec2ec759c1ff",
+								"id": "57ddee1c-b1db-40fc-8843-04132668d2f4",
 								"exec": [
 									"pm.test(\"Status code is 201. A group has been created.\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
@@ -626,7 +769,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1e182999-9e2e-4e32-af00-259faed6f4a5",
+								"id": "7021a96f-b502-4c3f-891c-54e672de07aa",
 								"exec": [
 									"pm.test(\"Status code is 400. An illegal value was provided for the argument groupCreator.name: Value less than allowed min length. Min length is 3.\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
@@ -670,7 +813,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dca30ab1-f631-4898-a8a4-6b1ab2f8ede6",
+								"id": "c8d4d530-33e2-47a4-b08a-882d4737aacc",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -681,6 +824,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL3d3dy5lY2xpcHNlLm9yZy9rYXB1YSIsImlhdCI6MTU5NDI3ODU5OCwiZXhwIjoxNTk0MjgwMzk4LCJzdWIiOiJBUSIsInNJZCI6IkFRIn0.yWUrGgbxyY0ixpC7gygg3LJ3MSEJxZBdeUbyyyJhxgkP2fPGAv4vDmY6XqN_-y6FfssVxR_2fdSVgymKqk13NotRduCQKLgo-NqlUAXcWM6HGH5kP4ZPtRy3kMhsx37brAKcQTF5wuYoPtsoMdB17SaGS9d3dpjaESH6aBbeONTZM3ITsO820CSGkCCWFwo7AdVzfKpLGZ6e4Wjsjey1n4fgMx4bmePVgqWkLMBpjg2DcW--S8qaudl-S2hszZOjhFUQS6BX47_zXV7X_1ag_5O6l6bO2EmGJ6EKFvsuZXmNTWeY_S-lhKiPbI1fbtg5fnHNwvNXzneC3E8imjR4Copj-gcjtZ0fBP1hsVyMbP4WHqwfySYDnNS68kB81zLcDihle-69mjOxQfhWwQJsU-ys_BwGbkx9GuoBdJMqlQTxudtlht7NmF6bZEL_8-Nli9roROR3ya39-ErpGCrifVTc8H9-HNgf6NE4_JvAiPCvRLszXSBvBOEdm124-suc7WnpHPNJJ_-7DDz1uAEono5fhrGTVGMder2544w3g4Tffx25qe3IFqIbGBzTrelIJbJ0RZonqZHSliqjzYZz2dIRiHqMCeDYk_AIJujAc3j0GY-UNO0v3lWtshXogsWMKm2FonrFHk4YDY0elXRN19I2Itb1srSrfjfZeITuUHM",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -708,6 +861,17 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Delete group",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -727,7 +891,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "1990bfab-b6b6-4824-85de-bdaec337b7fe",
+				"id": "644908d8-421f-4c66-9726-76a151522bab",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -737,7 +901,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "e6f379d8-3571-4327-abb3-f023b574b7b0",
+				"id": "42ae9b46-d55f-4da8-9f20-8bd80a9ea366",
 				"type": "text/javascript",
 				"exec": [
 					""
