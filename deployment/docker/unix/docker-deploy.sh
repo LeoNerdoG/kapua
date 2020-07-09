@@ -65,6 +65,7 @@ while "$( docker container inspect -f '{{.State.Running}}' $compose_kapua-api_1)
 do
  sleep 5s
  echo "Waiting for docker to start..."
+done
 
 echo "Deploying Eclipse Kapua... DONE!"
 
