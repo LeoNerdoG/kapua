@@ -42,7 +42,7 @@ jobs:
         - npm --version
         - node_modules/.bin/newman --version
       script:
-        - node_modules/.bin/newman run rest-api/test/Demo.postman_collection.json -e rest-api/test/Authentication.postman_environment.json
+        - node_modules/.bin/newman run rest-api/test/Demo_postman_collection.json
       after_script:
         - ./deployment/docker/unix/docker-undeploy.sh
     - stage: test
