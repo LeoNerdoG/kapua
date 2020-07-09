@@ -424,7 +424,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL3d3dy5lY2xpcHNlLm9yZy9rYXB1YSIsImlhdCI6MTU5NDI3ODUyMCwiZXhwIjoxNTk0MjgwMzIwLCJzdWIiOiJBUSIsInNJZCI6IkFRIn0.mR94ryTTkXGg1Ks2z8Gz80dyc79Nl6tOvul-ib29atgV0dHpvcf53b44WTw2AIgd31j9Kw2SeBZorQg-DYyVseW7l_QUXmK1Qe9ycK6E5FDHKV3HFBdXAlQP7O51GfuP4bBG7A5Qmlm6b1Zr_Ba5g0d32Gg2M8oHZsPfO50m8dM-1hG_tjoIo_jzBQwNDOL2SxzCe85S7M7TOWqriFnu5GzGE1ubvx-qHJisaFbzKiRE_PmdTa7peHLFkL6mhE2mhq_m6t6YE2E_ZYqQyEw3NOm78loyHQkpgsO5me1NpinLv_UiBborGdrQl-G2TxMl0mgPHx9m8kYy1syXgXmYf1cQSGhSJPXxoeZGl9Vfad3n6Jns67vBJMzgNl-5iZ2MTfwCbSnq3ied91lSpx8r_SNcHHxdIesC4TXbtm2Zfr6Nm3FdLkMhigaCjnD5LFHDPGj_RSM3gUv_S-IDjYSPE-nnYLpmRnNsdxoSQ1H3ZAHwRojTKOhTe-bFWqMG-54ryLH2b-ggqWyrzVUa64OYGcogMwwzyOzoBncsadi3SU_Rg9TSpBzPIralkR2wUH-8rWZnfloJOTt_OgICshbk_KODQlMJglwpMFEmm4Wdxxd1qImNVp4TWrVV_nUOMPIgIm_jWKlf8Zci173BARqKJSsJf6u7exnS_KUD-EIVjIM",
+									"value": "{{jwttoken}}",
 									"type": "string"
 								}
 							]
@@ -513,14 +513,152 @@
 							"script": {
 								"id": "92cc524c-70d2-47d8-963b-a8589692d1e0",
 								"exec": [
+									"//var authServiceUrl = pm.environment.get('authService');",
+									"//var gatewayBaseUrl = pm.environment.get('gatewayBaseUrl');",
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"// console.log(\"token id read from PRE-SCRIPT is:\" + pm.globals.get(\"jwttoken\"));",
+									"",
+									"var sdk = require('postman-collection');",
+									"//console.log(sdk);",
+									"",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/groups\", // Use an endpoint that requires being authenticated",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"// console.log(\"in isValidTokenRequestEnd\");;",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"        console.log(\"in pm.sendRequest\");",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"groupName123\",\r\n  \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/groups",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Non-unique name without description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c8384d9a-5388-46b0-96ff-a849b778255e",
+								"exec": [
+									"pm.test(\"Status code is 500. An entity with the same name already exists.\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c3b1f559-5359-4965-8c7f-9fbc1604671d",
+								"exec": [
 									"var authServiceUrl = pm.environment.get('authService');",
 									"var gatewayBaseUrl = pm.environment.get('gatewayBaseUrl');",
 									"var username = pm.environment.get('username');",
 									"var password = pm.environment.get('password');",
-									"// console.log(\"token id read from PRE-SCRIPT is:\" + pm.globals.get(\"jwttoken\"));",
+									"console.log(\"token id read from PRE-SCRIPT is:\" + pm.globals.get(\"jwttoken\"));",
 									"",
 									"var sdk = require('postman-collection');",
-									"console.log(sdk);",
+									"// console.log(sdk);",
 									"",
 									"var isValidTokenRequest = new sdk.Request({",
 									"    ",
@@ -553,6 +691,7 @@
 									"});",
 									"",
 									"function refreshToken() {",
+									"            console.log(\"refreshing token...\");",
 									"    var tokenRequest = new sdk.Request({",
 									"    url: authServiceUrl,",
 									"    method: 'POST',",
@@ -608,136 +747,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"groupName\",\r\n  \"description\": \"\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8081/v1/_/groups",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"v1",
-								"_",
-								"groups"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Non-unique name without description",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "c8384d9a-5388-46b0-96ff-a849b778255e",
-								"exec": [
-									"pm.test(\"Status code is 500. An entity with the same name already exists.\", function () {\r",
-									"    pm.response.to.have.status(500);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "c3b1f559-5359-4965-8c7f-9fbc1604671d",
-								"exec": [
-									"var authServiceUrl = pm.environment.get('authService');",
-									"var gatewayBaseUrl = pm.environment.get('gatewayBaseUrl');",
-									"var username = pm.environment.get('username');",
-									"var password = pm.environment.get('password');",
-									"console.log(\"token id read from PRE-SCRIPT is:\" + pm.globals.get(\"jwttoken\"));",
-									"",
-									"var sdk = require('postman-collection');",
-									"console.log(sdk);",
-									"",
-									"var isValidTokenRequest = new sdk.Request({",
-									"    ",
-									"    url: gatewayBaseUrl + \"/v1/_/groups\", // Use an endpoint that requires being authenticated",
-									"    ",
-									"    method: 'GET',",
-									"    header: [",
-									"        new sdk.Header({",
-									"            key: 'content-type',",
-									"            value: 'application/json',",
-									"        }),",
-									"        new sdk.Header({",
-									"            key: 'acccept',",
-									"            value: 'application/json',",
-									"        }),",
-									"        new sdk.Header({",
-									"            key: 'Authorization',",
-									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
-									"        }),",
-									"    ]",
-									"})",
-									"console.log(\"in isValidTokenRequestEnd\");;",
-									"",
-									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
-									"        console.log(\"in pm.sendRequest\");",
-									"    if (response.code === 401) {",
-									"        console.log(\"Refreshing token...\");",
-									"        refreshToken();",
-									"    }",
-									"});",
-									"",
-									"function refreshToken() {",
-									"            console.log(\"refreshing token...\");",
-									"    var tokenRequest = new sdk.Request({",
-									"    url: authServiceUrl,",
-									"    method: 'POST',",
-									"    header: [",
-									"        new sdk.Header({",
-									"            key: 'content-type',",
-									"            value: 'application/json'",
-									"        }),",
-									"        new sdk.Header({",
-									"            key: 'acccept',",
-									"            value: 'application/json'",
-									"        }),",
-									"    ],",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"            username: username,",
-									"            password: password",
-									"        })",
-									"    } ",
-									"  });",
-									"",
-									"  pm.sendRequest(tokenRequest, function (err, response) {",
-									"      if (err) {",
-									"          throw err;",
-									"      }",
-									"      ",
-									"      if (response.code !== 200) {",
-									"          throw new Error('Could not log in.');",
-									"      }",
-									"      ",
-									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
-									"      console.log(`New token has been set: ${response.json().tokenId}`);",
-									"  });",
-									"}"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"groupName\",\r\n    \"description\": \"\"\r\n}",
+							"raw": "{\r\n    \"name\": \"groupName123\",\r\n    \"description\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -787,7 +797,7 @@
 									"console.log(\"token id read from PRE-SCRIPT is:\" + pm.globals.get(\"jwttoken\"));",
 									"",
 									"var sdk = require('postman-collection');",
-									"console.log(sdk);",
+									"// console.log(sdk);",
 									"",
 									"var isValidTokenRequest = new sdk.Request({",
 									"    ",
@@ -862,6 +872,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -928,7 +948,7 @@
 									"console.log(\"token id read from PRE-SCRIPT is:\" + pm.globals.get(\"jwttoken\"));",
 									"",
 									"var sdk = require('postman-collection');",
-									"console.log(sdk);",
+									"// console.log(sdk);",
 									"",
 									"var isValidTokenRequest = new sdk.Request({",
 									"    ",
@@ -1003,11 +1023,21 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"abc\",\r\n    \"description\": \"\"\r\n}",
+							"raw": "{\r\n    \"name\": \"aec\",\r\n    \"description\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1044,9 +1074,103 @@
 								],
 								"type": "text/javascript"
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "31160999-c459-4724-b655-9236c86ed4a4",
+								"exec": [
+									"//var authServiceUrl = pm.environment.get('authService');",
+									"//var gatewayBaseUrl = pm.environment.get('gatewayBaseUrl');",
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"// console.log(\"token id read from PRE-SCRIPT is:\" + pm.globals.get(\"jwttoken\"));",
+									"",
+									"var sdk = require('postman-collection');",
+									"//console.log(sdk);",
+									"",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/groups\", // Use an endpoint that requires being authenticated",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"// console.log(\"in isValidTokenRequestEnd\");;",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"        console.log(\"in pm.sendRequest\");",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
