@@ -61,8 +61,11 @@ docker_compose || {
     echo "Deploying Eclipse Kapua... ERROR!"
     exit 1
 }
-echo "Please wait two minutes for docker containers to properly run........."
-sleep 120s
+while "$( docker container inspect -f '{{.State.Running}}' $compose_kapua-api_1)" == "false"
+do
+ sleep 5s
+ echo "Waiting for docker to start..."
+
 echo "Deploying Eclipse Kapua... DONE!"
 
 if [[ -z "$1" ]]; then
