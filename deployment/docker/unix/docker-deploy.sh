@@ -61,11 +61,19 @@ docker_compose || {
     echo "Deploying Eclipse Kapua... ERROR!"
     exit 1
 }
-while "$( docker container inspect -f '{{.State.Running}}' $compose_kapua-api_1)" == "false"
-do
- sleep 5s
- echo "Waiting for docker to start..."
+
+container=1
+while ((container)); do
+    echo "waiting for containers to start..."
+    docker logs compose_kapua-api_1 >& docker-log.log
+    if grep -q "org.eclipse.jetty.server.Server - Started" docker-log.log ; then
+        container=0  
+    else
+        sleep 5s
+    fi
 done
+echo "Docker containers are up and running!"
+rm docker-log.log
 
 echo "Deploying Eclipse Kapua... DONE!"
 
