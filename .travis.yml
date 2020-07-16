@@ -49,7 +49,7 @@ jobs:
     - npm --version
     - node_modules/.bin/newman --version
     script:
-    - node_modules/.bin/newman run rest-api/test/KapuaApiTestingPostman_collection.json
+    - node_modules/.bin/newman run rest-api/test/KapuaApiTestingPostman_collection1.json
     after_script:
     - ./deployment/docker/unix/docker-undeploy.sh
   - stage: Unit & Integration Tests
