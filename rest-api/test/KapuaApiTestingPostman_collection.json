@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "90847948-be9c-41c5-b13c-0564b836422e",
-		"name": "Demo",
+		"name": "kapua-api-tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -35,11 +35,9 @@
 									"    pm.expect(pm.response.text()).to.include(\"refreshExpiresOn\");\r",
 									"\r",
 									"});\r",
-									"// pm.globals.set(\"variable_key\", \"variable_value\");\r",
-									"var jsonData = JSON.parse(responseBody);\r",
 									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
 									"pm.globals.set(\"jwttoken\", jsonData.tokenId);\r",
-									"console.log(\"token id after login is: \" + pm.globals.get(\"jwttoken\"));\r",
 									""
 								],
 								"type": "text/javascript"
@@ -622,6 +620,435 @@
 					"response": []
 				},
 				{
+					"name": "Unique longest name without desciption",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "222d7cc2-a03f-4f1f-acd4-7d0165697e82",
+								"exec": [
+									"pm.test(\"Status code is 201 A group has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "da6ca080-8209-4ace-9a5e-da5fdf810caa",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/groups\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"groupName123\",\r\n  \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/groups",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unique longest name with longest desciption",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d787ec4f-8734-4052-bfb1-e1b50d6706d6",
+								"exec": [
+									"pm.test(\"Status code is 201 A group has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "09458ea2-e529-48a9-989f-09093b421881",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/groups\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"groupName123\",\r\n  \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/groups",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unique name with shortest desciption",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "11571055-5b42-4f29-9cb9-868b796da41b",
+								"exec": [
+									"pm.test(\"Status code is 201 A group has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "11d6eac0-30c5-4806-8247-5f74d462ca47",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/groups\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"groupName123\",\r\n  \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/groups",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Non-unique name without description",
 					"event": [
 						{
@@ -752,7 +1179,7 @@
 					"response": []
 				},
 				{
-					"name": "Without name and description",
+					"name": "Group Without name and description",
 					"event": [
 						{
 							"listen": "test",
@@ -1269,6 +1696,4463 @@
 								"v1",
 								"_",
 								"groups"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "50"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Creating a Tag",
+			"item": [
+				{
+					"name": "Unique name without desciption",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a85180c0-98f6-4f24-ab7f-53901594c172",
+								"exec": [
+									"pm.test(\"Status code is 201 A tag has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a8a09cb4-7b3a-482f-965f-0ebeadfc5661",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/tags\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"tagName123\",\r\n  \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/tags",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unique longest name without desciption",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2f151ad4-33c9-44d9-9f42-13bad5a16cb8",
+								"exec": [
+									"pm.test(\"Status code is 201 A tag has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "17b22bb3-7a86-46a5-a52d-52fa98ad2e6f",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/tags\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-\",\r\n  \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/tags",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unique name with shortest desciption",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c291cac4-e780-4b9a-bdd9-a32cf5952df8",
+								"exec": [
+									"pm.test(\"Status code is 201 A tag has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7df3dbb3-f74a-449b-a0ce-85ca1fbecd2c",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/tags\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"uniqueName\",\r\n  \"description\": \"a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/tags",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unique longest name with longest desciption",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0e3b5657-bb5d-473c-8c66-b711f71c1fd7",
+								"exec": [
+									"pm.test(\"Status code is 201 A group has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "cf8926e7-b338-41ea-aacb-4dd0fd1b6bdb",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/tags\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-\",\r\n  \"description\": \"1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/tags",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Non-unique name without description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "477cb17f-4378-4107-8a4d-9a7e8cfc219b",
+								"exec": [
+									"pm.test(\"Status code is 500. An entity with the same name already exists.\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "90567d5e-a0ce-4dc0-bc2d-f26a1c603c80",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/tags\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"groupName123\",\r\n    \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/tags",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tag Without name and description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9e1a46c0-ac04-4996-9ca4-d4a41ee31d92",
+								"exec": [
+									"pm.test(\"Status code is 400. An illegal null value was provided for the argument groupCreator.name.\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "39816f5a-1131-4ccc-ac05-28200c9a94ad",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/tags\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"\",\r\n    \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/tags",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Short name without description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a7c05ee6-181a-46c5-b6fe-c01f699f7c14",
+								"exec": [
+									"pm.test(\"Status code is 201. A group has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "0e86db73-16b3-4457-bccf-c08ed2226a8a",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/tags\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"aec\",\r\n    \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/tags",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Too short name without description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "71a241e5-238c-48e7-94b8-9078d4af6125",
+								"exec": [
+									"pm.test(\"Status code is 400. An illegal value was provided for the argument tagCreator.name: Value less than allowed min length. Min length is 3.\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f889a7a0-9bf2-4591-9ccb-a749c69dcfaf",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/tags\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"a\",\r\n    \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/tags",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all tags",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "062fee6f-73a4-4754-91e4-a36494ccb2ef",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "df7af1b1-1274-4d78-8a71-870c17d65694",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/tags\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/v1/_/tags?limit=50&offset=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"tags"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "50"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Creating a Role",
+			"item": [
+				{
+					"name": "Unique name without desciption",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9021628f-1323-4ede-a0e6-f4134f7b776c",
+								"exec": [
+									"pm.test(\"Status code is 201 A role has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "93188721-7fd8-47d7-bae2-5e6d15bef398",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/roles\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"roleName123\",\r\n  \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unique longest name without desciption",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "aef1bc54-ed7d-452d-a767-b1bbe64b1f28",
+								"exec": [
+									"pm.test(\"Status code is 201 A role has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "2f405c44-5031-4d9f-b1de-60fe8e045aa8",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/roles\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-\",\r\n  \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unique name with shortest desciption",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dbccb066-3e91-445f-a833-ebac6109f8b0",
+								"exec": [
+									"pm.test(\"Status code is 201 A role has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "73d12def-7ba7-4fdb-82c3-adb43af4b164",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/roles\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"uniqueName\",\r\n  \"description\": \"a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unique longest name with longest desciption",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "91e377e1-b53a-4719-a519-467780cd0451",
+								"exec": [
+									"pm.test(\"Status code is 201 A role has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "dd10720b-a0c5-42a6-be97-be990a22c31e",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/roles\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-\",\r\n  \"description\": \"1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Non-unique name without description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dc086748-1eb1-4ab4-b69e-31294a70f782",
+								"exec": [
+									"pm.test(\"Status code is 500. An entity with the same name already exists.\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "aaf5cade-6c7b-4667-9159-d35160362cfb",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/roles\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"groupName123\",\r\n    \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Role Without name and description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0c8ed9b9-6765-485a-820d-e31fcdd05782",
+								"exec": [
+									"pm.test(\"Status code is 400. An illegal null value was provided for the argument roleCreator.name.\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6875b4c4-a49d-46dc-a881-00b6b3af5ae1",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/roles\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"\",\r\n    \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Short name without description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f6cbb9f5-831d-4292-96c0-ca5571df47f3",
+								"exec": [
+									"pm.test(\"Status code is 201. A role has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "310eef2b-0b4c-408e-b506-ff35072a7c16",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/roles\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"aec\",\r\n    \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Too short name without description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3c24900-756a-49fc-83c8-75d90273ddc8",
+								"exec": [
+									"pm.test(\"Status code is 400. An illegal value was provided for the argument roleCreator.name: Value less than allowed min length. Min length is 3.\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "03740aff-1d9b-446a-a71f-9968059d7321",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/roles\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"a\",\r\n    \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "48b3d2d8-686f-4681-a225-1c54b24bb923",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "bb817a97-1770-4fd0-832f-c5c0fb3985e3",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/roles\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/v1/_/roles?limit=50&offset=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"roles"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "50"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Creating a User",
+			"item": [
+				{
+					"name": "Unique longest name without desciption",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ab07ede8-c88e-4f63-a2b8-16e3a0a4646e",
+								"exec": [
+									"pm.test(\"Status code is 201 A user has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "0b4774e8-756c-497e-90fa-129a1a5ffe00",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/users\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unique name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "59f51f8f-59ab-4aef-b211-05227c95c4f5",
+								"exec": [
+									"pm.test(\"Status code is 201 A user has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1aa86f01-b602-4312-b6da-03026c7b0a2c",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/users\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"user123\",\r\n  \"description\": \"a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Non-unique name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7a775a5a-fd37-457d-ae5d-ad98dd4dbf31",
+								"exec": [
+									"pm.test(\"Status code is 500. An entity with the same name already exists.\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1313a81e-ccdd-44a6-b124-63a81cebda33",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/users\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"user123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Without name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7c14167d-0f8e-4c41-93f1-07acceda8889",
+								"exec": [
+									"pm.test(\"Status code is 400. An illegal null value was provided for the argument userCreator.name.\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fee888c9-4448-4bbe-8fc3-2b72ad78640e",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/users\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Short name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c7adb525-506a-440a-9714-6fa297c084bc",
+								"exec": [
+									"pm.test(\"Status code is 201. A user has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "92d3d708-a16c-4038-b22f-bd0341a29298",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/users\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"aev\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Too short name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "55b5fea8-c8f9-4168-9a7d-08420b01ae6c",
+								"exec": [
+									"pm.test(\"Status code is 400. An illegal value was provided for the argument userCreator.name: Value less than allowed min length. Min length is 3.\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3cdd360f-2c1e-4a0c-bcdd-074d5f5b47b2",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/users\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "863c638d-23fd-4f14-8fe1-b8baac40ca75",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b353b0ad-ede1-406c-bc0a-0f107d7bfca3",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/users\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/v1/_/users?limit=50&offset=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"users"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "50"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Creating a Endpoints",
+			"item": [
+				{
+					"name": "Unique name without desciption",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bdd9fd18-7c91-4b73-b7ef-95f6f1667bc3",
+								"exec": [
+									"pm.test(\"Status code is 201 A endpoint has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ee7f2e88-7669-4762-8b6b-89f260b126dd",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/endpointInfos\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"schema\": \"mqtts\",\r\n  \"dns\": \"10.200.12.148\",\r\n  \"port\": \"1883\",\r\n  \"secure\": false,\r\n  \"usages\": [\r\n    {\r\n      \"name\": \"MESSAGE_BROKER\"\r\n    },\r\n    {\r\n      \"name\": \"PROVISION\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/endpointInfos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"endpointInfos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Non-unique Schema, all other unique",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "82b02588-9599-43fa-a423-4a2179877b0f",
+								"exec": [
+									"pm.test(\"Status code is 201 A endpoint has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "69fbe03b-2b36-439f-b1e2-2cb072ff8c1d",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/endpointInfos\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"schema\": \"mqtts\",\r\n  \"dns\": \"10.200.12.149\",\r\n  \"port\": \"1881\",\r\n  \"secure\": false,\r\n  \"usages\": [\r\n    {\r\n      \"name\": \"MESSAGE_BROKER\"\r\n    },\r\n    {\r\n      \"name\": \"PROVISION\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/endpointInfos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"endpointInfos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Non-Unique DNS, all other unique",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2f7a5f8f-a997-4980-a32f-8bffa662d0f6",
+								"exec": [
+									"pm.test(\"Status code is 201 An endpoint has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c46f95d2-2a6d-4569-b489-df7da9ad1b06",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/endpointInfos\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"schema\": \"bva\",\r\n  \"dns\": \"10.200.12.148\",\r\n  \"port\": \"231\",\r\n  \"secure\": false,\r\n  \"usages\": [\r\n    {\r\n      \"name\": \"MESSAGE_BROKER\"\r\n    },\r\n    {\r\n      \"name\": \"PROVISION\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/endpointInfos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"endpointInfos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Non-Unique Port, all other unique",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1a9ccde2-2d20-478f-93f0-2f0e53117a73",
+								"exec": [
+									"pm.test(\"Status code is 201 An Endpoint has been created.\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7d3a8c8f-3619-4b91-83fb-245700104842",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/endpointInfos\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"schema\": \"avb\",\r\n  \"dns\": \"10.201.12.148\",\r\n  \"port\": \"1883\",\r\n  \"secure\": false,\r\n  \"usages\": [\r\n    {\r\n      \"name\": \"MESSAGE_BROKER\"\r\n    },\r\n    {\r\n      \"name\": \"PROVISION\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/endpointInfos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"endpointInfos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Endpoint Without Schema",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b6c20cc6-db67-48ac-aaad-d2f9dee3164f",
+								"exec": [
+									"pm.test(\"Status code is 400. An illegal null value was provided for the argument endpointInfoCreator.name.\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "38c6fc5f-bff8-4f2d-b648-282b18fd838c",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/endpointInfos\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"schema\": \"\",\r\n  \"dns\": \"10.201.12.148\",\r\n  \"port\": \"1883\",\r\n  \"secure\": false,\r\n  \"usages\": [\r\n    {\r\n      \"name\": \"MESSAGE_BROKER\"\r\n    },\r\n    {\r\n      \"name\": \"PROVISION\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/endpointInfos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"endpointInfos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Endpoint Without DNS",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c3d1cfcd-203a-426d-97fc-c107cb67525a",
+								"exec": [
+									"pm.test(\"Status code is 400. An illegal null value was provided for the argument endpointInfoCreator.name.\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1e83b3b3-c375-470b-8103-d0dc6835bf3f",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/endpointInfos\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"schema\": \"avb\",\r\n  \"dns\": \"\",\r\n  \"port\": \"1883\",\r\n  \"secure\": false,\r\n  \"usages\": [\r\n    {\r\n      \"name\": \"MESSAGE_BROKER\"\r\n    },\r\n    {\r\n      \"name\": \"PROVISION\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/endpointInfos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"endpointInfos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Endpoint Without Port",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "55d1e4a2-880e-4fbf-b27c-8b887ab1d9ff",
+								"exec": [
+									"pm.test(\"Status code is 400. An illegal null value was provided for the argument endpointInfoCreator.name.\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "981a6634-2445-460d-8636-386496a16e06",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/endpointInfos\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"schema\": \"avb\",\r\n  \"dns\": \"10.201.12.148\",\r\n  \"port\": \"\",\r\n  \"secure\": false,\r\n  \"usages\": [\r\n    {\r\n      \"name\": \"MESSAGE_BROKER\"\r\n    },\r\n    {\r\n      \"name\": \"PROVISION\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/_/endpointInfos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"endpointInfos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bd2ecae6-6eb4-4e89-93a5-e0a62d22d876",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b635c0da-155c-44e8-bdff-fa433cc65279",
+								"exec": [
+									"var username = \"kapua-sys\"",
+									"var password = \"kapua-password\"",
+									"var sdk = require('postman-collection');",
+									"var isValidTokenRequest = new sdk.Request({",
+									"    ",
+									"    url: \"http://localhost:8081/v1/_/enpointinfos\",",
+									"    ",
+									"    method: 'GET',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json',",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'Authorization',",
+									"            value: 'Bearer ' + pm.globals.get(\"jwttoken\"),",
+									"        }),",
+									"    ]",
+									"})",
+									"",
+									"pm.sendRequest(isValidTokenRequest, function (err, response) {",
+									"    if (response.code === 401) {",
+									"        console.log(\"Refreshing token...\");",
+									"        refreshToken();",
+									"    }",
+									"});",
+									"",
+									"function refreshToken() {",
+									"    var tokenRequest = new sdk.Request({",
+									"    url: \"http://localhost:8081/v1/authentication/user\",",
+									"    method: 'POST',",
+									"    header: [",
+									"        new sdk.Header({",
+									"            key: 'content-type',",
+									"            value: 'application/json'",
+									"        }),",
+									"        new sdk.Header({",
+									"            key: 'acccept',",
+									"            value: 'application/json'",
+									"        }),",
+									"    ],",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: username,",
+									"            password: password",
+									"        })",
+									"    } ",
+									"  });",
+									"",
+									"  pm.sendRequest(tokenRequest, function (err, response) {",
+									"      if (err) {",
+									"          throw err;",
+									"      }",
+									"      ",
+									"      if (response.code !== 200) {",
+									"          throw new Error('Could not log in.');",
+									"      }",
+									"      ",
+									"      pm.globals.set(\"jwttoken\", response.json().tokenId);",
+									"      console.log(`New token has been set: ${response.json().tokenId}`);",
+									"  });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwttoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/v1/_/enpointinfos?limit=50&offset=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"_",
+								"enpointinfos"
 							],
 							"query": [
 								{
