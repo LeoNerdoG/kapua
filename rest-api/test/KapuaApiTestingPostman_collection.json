@@ -487,18 +487,6 @@
 									"pm.test(\"Status code is 201 A group has been created.\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
 									"});\r",
-									"\r",
-									"pm.test(\"Body matches string\", function () {\r",
-									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
-									"});\r",
 									""
 								],
 								"type": "text/javascript"
@@ -631,17 +619,6 @@
 									"    pm.response.to.have.status(201);\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Body matches string\", function () {\r",
-									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
-									"});\r",
 									""
 								],
 								"type": "text/javascript"
@@ -739,7 +716,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"groupName123\",\r\n  \"description\": \"\"\r\n}",
+							"raw": "{\r\n  \"name\": \"1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-\",\r\n  \"description\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -772,18 +749,6 @@
 								"exec": [
 									"pm.test(\"Status code is 201 A group has been created.\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Body matches string\", function () {\r",
-									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
 									"});\r",
 									""
 								],
@@ -882,7 +847,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"groupName123\",\r\n  \"description\": \"\"\r\n}",
+							"raw": "{\r\n  \"name\": \"1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfgh253zxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-\",\r\n  \"description\": \"1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -915,18 +880,6 @@
 								"exec": [
 									"pm.test(\"Status code is 201 A group has been created.\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Body matches string\", function () {\r",
-									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
 									"});\r",
 									""
 								],
@@ -1025,7 +978,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"groupName123\",\r\n  \"description\": \"\"\r\n}",
+							"raw": "{\r\n  \"name\": \"abdgsd\",\r\n  \"description\": \"a\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1319,18 +1272,7 @@
 									"pm.test(\"Status code is 201. A group has been created.\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
 									"});\r",
-									"\r",
-									"pm.test(\"Body matches string\", function () {\r",
-									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
-									"});"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -1427,7 +1369,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"aec\",\r\n    \"description\": \"\"\r\n}",
+							"raw": "{\r\n    \"name\": \"aac\",\r\n    \"description\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1729,17 +1671,6 @@
 									"    pm.response.to.have.status(201);\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Body matches string\", function () {\r",
-									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
-									"});\r",
 									""
 								],
 								"type": "text/javascript"
@@ -1872,17 +1803,6 @@
 									"    pm.response.to.have.status(201);\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Body matches string\", function () {\r",
-									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
-									"});\r",
 									""
 								],
 								"type": "text/javascript"
@@ -2015,17 +1935,6 @@
 									"    pm.response.to.have.status(201);\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Body matches string\", function () {\r",
-									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
-									"});\r",
 									""
 								],
 								"type": "text/javascript"
@@ -2158,17 +2067,6 @@
 									"    pm.response.to.have.status(201);\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Body matches string\", function () {\r",
-									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
-									"});\r",
 									""
 								],
 								"type": "text/javascript"
@@ -2266,7 +2164,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-\",\r\n  \"description\": \"1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-\"\r\n}",
+							"raw": "{\r\n  \"name\": \"1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcv782QWERTYUIOPLKJHGFDSAZXCVBNM-\",\r\n  \"description\": \"1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2396,7 +2294,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"groupName123\",\r\n    \"description\": \"\"\r\n}",
+							"raw": "{\r\n    \"name\": \"tagName123\",\r\n    \"description\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2560,18 +2458,7 @@
 									"pm.test(\"Status code is 201. A group has been created.\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
 									"});\r",
-									"\r",
-									"pm.test(\"Body matches string\", function () {\r",
-									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
-									"});"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -2668,7 +2555,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"aec\",\r\n    \"description\": \"\"\r\n}",
+							"raw": "{\r\n    \"name\": \"anc\",\r\n    \"description\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2969,18 +2856,6 @@
 									"pm.test(\"Status code is 201 A role has been created.\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
 									"});\r",
-									"\r",
-									"pm.test(\"Body matches string\", function () {\r",
-									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
-									"});\r",
 									""
 								],
 								"type": "text/javascript"
@@ -3113,17 +2988,6 @@
 									"    pm.response.to.have.status(201);\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Body matches string\", function () {\r",
-									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
-									"});\r",
 									""
 								],
 								"type": "text/javascript"
@@ -3255,18 +3119,6 @@
 									"pm.test(\"Status code is 201 A role has been created.\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
 									"});\r",
-									"\r",
-									"pm.test(\"Body matches string\", function () {\r",
-									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
-									"});\r",
 									""
 								],
 								"type": "text/javascript"
@@ -3397,20 +3249,7 @@
 								"exec": [
 									"pm.test(\"Status code is 201 A role has been created.\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Body matches string\", function () {\r",
-									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
-									"});\r",
-									""
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -3507,7 +3346,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-\",\r\n  \"description\": \"1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-\"\r\n}",
+							"raw": "{\r\n  \"name\": \"1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyu254asdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-\",\r\n  \"description\": \"1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-_1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM-\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3637,7 +3476,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"groupName123\",\r\n    \"description\": \"\"\r\n}",
+							"raw": "{\r\n    \"name\": \"roleName123\",\r\n    \"description\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3800,18 +3639,6 @@
 								"exec": [
 									"pm.test(\"Status code is 201. A role has been created.\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Body matches string\", function () {\r",
-									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"scopeId\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"createdBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedOn\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"modifiedBy\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"optlock\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
-									"    pm.expect(pm.response.text()).to.include(\"description\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -6038,7 +5865,7 @@
 					"response": []
 				},
 				{
-					"name": "Get all Roles",
+					"name": "Get all Endpoints",
 					"event": [
 						{
 							"listen": "test",
@@ -6143,7 +5970,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/v1/_/enpointinfos?limit=50&offset=0",
+							"raw": "http://localhost:8081/v1/_/endpointInfos?limit=50&offset=0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -6152,7 +5979,7 @@
 							"path": [
 								"v1",
 								"_",
-								"enpointinfos"
+								"endpointInfos"
 							],
 							"query": [
 								{
