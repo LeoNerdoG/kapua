@@ -26,14 +26,14 @@ public class TagsTests extends RestAssured {
 
         given().when().get("http://www.google.com").then().statusCode(200);
 
-        Response response = (Response) given().
+        Response response = (Response) given().log().all().
+                contentType(ContentType.JSON).
                 auth().
                 preemptive().
                 basic("kapua-sys", "kapua-password").
-                contentType(ContentType.JSON).
-                get("http://localhost:8081/v1/authentication/user").
+                when().
+                post("http://localhost:8081/v1/authentication/user").
                 then().
-                assertThat().
-                statusCode(200);
+                log().all().statusCode(200).log().all();
     }
 }
