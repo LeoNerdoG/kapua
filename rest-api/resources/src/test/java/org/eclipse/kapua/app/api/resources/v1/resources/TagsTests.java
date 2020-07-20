@@ -32,7 +32,7 @@ public class TagsTests extends RestAssured {
                 preemptive().
                 basic("kapua-sys", "kapua-password").
                 when().
-                post("http://localhost:8081/v1/authentication/user").
+                get("http://localhost:8081/v1/authentication/user").
                 then().
                 log().all().statusCode(200).log().all();
     }
