@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 Eurotech and/or its affiliates and others
+ * Copyright (c) 2020 Eurotech and/or its affiliates and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,6 @@
  *
  * Contributors:
  *     Eurotech - initial API and implementation
- *     Red Hat Inc
  *******************************************************************************/
 package org.eclipse.kapua.service.sso.steps;
 
@@ -30,6 +29,7 @@ import org.apache.http.util.EntityUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.SecurityManager;
 import org.eclipse.kapua.KapuaException;
+import org.eclipse.kapua.app.console.core.shared.model.authentication.GwtJwtIdToken;
 import org.eclipse.kapua.commons.security.KapuaSecurityUtils;
 import org.eclipse.kapua.commons.util.xml.XmlUtil;
 import org.eclipse.kapua.locator.KapuaLocator;
@@ -125,7 +125,6 @@ public class SsoServiceSteps extends TestBase {
         System.setProperty("sso.keycloak.realm", "kapua");
         System.setProperty("sso.openid.client.id", "console");
         System.setProperty("sso.provider", "keycloak");
-        System.setProperty("authentication.registration.service.enabled", "true");
     }
 
     @And("^Set environment variables for generic provider$")
@@ -141,6 +140,7 @@ public class SsoServiceSteps extends TestBase {
     public void configureTheSso() throws Exception {
         primeException();
         try {
+            System.setProperty("authentication.registration.service.enabled", "true");
             JwtCredentials credentials = (JwtCredentials) stepData.get("jwtCredentials");
             RegistrationServiceImpl registrationService = new RegistrationServiceImpl();
             registrationService.createAccount(credentials);
@@ -181,7 +181,8 @@ public class SsoServiceSteps extends TestBase {
     @Then("^Create a jwt credential using the access token$")
     public void createJwtCredential() throws KapuaException {
         String accessToken = (String) stepData.get("accessToken");
-        JwtCredentials jwtCredentials = credentialsFactory.newJwtCredentials(accessToken);
+        GwtJwtIdToken jwtIdToken = new GwtJwtIdToken();
+        JwtCredentials jwtCredentials = credentialsFactory.newJwtCredentials(accessToken, jwtIdToken.getIdToken());
         stepData.put("jwtCredentials", jwtCredentials);
     }
 

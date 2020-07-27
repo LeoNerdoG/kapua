@@ -105,10 +105,8 @@ Feature: Sso Login using Keycloak Provider
       | name      | password          | enabled |
       | test-user | ToManySecrets123# | true    |
     Then I logout
-    Then Get access token for user with username "test-user" and password "TestPassword123#"
-    And Create a jwt credential using the access token
-    Given I expect the exception "KapuaException" with the text "*"
-    When Configure the SSO service
+    Given I expect the exception "NullPointerException" with the text "*"
+    Then Get access token for user with username "test-user" and password "ToManySecrets123#"
     Then An exception was thrown
 
   Scenario: Add user with fake externalId
