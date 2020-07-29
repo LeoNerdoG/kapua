@@ -17,6 +17,8 @@
         <artifactId>kapua-extras</artifactId>
         <version>1.3.0-SNAPSHOT</version>
     </parent>
+    <packaging>pom</packaging>
 
-    <artifactId>kapua-foreignkeys</artifactId>        
+    <artifactId>kapua-foreignkeys</artifactId>
+    <name>${project.artifactId}</name>
 </project>
