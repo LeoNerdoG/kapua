@@ -43,18 +43,26 @@ public class MqttClientCallbackSetExceptionTest extends Assert {
 
     @Test
     public void constructorCauseNullTest() {
-        MqttClientCallbackSetException exception = new MqttClientCallbackSetException(null, "clientId", mqttTopic);
-        assertNull("Null expected!", exception.getCause());
-        assertEquals("Expected and actual values should be the same!", "clientId", exception.getClientId());
-        assertEquals("Expected and actual values should be the same!", mqttTopic, exception.getTopic());
+        try {
+            MqttClientCallbackSetException exception = new MqttClientCallbackSetException(null, "clientId", mqttTopic);
+            assertNull("Null expected!", exception.getCause());
+            assertEquals("Expected and actual values should be the same!", "clientId", exception.getClientId());
+            assertEquals("Expected and actual values should be the same!", mqttTopic, exception.getTopic());
+        } catch (Exception ex) {
+            fail("No exception expected!");
+        }
     }
 
     @Test
     public void constructorClientIdNullTest() {
-        MqttClientCallbackSetException exception = new MqttClientCallbackSetException(throwable, null, mqttTopic);
-        assertEquals("Expected and actual values should be the same!", throwable, exception.getCause());
-        assertNull("Null expected!", exception.getClientId());
-        assertEquals("Expected and actual values should be the same!", mqttTopic, exception.getTopic());
+        try {
+            MqttClientCallbackSetException exception = new MqttClientCallbackSetException(throwable, null, mqttTopic);
+            assertEquals("Expected and actual values should be the same!", throwable, exception.getCause());
+            assertNull("Null expected!", exception.getClientId());
+            assertEquals("Expected and actual values should be the same!", mqttTopic, exception.getTopic());
+        } catch (Exception ex) {
+            fail("No exception expected!");
+        }
     }
 
     @Test (expected = NullPointerException.class)
