@@ -24,6 +24,8 @@ install:
 - chmod a+x maven/bin/mvn
 
 before_script:
+  - ./deployment/docker/unix/docker-deploy.sh
+  - docker ps -a
   - export M2_HOME=$PWD/maven
   - export PATH=${M2_HOME}/bin:${PATH}
   - export BUILD_OPTS=""
