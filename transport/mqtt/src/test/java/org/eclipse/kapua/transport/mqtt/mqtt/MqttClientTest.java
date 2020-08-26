@@ -60,16 +60,17 @@ public class MqttClientTest extends Assert {
 
     private void connectClientWithValidOptions() throws Exception {
         connectionOptions.setClientId("1");
-        connectionOptions.setEndpointURI(new URI("tcp://0.0.0.0:1883"));
+        connectionOptions.setEndpointURI(new URI("tcp://0.0.0.0"));
         connectionOptions.setUsername(username);
         connectionOptions.setPassword(password);
         mqttClient.connectClient(connectionOptions);
     }
 
+    // tale
     @Test
     public void connectClientValidTest() throws Exception {
         connectionOptions.setClientId("1");
-        connectionOptions.setEndpointURI(new URI("tcp://0.0.0.0:1883"));
+        connectionOptions.setEndpointURI(new URI("tcp://0.0.0.0"));
         connectionOptions.setUsername(username);
         connectionOptions.setPassword(password);
         mqttClient.connectClient(connectionOptions);
@@ -79,7 +80,7 @@ public class MqttClientTest extends Assert {
     @Test(expected = IllegalArgumentException.class)
     public void connectClientWithNullIdTest() throws Exception {
         connectionOptions.setClientId(null);
-        connectionOptions.setEndpointURI(new URI("tcp://0.0.0.0:1883"));
+        connectionOptions.setEndpointURI(new URI("tcp://0.0.0.0"));
         connectionOptions.setUsername(username);
         connectionOptions.setPassword(password);
         mqttClient.connectClient(connectionOptions);
@@ -97,7 +98,7 @@ public class MqttClientTest extends Assert {
     @Test(expected = MqttClientConnectException.class)
     public void connectClientWithNullUsernameTest() throws Exception {
         connectionOptions.setClientId("1");
-        connectionOptions.setEndpointURI(new URI("tcp://0.0.0.0:1883"));
+        connectionOptions.setEndpointURI(new URI("tcp://0.0.0.0"));
         connectionOptions.setUsername(null);
         connectionOptions.setPassword(password);
         mqttClient.connectClient(connectionOptions);
@@ -106,7 +107,7 @@ public class MqttClientTest extends Assert {
     @Test(expected = NullPointerException.class)
     public void connectClientWithNullPasswordTest() throws Exception {
         connectionOptions.setClientId("1");
-        connectionOptions.setEndpointURI(new URI("tcp://0.0.0.0:1883"));
+        connectionOptions.setEndpointURI(new URI("tcp://0.0.0.0"));
         connectionOptions.setUsername(username);
         connectionOptions.setPassword(null);
         mqttClient.connectClient(connectionOptions);
@@ -121,6 +122,7 @@ public class MqttClientTest extends Assert {
         mqttClient.connectClient(connectionOptions);
     }
 
+    // tale
     @Test(expected = MqttClientAlreadyConnectedException.class)
     public void connectSeveralClientAtSameTimeTest() throws Exception {
         connectClientWithValidOptions();
@@ -130,12 +132,13 @@ public class MqttClientTest extends Assert {
     @Test(expected = IllegalArgumentException.class)
     public void connectClientWithWrongUriFormatTest() throws Exception {
         connectionOptions.setClientId("1");
-        connectionOptions.setEndpointURI(new URI("localhost:1883"));
+        connectionOptions.setEndpointURI(new URI("localhost"));
         connectionOptions.setUsername(username);
         connectionOptions.setPassword(password);
         mqttClient.connectClient(connectionOptions);
     }
 
+    // tale
     @Test
     public void disconnectClientValidTest() throws Exception {
         connectClientWithValidOptions();
@@ -149,6 +152,7 @@ public class MqttClientTest extends Assert {
         mqttClient.disconnectClient();
     }
 
+    // tale
     @Test(expected = MqttClientDisconnectException.class)
     public void disconnectClientTwiceTest() throws Exception {
         connectClientWithValidOptions();
@@ -157,6 +161,7 @@ public class MqttClientTest extends Assert {
         mqttClient.disconnectClient();
     }
 
+    // tale
     @Test
     public void terminateClientValidTest() throws Exception {
         connectClientWithValidOptions();
@@ -169,6 +174,7 @@ public class MqttClientTest extends Assert {
         mqttClient.terminateClient();
     }
 
+    // tale
     @Test(expected = MqttClientTerminateException.class)
     public void terminateClientTwiceTest() throws Exception {
         connectClientWithValidOptions();
@@ -177,6 +183,7 @@ public class MqttClientTest extends Assert {
         mqttClient.terminateClient();
     }
 
+    // tale
     @Test
     public void publishMqttMessageValidTest() throws Exception {
         connectClientWithValidOptions();
@@ -202,6 +209,7 @@ public class MqttClientTest extends Assert {
         assertFalse("The client should should not be connected!", mqttClient.isConnected());
     }
 
+    // tale
     @Test(expected = NullPointerException.class)
     public void publishMqttMessageWithAllNullValue() throws Exception {
         connectClientWithValidOptions();
@@ -209,6 +217,7 @@ public class MqttClientTest extends Assert {
         mqttClient.publish(mqttMessage);
     }
 
+    // tale
     @Test(expected = NullPointerException.class)
     public void publishMqttMessageWithRequestTopicNullValue() throws Exception {
         connectClientWithValidOptions();
@@ -219,6 +228,7 @@ public class MqttClientTest extends Assert {
         mqttClient.publish(mqttMessage);
     }
 
+    // tale
     @Test
     public void publishMqttMessageWithDateNullValue() throws Exception {
         connectClientWithValidOptions();
@@ -228,6 +238,7 @@ public class MqttClientTest extends Assert {
         mqttClient.publish(mqttMessage);
     }
 
+    // tale
     @Test(expected = NullPointerException.class)
     public void publishMqttMessageWithPayloadBodyNullValue() throws Exception {
         connectClientWithValidOptions();
@@ -237,6 +248,7 @@ public class MqttClientTest extends Assert {
         mqttClient.publish(mqttMessage);
     }
 
+    // tale
     @Test
     public void subscribeClientToMessageValidTest() throws Exception {
         connectClientWithValidOptions();
@@ -255,12 +267,14 @@ public class MqttClientTest extends Assert {
         assertFalse("The client should should not be connected!", mqttClient.isConnected());
     }
 
+    // tale
     @Test(expected = NullPointerException.class)
     public void subscribeClientWithNullTopicTest() throws Exception {
         connectClientWithValidOptions();
         mqttClient.subscribe(null);
     }
 
+    // tale
     @Test
     public void unsubscribeAllValidTest() throws Exception {
         connectClientWithValidOptions();
@@ -273,6 +287,7 @@ public class MqttClientTest extends Assert {
         assertEquals("Expected and actual values should be the same!", expectedValue, fieldValue);
     }
 
+    // tale
     @Test
     public void unsubscribeAllTwiceTest() throws Exception {
         connectClientWithValidOptions();
@@ -292,6 +307,7 @@ public class MqttClientTest extends Assert {
         mqttClient.unsubscribeAll();
     }
 
+    // tale
     @Test
     public void unsubscribeWithoutSubscribedClientTest() throws Exception {
         connectClientWithValidOptions();
@@ -302,6 +318,7 @@ public class MqttClientTest extends Assert {
         assertEquals("Expected and actual values should be the same!", expectedValue, fieldValue);
     }
 
+    // tale
     @Test
     public void setCallbackValidTest() throws Exception {
         try {
@@ -317,6 +334,7 @@ public class MqttClientTest extends Assert {
         }
     }
 
+    // tale
     @Test
     public void setCallbackNullTest() throws Exception {
         try {
@@ -337,6 +355,7 @@ public class MqttClientTest extends Assert {
         mqttClient.setCallback(mqttResponseCallback);
     }
 
+    //  tale
     @Test
     public void cleanValidTest() throws Exception {
         connectClientWithValidOptions();
@@ -354,6 +373,7 @@ public class MqttClientTest extends Assert {
         mqttClient.clean();
     }
 
+    // tale
     @Test
     public void getClientIdTest() throws Exception {
         connectClientWithValidOptions();
