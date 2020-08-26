@@ -298,8 +298,6 @@ public class MqttClientTest extends Assert {
         } catch (Exception ex) {
             // expected
         }
-
-
         Field field = MqttClient.class.getDeclaredField("subscribedTopics");
         field.setAccessible(true);
         Object fieldValue = field.get(mqttClient);
