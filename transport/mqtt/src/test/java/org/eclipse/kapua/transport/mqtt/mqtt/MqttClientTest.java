@@ -293,7 +293,12 @@ public class MqttClientTest extends Assert {
         connectClientWithValidOptions();
         mqttClient.subscribe(mqttTopic);
         mqttClient.unsubscribeAll();
-        mqttClient.unsubscribeAll();
+        try {
+            mqttClient.unsubscribeAll();
+        } catch (Exception ex) {
+            // expected
+        }
+
 
         Field field = MqttClient.class.getDeclaredField("subscribedTopics");
         field.setAccessible(true);
