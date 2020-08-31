@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2020 Red Hat Inc and others.
+ * Copyright (c) 2017, 2020 Eurotech and/or its affiliates and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,27 +7,74 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *     Red Hat Inc - initial API and implementation
+ *     Eurotech - initial API and implementation
  *******************************************************************************/
 package org.eclipse.kapua.client.gateway.spi.util;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
-
-import org.eclipse.kapua.client.gateway.Transport.ListenerHandle;
+import org.eclipse.kapua.client.gateway.Transport;
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
-import org.junit.After;
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mockito;
+
+import java.util.concurrent.Executor;
 
 @Category(JUnitTests.class)
-public class TransportProxyTest {
+public class TransportProxyTest extends Assert {
 
-    private static final class TestListener {
+    @Test(expected = IllegalStateException.class)
+    public void closeTest() {
+        final Transport transport = Mockito.mock(Transport.class);
+        final Executor executor = Mockito.mock(Executor.class);
+        TransportProxy transportProxy = TransportProxy.proxy(transport, executor);
+        transportProxy.close();
+        assertNull(transportProxy.listen(Mockito.mock(Transport.Listener.class)));
+    }
+
+    @Test
+    public void listenTest() {
+        final Transport transport = Mockito.mock(Transport.class);
+        final Executor executor = Mockito.mock(Executor.class);
+        TransportProxy transportProxy = TransportProxy.proxy(transport, executor);
+        final Transport.Listener listener = Mockito.mock(Transport.Listener.class);
+        assertThat("Instance of ListenerHandle expected.", transportProxy.listen(listener), IsInstanceOf.instanceOf(Transport.ListenerHandle.class));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void listenListenerNullTest() {
+        final Transport transport = Mockito.mock(Transport.class);
+        final Executor executor = Mockito.mock(Executor.class);
+        TransportProxy transportProxy = TransportProxy.proxy(transport, executor);
+        assertThat("Instance of ListenerHandle expected.", transportProxy.listen(null), IsInstanceOf.instanceOf(Transport.ListenerHandle.class));
+    }
+
+    @Test
+    public void proxyTest() {
+        final Transport transport = Mockito.mock(Transport.class);
+        final Executor executor = Mockito.mock(Executor.class);
+        assertThat("Instance of TransportProxy expected.", TransportProxy.proxy(transport, executor), IsInstanceOf.instanceOf(TransportProxy.class));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void proxyTransportNullTest() {
+        final Executor executor = Mockito.mock(Executor.class);
+        assertThat("Instance of TransportProxy expected.", TransportProxy.proxy(null, executor), IsInstanceOf.instanceOf(TransportProxy.class));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void proxyExecutorNullTest() {
+        final Transport transport = Mockito.mock(Transport.class);
+        assertThat("Instance of TransportProxy expected.", TransportProxy.proxy(transport, null), IsInstanceOf.instanceOf(TransportProxy.class));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void proxyTransportNullAndExecutorNullTest() {
+        assertThat("Instance of TransportProxy expected.", TransportProxy.proxy(null, null), IsInstanceOf.instanceOf(TransportProxy.class));
+    }
+
+    /*private static final class TestListener {
 
         private static final long DEFAULT_TIMEOUT = Long.getLong("defaultTimeout", 500L); // 500ms default
 
@@ -130,6 +177,6 @@ public class TransportProxyTest {
         proxy.close();
         proxy.listen((state) -> {
         });
-    }
+    }*/
 
 }
