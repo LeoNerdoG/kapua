@@ -200,7 +200,7 @@ public class EventStoreDAOTest extends Assert {
     @Test
     public void queryTest() throws KapuaException {
         EntityManager entityManager = Mockito.mock(EntityManager.class);
-        KapuaQuery<EventStoreRecord> kapuaQuery = Mockito.mock(KapuaQuery.class);
+        KapuaQuery kapuaQuery = Mockito.mock(KapuaQuery.class);
 
         List<String> list = new ArrayList<>();
         CriteriaBuilder criteriaBuilder = Mockito.mock(CriteriaBuilder.class);
@@ -226,7 +226,7 @@ public class EventStoreDAOTest extends Assert {
     @Test
     public void countTest() throws KapuaException {
         EntityManager entityManager = Mockito.mock(EntityManager.class);
-        KapuaQuery<EventStoreRecord> kapuaQuery = Mockito.mock(KapuaQuery.class);
+        KapuaQuery kapuaQuery = Mockito.mock(KapuaQuery.class);
         CriteriaBuilder criteriaBuilder = Mockito.mock(CriteriaBuilder.class);
         CriteriaQuery<Long> criteriaQuery1 = Mockito.mock(CriteriaQuery.class);
         CriteriaQuery<Long> criteriaQuery2 = Mockito.mock(CriteriaQuery.class);
