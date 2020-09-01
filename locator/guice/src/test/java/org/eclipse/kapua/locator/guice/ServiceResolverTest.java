@@ -1,5 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2020 Eurotech and/or its affiliates and others
  * Copyright (c) 2017, 2020 Red Hat Inc and others.
  *
  * All rights reserved. This program and the accompanying materials
