@@ -28,6 +28,7 @@ public class MqttPayloadTest extends Assert {
         mqttPayload = new MqttPayload(body);
     }
 
+    // COMMENT:Why are you not using all the possible symbols?
     byte[] body = "~i ♥!@#$%^&*()_+usdadasd8998308102830123/*/-*/-/-/9381029391t541=-03---------[[[[//////]]]]------------------adaewdasasdasd".getBytes();
 
     @Test

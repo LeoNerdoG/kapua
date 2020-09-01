@@ -34,6 +34,12 @@ public class MqttTopicTest extends Assert {
             assertEquals("Expected and actual values are not equals!", value, mqttTopic.getTopic());
         }
     }
+    // COMMENT: You are missing test:
+//    @Test
+//    public void mqttTopicConstructorNullTest() {
+//            MqttTopic mqttTopic = new MqttTopic(null);
+//            assertNull("Null expected!", null, mqttTopic.getTopic());
+//    }
 
     @Test
     public void mqttTopicSecondConstructorValidTest() {
@@ -55,6 +61,12 @@ public class MqttTopicTest extends Assert {
         MqttTopic mqttTopic = new MqttTopic(mqttValue);
         assertArrayEquals("Expected and actual values are not equals!", mqttValue, mqttTopic.getSplittedTopic());
     }
+    // COMMENT: MISSING TEST!
+//    @Test
+//    public void getSplittedEmptyTopicTest() {
+//        MqttTopic mqttTopic = new MqttTopic(null);
+//        assertNUll("Null Expected!", null, mqttTopic.getSplittedTopic());
+//    }
 
     @Test
     public void toStringTest() {

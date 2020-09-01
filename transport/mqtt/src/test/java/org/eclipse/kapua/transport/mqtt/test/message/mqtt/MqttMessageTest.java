@@ -90,10 +90,37 @@ public class MqttMessageTest extends Assert {
         MqttMessage mqttMessage = new MqttMessage(requestTopic, responseTopic, mqttPayload);
         assertTrue("The response should not be null!", mqttMessage.expectResponse());
     }
+    // COMMENT! You are missing this test:
+//    @Test
+//    public void expectResponseFalseTest() {
+//        MqttMessage mqttMessage = new MqttMessage(requestTopic, null, mqttPayload);
+//        assertTrue("The response should not be null!", mqttMessage.expectResponse());
+//    }
+    // Thisđ will return False, this is the scenario that is missing. If able, please combine the "true" and "false" tests.
+
 
     @Test
     public void toStringTest() {
         MqttMessage mqttMessage = new MqttMessage(requestTopic, responseTopic, mqttPayload);
         assertEquals("null, requestTopic, cGF5bG9hZC5jb2Rl", mqttMessage.toString());
     }
+    // COMMENT: You are not covering second part of the "toString" method. You are missing:
+//    @Test
+//    public void toStringTest2() {
+//        MqttMessage mqttMessage = new MqttMessage(null, responseTopic, mqttPayload);
+//        assertEquals("null, requestTopic, cGF5bG9hZC5jb2Rl", mqttMessage.toString());
+//    }
+
+    //    @Test2
+//    public void toStringTest() {
+//        MqttMessage mqttMessage = new MqttMessage(requestTopic, null, mqttPayload);
+//        assertEquals("null, requestTopic, cGF5bG9hZC5jb2Rl", mqttMessage.toString());
+//    }
+    //    @Test3
+//    public void toStringTest() {
+//        MqttMessage mqttMessage = new MqttMessage(requestTopic, responseTopic, null);
+//        assertEquals("null, requestTopic, cGF5bG9hZC5jb2Rl", mqttMessage.toString());
+//    }
+
+    // COMMENT: Please join all the tests into one if possible.
 }

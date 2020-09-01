@@ -51,8 +51,8 @@ public class MqttClientAlreadyConnectedExceptionTest extends Assert {
         }
     }
 
-    @Test (expected = MqttClientAlreadyConnectedException.class)
-    public void throwingExceptionTest() throws MqttClientAlreadyConnectedException {
-        throw exception;
-    }
+//    @Test (expected = MqttClientAlreadyConnectedException.class)
+//    public void throwingExceptionTest() throws MqttClientAlreadyConnectedException {
+//        throw exception;
+//    }
 }
