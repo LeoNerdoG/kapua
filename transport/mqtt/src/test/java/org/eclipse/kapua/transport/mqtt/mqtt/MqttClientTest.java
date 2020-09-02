@@ -302,30 +302,30 @@ public class MqttClientTest extends Assert {
         assertEquals("Expected and actual values should be the same!", expectedValue, fieldValue);
     }
 
-    @Test
-    public void setCallbackValidTest() throws Exception {
-        try {
-            connectClientWithValidOptions();
-            String payload = "payload.code";
-            MqttPayload mqttPayload = new MqttPayload(payload.getBytes());
-            MqttMessage mqttMessage = new MqttMessage(mqttTopic, mqttTopic, mqttPayload);
-            responses.add(mqttMessage);
-            MqttResponseCallback mqttResponseCallback = new MqttResponseCallback(mqttTopic, responses);
-            mqttClient.setCallback(mqttResponseCallback);
-        } catch (Exception ex) {
-            fail("No exception expected!");
-        }
-    }
-
-    @Test
-    public void setCallbackNullTest() throws Exception {
-        try {
-            connectClientWithValidOptions();
-            mqttClient.setCallback(null);
-        } catch (Exception ex) {
-            fail("No exception expected!");
-        }
-    }
+//    @Test
+//    public void setCallbackValidTest() throws Exception {
+//        try {
+//            connectClientWithValidOptions();
+//            String payload = "payload.code";
+//            MqttPayload mqttPayload = new MqttPayload(payload.getBytes());
+//            MqttMessage mqttMessage = new MqttMessage(mqttTopic, mqttTopic, mqttPayload);
+//            responses.add(mqttMessage);
+//            MqttResponseCallback mqttResponseCallback = new MqttResponseCallback(mqttTopic, responses);
+//            mqttClient.setCallback(mqttResponseCallback);
+//        } catch (Exception ex) {
+//            fail("No exception expected!");
+//        }
+//    }
+//
+//    @Test
+//    public void setCallbackNullTest() throws Exception {
+//        try {
+//            connectClientWithValidOptions();
+//            mqttClient.setCallback(null);
+//        } catch (Exception ex) {
+//            fail("No exception expected!");
+//        }
+//    }
 
     @Test(expected = MqttClientCallbackSetException.class)
     public void setCallbackWithUnconnectedClientTest() throws Exception {
