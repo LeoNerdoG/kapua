@@ -35,10 +35,13 @@ public class BuffersTest extends Assert {
     }
 
     @Test
+    // COMMENT: Please rename to wrapNullTest
     public void wrapByteArrayDataNullTest() {
         assertEquals("Expected and actual value should be the same", null, Buffers.wrap(null));
     }
 
+    // COMMENT: Can you please move this test up, becasue in the original file there is constructo, then wrap method and then toByteArray.
+    // This way it is easier to track everything.
     @Test
     public void wrapTest() {
         final byte[] byteArray = new byte[]{1, 3, 5, 7, 9};
@@ -48,6 +51,7 @@ public class BuffersTest extends Assert {
     }
 
     @Test
+    // COMMENT: Please rename to toByteArrayNullTest
     public void toByteArrayBufferNullTest() {
         assertEquals("Expected and actual value should be the same", null, Buffers.toByteArray(null));
     }
@@ -57,7 +61,10 @@ public class BuffersTest extends Assert {
         ByteBuffer byteBuffer = Mockito.mock(ByteBuffer.class);
         assertThat("Instance of Buffers expected.", Buffers.toByteArray(byteBuffer), IsInstanceOf.instanceOf(byte[].class));
     }
+    // COMMENT: there are missing tests. Please take a look at https://examples.javacodegeeks.com/core-java/nio/java-nio-bytebuffer-example/,
+    // there are some eaxmple already written, please take a look if you can use them.
 
+        // COMMENT: Please delete these tests. There should be no commented code (without a good reason) in the code base.
     /*@Test
     public void test1() {
         final ByteBuffer result = Buffers.wrap(new byte[0]);

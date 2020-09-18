@@ -23,6 +23,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Future;
 
 @Category(JUnitTests.class)
 public class FuturesTest extends Assert {
@@ -44,6 +45,11 @@ public class FuturesTest extends Assert {
     public void completedExceptionallyTest() {
         Throwable error = new Throwable();
         assertThat("Instance of CompletableFuture expected", Futures.completedExceptionally(error), IsInstanceOf.instanceOf(CompletableFuture.class));
+    }
+
+    @Test
+    public void mapTest() {
+//        Futures futures1 = new Futures();
     }
 
     @Test(expected = InvocationTargetException.class)

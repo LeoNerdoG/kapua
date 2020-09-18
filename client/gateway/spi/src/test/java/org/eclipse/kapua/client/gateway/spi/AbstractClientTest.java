@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.kapua.client.gateway.spi;
 
-
+    // COMMENT: Please delete empty line.
 import org.eclipse.kapua.client.gateway.Application;
 import org.eclipse.kapua.client.gateway.ErrorHandler;
 import org.eclipse.kapua.client.gateway.MessageHandler;
@@ -29,6 +29,8 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.mockito.Mockito;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -59,7 +61,9 @@ public class AbstractClientTest extends Assert {
         executor = Mockito.mock(ScheduledExecutorService.class);
         modules = new HashSet<>();
         modules.add(Mockito.mock(Module.class));
+        // COMMENT: Why adding same class twice?
         modules.add(Mockito.mock(Module.class));
+        // COMMENT: and then again adding the same class through a varaiable? Am I missing something?
         module = Mockito.mock(Module.class);
         modules.add(module);
         abstractClient = new ActualClient(executor, modules);
@@ -78,7 +82,7 @@ public class AbstractClientTest extends Assert {
                 new Object[]{"$EDC/string/string/MQTT/BIRTH"});
     }
 
-    private class ActualClient extends AbstractClient {
+    public class ActualClient extends AbstractClient {
 
         public ActualClient(ScheduledExecutorService executor, Set<Module> modules) {
             super(executor, modules);
@@ -96,12 +100,12 @@ public class AbstractClientTest extends Assert {
 
         @Override
         protected void handleUnsubscribe(String applicationId, Collection<Topic> topics) throws Exception {
-
+            // COMMENT: Please delete empty line
         }
 
         @Override
         public void close() throws Exception {
-
+            // COMMENT: Please delete empty line
         }
     }
 
