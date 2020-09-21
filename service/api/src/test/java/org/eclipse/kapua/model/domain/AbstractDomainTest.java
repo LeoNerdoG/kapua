@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2020 Red Hat Inc and others
+ * Copyright (c) 2020 Eurotech and/or its affiliates and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,10 +7,12 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *     Red Hat Inc - initial API and implementation
+ *     Eurotech - initial API and implementation
  *******************************************************************************/
-package org.eclipse.kapua.locator.internal.guice;
+package org.eclipse.kapua.model.domain;
 
-public interface FactoryA extends KapuaIdFactory {
+import org.junit.Assert;
+
+public abstract class AbstractDomainTest extends Assert {
 
 }

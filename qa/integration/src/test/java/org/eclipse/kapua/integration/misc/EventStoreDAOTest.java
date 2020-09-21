@@ -21,8 +21,6 @@ import org.eclipse.kapua.commons.service.event.store.api.EventStoreRecordListRes
 import org.eclipse.kapua.commons.service.event.store.internal.EventStoreDAO;
 import org.eclipse.kapua.commons.service.event.store.internal.EventStoreRecordImpl;
 import org.eclipse.kapua.model.KapuaEntity;
-import org.eclipse.kapua.model.id.KapuaId;
-import org.eclipse.kapua.model.query.KapuaQuery;
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
 
 import org.hamcrest.core.IsInstanceOf;

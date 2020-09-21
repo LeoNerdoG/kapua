@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.kapua.commons.service.event.store.internal;
 
-import org.eclipse.kapua.model.id.KapuaId;
-import org.eclipse.kapua.model.id.KapuaIdStatic;
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
 import org.junit.Assert;
 import org.junit.Test;
@@ -31,7 +29,7 @@ public class EventStoreQueryImplTest extends Assert {
 
     @Test
     public void eventStoreQueryImplTest2() {
-        KapuaId scopeId = new KapuaIdStatic(BigInteger.ONE);
+        KapuaId scopeId = new KapuaIdStaticTest(BigInteger.ONE);
 
         EventStoreQueryImpl eventStoreQueryImpl1 = new EventStoreQueryImpl(null);
         assertNotNull("Null not expected.", eventStoreQueryImpl1.getSortCriteria());

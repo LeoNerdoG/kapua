@@ -14,7 +14,6 @@ package org.eclipse.kapua.locator.internal.guice;
 import java.math.BigInteger;
 
 import org.eclipse.kapua.locator.KapuaProvider;
-import org.eclipse.kapua.model.id.KapuaId;
 
 @KapuaProvider
 public class FactoryAImpl implements FactoryA {

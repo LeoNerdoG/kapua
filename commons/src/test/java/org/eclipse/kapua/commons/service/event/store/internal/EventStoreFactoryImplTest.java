@@ -14,7 +14,6 @@ package org.eclipse.kapua.commons.service.event.store.internal;
 import org.eclipse.kapua.KapuaEntityCloneException;
 import org.eclipse.kapua.commons.model.id.KapuaEid;
 import org.eclipse.kapua.commons.service.event.store.api.EventStoreRecord;
-import org.eclipse.kapua.model.id.KapuaId;
 
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
 import org.hamcrest.core.IsInstanceOf;

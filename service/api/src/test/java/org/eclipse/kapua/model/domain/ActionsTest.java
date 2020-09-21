@@ -9,21 +9,22 @@
  * Contributors:
  *     Eurotech - initial API and implementation
  *******************************************************************************/
-package org.eclipse.kapua.commons.configuration;
+package org.eclipse.kapua.model.domain;
 
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-
 @Category(JUnitTests.class)
-public class ServiceConfigQueryImplTest extends Assert {
+public class ActionsTest extends Assert {
 
     @Test
-    public void createInstanceTest() {
-        ServiceConfigQueryImpl query = new ServiceConfigQueryImpl(KapuaId.ONE);
-        assertEquals(query.getScopeId(), KapuaId.ONE);
+    public void actionTest() {
+        try {
+            assertNotNull(Actions.valueOf("read"));
+        } catch (Exception ex) {
+            fail("'Read' enum does not exist");
+        }
     }
-
 }

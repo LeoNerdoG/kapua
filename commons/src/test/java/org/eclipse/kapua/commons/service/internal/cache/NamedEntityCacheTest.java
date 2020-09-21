@@ -12,8 +12,6 @@
 package org.eclipse.kapua.commons.service.internal.cache;
 
 import org.eclipse.kapua.model.KapuaEntity;
-import org.eclipse.kapua.model.id.KapuaId;
-import org.eclipse.kapua.model.id.KapuaIdStatic;
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
 import org.junit.Assert;
 import org.junit.Test;
@@ -59,7 +57,7 @@ public class NamedEntityCacheTest extends Assert {
         String idCacheName = "idCacheName";
         String nameCacheName = "nameCacheName";
         NamedEntityCache namedEntityCache = new NamedEntityCache(idCacheName, nameCacheName);
-        KapuaId scopeId = new KapuaIdStatic(BigInteger.ONE);
+        KapuaId scopeId = new KapuaIdStaticTest(BigInteger.ONE);
         String name = "name";
         String nullName = null;
 
@@ -77,8 +75,8 @@ public class NamedEntityCacheTest extends Assert {
     @Test
     public void putTest() {
         NamedEntityCache namedEntityCache = new NamedEntityCache("idCacheName", "nameCacheName");
-        KapuaId scopeId = new KapuaIdStatic(BigInteger.ONE);
-        KapuaId kapuaId = new KapuaIdStatic(BigInteger.ONE);
+        KapuaId scopeId = new KapuaIdStaticTest(BigInteger.ONE);
+        KapuaId kapuaId = new KapuaIdStaticTest(BigInteger.ONE);
         KapuaEntity kapuaEntity = namedEntityCache.get(scopeId, kapuaId);
 
         //COMMENT: Entity is always null (see Cache.get() method)
@@ -99,8 +97,8 @@ public class NamedEntityCacheTest extends Assert {
         String idCacheName = "idCacheName";
         String nameCacheName = "nameCacheName";
         NamedEntityCache namedEntityCache = new NamedEntityCache(idCacheName, nameCacheName);
-        KapuaId scopeId = new KapuaIdStatic(BigInteger.ONE);
-        KapuaId kapuaId = new KapuaIdStatic(BigInteger.ONE);
+        KapuaId scopeId = new KapuaIdStaticTest(BigInteger.ONE);
+        KapuaId kapuaId = new KapuaIdStaticTest(BigInteger.ONE);
         KapuaId nullScopeId = null;
         KapuaId nullKapuaId = null;
 

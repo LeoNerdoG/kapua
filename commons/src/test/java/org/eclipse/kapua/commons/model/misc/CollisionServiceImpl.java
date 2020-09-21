@@ -15,9 +15,6 @@ import org.eclipse.kapua.KapuaException;
 import org.eclipse.kapua.commons.configuration.AbstractKapuaConfigurableService;
 import org.eclipse.kapua.commons.jpa.EntityManagerContainer;
 import org.eclipse.kapua.model.config.metatype.KapuaTocd;
-import org.eclipse.kapua.model.id.KapuaId;
-import org.eclipse.kapua.model.query.KapuaListResult;
-import org.eclipse.kapua.model.query.KapuaQuery;
 
 import java.util.Map;
 

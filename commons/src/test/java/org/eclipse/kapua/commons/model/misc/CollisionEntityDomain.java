@@ -13,7 +13,6 @@ package org.eclipse.kapua.commons.model.misc;
 
 import org.eclipse.kapua.model.domain.AbstractDomain;
 import org.eclipse.kapua.model.domain.Actions;
-import org.eclipse.kapua.model.domain.Domain;
 
 import java.util.Arrays;
 import java.util.HashSet;

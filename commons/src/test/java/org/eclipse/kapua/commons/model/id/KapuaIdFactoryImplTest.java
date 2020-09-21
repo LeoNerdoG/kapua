@@ -12,7 +12,6 @@
 package org.eclipse.kapua.commons.model.id;
 
 import org.eclipse.kapua.commons.util.RandomUtils;
-import org.eclipse.kapua.model.id.KapuaId;
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
 import org.junit.Assert;
 import org.junit.Test;
