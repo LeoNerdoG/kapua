@@ -17,7 +17,6 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import java.lang.reflect.Constructor;
-import java.util.Date;
 
 @Category(JUnitTests.class)
 public class ObjectValueConverterTest extends Assert {
