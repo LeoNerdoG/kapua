@@ -16,6 +16,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import java.lang.reflect.Constructor;
+import java.util.Base64;
 
 @Category(JUnitTests.class)
 public class ByteArrayConverterTest extends Assert {
@@ -44,10 +45,10 @@ public class ByteArrayConverterTest extends Assert {
 
     @Test
     public void fromStringTest() {
-        String[] stringComparisonArray = new String[]{"[B@504bae78", "[B@3b764bce", "[B@759ebb3d", "[B@484b61fc", "[B@45fe3ee3"};
+        String[] stringComparisonArray = new String[]{"[B@759ebb3d", "[B@6956de9", "[B@769c9116", "[B@6aceb1a5", "[B@2d6d8735"};
         String[] stringArray = new String[]{"123", "abc", "ABC", "!#$%&'()=?*-.,<_:;>", "123abcBAC!#I$=)"};
         for (int i=0; i < stringArray.length; i++) {
-            assertEquals("Compared and Expected string are not the same!", stringComparisonArray[i], ByteArrayConverter.fromString(stringArray[i]).toString());
+            assertEquals("Compared and Expected string are not the same!", stringComparisonArray[i], Base64.getDecoder().decode((ByteArrayConverter.fromString(stringArray[i]))).toString());
         }
     }
 }
