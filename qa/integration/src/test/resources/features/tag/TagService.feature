@@ -697,7 +697,7 @@ Scenario: Init Security Context for all scenarios
       | integer | maxNumberChildEntities | 10    |
     When I create tag with name "Tag123" without description
     Given A device named "Device1"
-    And I asign tag "Tag123" to device "Device1"
+    And I assign tag "Tag123" to device "Device1"
     Given Tag "Tag123" is assigned to device "Device1"
     And No exception was thrown
     Then I logout
@@ -718,7 +718,7 @@ Scenario: Init Security Context for all scenarios
       | integer | maxNumberChildEntities | 10    |
     Given A device named "Device1"
     And I create tag with name "FxJpmQN9CU3ruFCAGtPDmKymN88CK7rn5L1AAYH184hCaxEpJsOQWKc3ACV2Gw44yWFz0o74rnsCabGHmX7azzplDPAe4mVYmHGLnMmlliQUpljJYB5i1Wq4flevCI8lIjZQ7UT7ll6I2C4eqvhXmt4GOD50bhiLzMDDZJeXXC8IjCidnz60QmbzUxpRC1YP8MQqosesjER2xm4jPrk3eH0egSwxvnPCeAWTXtSHeejOFVKLL78IW1xlhXkbOCh" without description
-    When I asign tag "FxJpmQN9CU3ruFCAGtPDmKymN88CK7rn5L1AAYH184hCaxEpJsOQWKc3ACV2Gw44yWFz0o74rnsCabGHmX7azzplDPAe4mVYmHGLnMmlliQUpljJYB5i1Wq4flevCI8lIjZQ7UT7ll6I2C4eqvhXmt4GOD50bhiLzMDDZJeXXC8IjCidnz60QmbzUxpRC1YP8MQqosesjER2xm4jPrk3eH0egSwxvnPCeAWTXtSHeejOFVKLL78IW1xlhXkbOCh" to device "Device1"
+    When I assign tag "FxJpmQN9CU3ruFCAGtPDmKymN88CK7rn5L1AAYH184hCaxEpJsOQWKc3ACV2Gw44yWFz0o74rnsCabGHmX7azzplDPAe4mVYmHGLnMmlliQUpljJYB5i1Wq4flevCI8lIjZQ7UT7ll6I2C4eqvhXmt4GOD50bhiLzMDDZJeXXC8IjCidnz60QmbzUxpRC1YP8MQqosesjER2xm4jPrk3eH0egSwxvnPCeAWTXtSHeejOFVKLL78IW1xlhXkbOCh" to device "Device1"
     Then Tag "FxJpmQN9CU3ruFCAGtPDmKymN88CK7rn5L1AAYH184hCaxEpJsOQWKc3ACV2Gw44yWFz0o74rnsCabGHmX7azzplDPAe4mVYmHGLnMmlliQUpljJYB5i1Wq4flevCI8lIjZQ7UT7ll6I2C4eqvhXmt4GOD50bhiLzMDDZJeXXC8IjCidnz60QmbzUxpRC1YP8MQqosesjER2xm4jPrk3eH0egSwxvnPCeAWTXtSHeejOFVKLL78IW1xlhXkbOCh" is assigned to device "Device1"
     And No exception was thrown
     And I logout
@@ -739,7 +739,7 @@ Scenario: Init Security Context for all scenarios
       | integer | maxNumberChildEntities | 10    |
     Given A device named "Device1"
     And I create tag with name "abc" without description
-    When I asign tag "abc" to device "Device1"
+    When I assign tag "abc" to device "Device1"
     Then Tag "abc" is assigned to device "Device1"
     And No exception was thrown
     And I logout
@@ -760,7 +760,7 @@ Scenario: Init Security Context for all scenarios
       | integer | maxNumberChildEntities | 10    |
     Given A device named "Device1"
     And I create tag with name "T-a-g_1_" without description
-    When I asign tag "T-a-g_1_" to device "Device1"
+    When I assign tag "T-a-g_1_" to device "Device1"
     Then Tag "T-a-g_1_" is assigned to device "Device1"
     And No exception was thrown
     And I logout
@@ -781,7 +781,7 @@ Scenario: Init Security Context for all scenarios
       | integer | maxNumberChildEntities | 10    |
     Given A device named "Device1"
     And I create tag with name "Tag1234567890" without description
-    When I asign tag "Tag1234567890" to device "Device1"
+    When I assign tag "Tag1234567890" to device "Device1"
     Then Tag "Tag1234567890" is assigned to device "Device1"
     And No exception was thrown
     And I logout
@@ -804,7 +804,7 @@ Scenario: Init Security Context for all scenarios
       | integer | maxNumberChildEntities | 10    |
     Given A device named "Device1"
     And I create tag with name "Tag1" without description
-    When I asign tag "Tag1" to device "Device1"
+    When I assign tag "Tag1" to device "Device1"
     Then Tag "Tag1" is assigned to device "Device1"
     And No exception was thrown
     Given I unassign tag "Tag1" from device "Device1"
@@ -831,12 +831,12 @@ Scenario: Init Security Context for all scenarios
       | integer | maxNumberChildEntities | 10    |
     Given A device named "Device1"
     And I create tag with name "Tag1" without description
-    When I asign tag "Tag1" to device "Device1"
+    When I assign tag "Tag1" to device "Device1"
     Then Tag "Tag1" is assigned to device "Device1"
     And No exception was thrown
     Given I unassign tag "Tag1" from device "Device1"
     When Tag "Tag1" is not assigned to device "Device1"
-    Given I asign tag "Tag1" to device "Device1"
+    Given I assign tag "Tag1" to device "Device1"
     And Tag "Tag1" is assigned to device "Device1"
     Then No exception was thrown
     Then I logout
@@ -856,7 +856,7 @@ Scenario: Init Security Context for all scenarios
       | integer | maxNumberChildEntities | 10    |
     Given A device named "Device1"
     And I expect the exception "NullPointerException" with the text "*"
-    When I asign tag "Tag1" to device "Device1"
+    When I assign tag "Tag1" to device "Device1"
     Then An exception was thrown
     Then I logout
 
