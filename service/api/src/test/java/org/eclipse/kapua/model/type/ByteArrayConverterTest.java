@@ -16,7 +16,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import java.lang.reflect.Constructor;
-import java.util.Base64;
 
 @Category(JUnitTests.class)
 public class ByteArrayConverterTest extends Assert {
