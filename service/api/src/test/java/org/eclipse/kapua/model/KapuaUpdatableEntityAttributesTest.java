@@ -11,5 +11,10 @@
  *******************************************************************************/
 package org.eclipse.kapua.model;
 
-public class KapuaUpdatableEntityAttributesTest {
+import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.junit.Assert;
+import org.junit.experimental.categories.Category;
+
+@Category(JUnitTests.class)
+public class KapuaUpdatableEntityAttributesTest extends Assert {
 }

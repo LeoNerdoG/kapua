@@ -11,5 +11,10 @@
  *******************************************************************************/
 package org.eclipse.kapua.model.domain;
 
-public class AbstractDomainTest {
+import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.junit.Assert;
+import org.junit.experimental.categories.Category;
+
+@Category(JUnitTests.class)
+public class AbstractDomainTest extends Assert {
 }
