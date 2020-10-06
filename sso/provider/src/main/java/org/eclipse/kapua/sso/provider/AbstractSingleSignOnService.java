@@ -29,6 +29,7 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
+import org.eclipse.kapua.commons.util.log.ConfigurationPrinter;
 import org.eclipse.kapua.sso.SingleSignOnService;
 import org.eclipse.kapua.sso.exception.SsoAccessTokenException;
 import org.eclipse.kapua.sso.exception.SsoException;
@@ -122,12 +123,16 @@ public abstract class AbstractSingleSignOnService implements SingleSignOnService
 
     @Override
     public String getLoginUri(final String state, final URI redirectUri) throws SsoLoginUriException {
-        StringBuilder logStr = new StringBuilder();
-        logStr.append("Requested SSO login URI:");
+        ConfigurationPrinter reqLogger =
+                ConfigurationPrinter
+                        .create()
+                        .withLogger(logger)
+                        .withLogLevel(ConfigurationPrinter.LogLevel.DEBUG)
+                        .withTitle("SSO: getting login URI");
         try {
             final String authUri = getAuthUri();
             final URIBuilder uri = new URIBuilder(authUri);
-            logStr.append("\n\tURI: ").append(authUri);
+            reqLogger.addParameter("URI", authUri);
 
             uri.addParameter("scope", "openid");
             uri.addParameter("response_type", "code");
@@ -136,9 +141,9 @@ public abstract class AbstractSingleSignOnService implements SingleSignOnService
             uri.addParameter("redirect_uri", redirectUri.toString());
 
             // logging parameters
-            logStr.append("\n\tParameters:");
+            reqLogger.addHeader("Parameters").increaseIndentation();
             for (NameValuePair nameValuePair : uri.getQueryParams()) {
-                logStr.append("\n\t\t").append(nameValuePair);
+                reqLogger.addParameter(nameValuePair.getName(), nameValuePair.getValue());
             }
 
             return uri.toString();
@@ -149,18 +154,22 @@ public abstract class AbstractSingleSignOnService implements SingleSignOnService
             logger.error("Error while retrieving the authentication URI {}", se.getLocalizedMessage(), se);
             throw new SsoLoginUriException(se);
         } finally {
-            logger.debug("{}", logStr);
+            reqLogger.printLog();
         }
     }
 
     @Override
     public String getLogoutUri(final String idTokenHint, final URI postLogoutRedirectUri, final String state) throws SsoLogoutUriException {
-        StringBuilder logStr = new StringBuilder();
-        logStr.append("Requested SSO logout URI:");
+        ConfigurationPrinter reqLogger =
+                ConfigurationPrinter
+                        .create()
+                        .withLogger(logger)
+                        .withLogLevel(ConfigurationPrinter.LogLevel.DEBUG)
+                        .withTitle("SSO: getting logout URI");
         try {
             final String logoutUri = getLogoutUri();
             final URIBuilder uri = new URIBuilder(logoutUri);
-            logStr.append("\n\tURI: ").append(logoutUri);
+            reqLogger.addParameter("URI", logoutUri);
 
             if (idTokenHint != null) { // idTokenHint is recommended
                 uri.addParameter("id_token_hint", idTokenHint);
@@ -173,13 +182,13 @@ public abstract class AbstractSingleSignOnService implements SingleSignOnService
             }
 
             // logging parameters
-            logStr.append("\n\tParameters:");
+            reqLogger.addHeader("Parameters").increaseIndentation();
             for (NameValuePair nameValuePair : uri.getQueryParams()) {
                 String name = nameValuePair.getName();
                 if (name.equals("id_token_hint")) {
-                    logStr.append("\n\t\t").append(name).append("=").append(HIDDEN_SECRET);
+                    reqLogger.addParameter(name, HIDDEN_SECRET);
                 } else {
-                    logStr.append("\n\t\t").append(nameValuePair);
+                    reqLogger.addParameter(name, nameValuePair.getValue());
                 }
             }
 
@@ -191,7 +200,7 @@ public abstract class AbstractSingleSignOnService implements SingleSignOnService
             logger.error("Error while retrieving the logout URI {}", se.getLocalizedMessage(), se);
             throw new SsoLogoutUriException(se);
         } finally {
-            logger.debug("{}", logStr);
+            reqLogger.printLog();
         }
     }
 
@@ -202,17 +211,21 @@ public abstract class AbstractSingleSignOnService implements SingleSignOnService
     public JsonObject getAccessToken(final String authCode, final URI redirectUri) throws SsoAccessTokenException {
         // FIXME: switch to HttpClient implementation: better performance and connection caching
 
-        StringBuilder logStr = new StringBuilder();
-        logStr.append("SSO access token HTTP request:");
+        ConfigurationPrinter reqLogger =
+                ConfigurationPrinter
+                        .create()
+                        .withLogger(logger)
+                        .withLogLevel(ConfigurationPrinter.LogLevel.DEBUG)
+                        .withTitle("SSO access token HTTP request");
         try {
             URL url = new URL(getTokenUri());
-            logStr.append("\n\tUrl: ").append(url);
+            reqLogger.addParameter("URL", url);
 
             final HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
             urlConnection.setRequestMethod("POST");
             urlConnection.setRequestProperty(HttpHeaders.CONTENT_TYPE, URLEncodedUtils.CONTENT_TYPE);
-            logStr.append("\n\tHTTP request method: ").append(urlConnection.getRequestMethod());
+            reqLogger.addParameter("HTTP request method", urlConnection.getRequestMethod());
 
             final List<NameValuePair> parameters = new ArrayList<NameValuePair>();
             parameters.add(new BasicNameValuePair("grant_type", "authorization_code"));
@@ -226,14 +239,15 @@ public abstract class AbstractSingleSignOnService implements SingleSignOnService
 
             parameters.add(new BasicNameValuePair("redirect_uri", redirectUri.toString()));
 
-            logStr.append("\n\tParameters:");
+            reqLogger.addHeader("Parameters").increaseIndentation();
             for (NameValuePair nameValuePair : parameters) {
                 String name = nameValuePair.getName();
                 if (name.equals("code") || name.equals("client_secret")) {
-                    logStr.append("\n\t\t").append(name).append("=").append(HIDDEN_SECRET);
+                    reqLogger.addParameter(name, HIDDEN_SECRET);
                 } else {
-                    logStr.append("\n\t\t").append(nameValuePair);
+                    reqLogger.addParameter(name, nameValuePair.getValue());
                 }
+                reqLogger.decreaseIndentation();
             }
 
             final UrlEncodedFormEntity entity = new UrlEncodedFormEntity(parameters);
@@ -246,11 +260,11 @@ public abstract class AbstractSingleSignOnService implements SingleSignOnService
 
             // parse result
             try (InputStream stream = urlConnection.getInputStream(); JsonReader jsonReader = Json.createReader(stream)) {
-                logStr.append("\n\tResponse code: ").append(urlConnection.getResponseCode());
+                reqLogger.addParameter("Response code", urlConnection.getResponseCode());
                 JsonObject result = jsonReader.readObject();
-                logStr.append("\n\tResponse body:");
-                logStr.append("\n\t\taccess_token: ").append(HIDDEN_SECRET);
-                logStr.append("\n\t\tid_token: ").append(HIDDEN_SECRET);
+                reqLogger.addHeader("Response body").increaseIndentation();
+                reqLogger.addParameter("access_token", HIDDEN_SECRET);
+                reqLogger.addParameter("id_token", HIDDEN_SECRET);
                 logger.debug("Successfully obtained access token.");
                 return result;
             }
@@ -270,7 +284,7 @@ public abstract class AbstractSingleSignOnService implements SingleSignOnService
             logger.error("Error while getting the access token {}", ioe.getLocalizedMessage(), ioe);
             throw new SsoAccessTokenException(ioe);
         } finally {
-            logger.debug("{}", logStr);
+            reqLogger.printLog();
         }
     }
 
