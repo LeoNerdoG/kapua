@@ -19,7 +19,6 @@ import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
-import java.util.List;
 
 @Category(JUnitTests.class)
 public class ConfigurationPrinterTest extends Assert {
