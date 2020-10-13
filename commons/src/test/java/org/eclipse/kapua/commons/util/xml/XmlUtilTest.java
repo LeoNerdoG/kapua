@@ -30,13 +30,12 @@ public class XmlUtilTest extends Assert {
     }
 
     @Test
-    public void setContextProviderTest() {
-        JAXBContextProvider provider = null;
-        XmlUtil.setContextProvider(provider);
+    public void setContextNullProviderTest() {
+        XmlUtil.setContextProvider(null);
     }
 
     @Test
-    public void marshalTest() throws Exception {
+    public void marshalTest() {
         Object[] jaxbElements = new Object[]{123, "string", "s"};
 
         // JAXBException
@@ -58,7 +57,7 @@ public class XmlUtilTest extends Assert {
     }
 
     @Test
-    public void marshalJsonTest() throws Exception {
+    public void marshalJsonTest() {
         Object[] jaxbElements = new Object[]{123, "string", "s"};
 
         // JAXBException
@@ -80,7 +79,7 @@ public class XmlUtilTest extends Assert {
     }
 
     @Test
-    public void unmarshalTest() throws JAXBException {
+    public void unmarshalTest() {
         String[] listOfStrings = new String[]{"string", "s123@#", null};
         Class[] listOfClasses = new Class[]{Integer.class, Character.class, String.class, Long.class, Short.class, Float.class, Double.class, Byte.class, Boolean.class};
 
@@ -130,7 +129,7 @@ public class XmlUtilTest extends Assert {
     }
 
     @Test
-    public void unmarshalJsonTest() throws JAXBException {
+    public void unmarshalJsonTest() {
         String[] listOfStrings = new String[]{"string", "s123@#", null};
         Class[] listOfClasses = new Class[]{Integer.class, Character.class, String.class, Long.class, Short.class, Float.class, Double.class, Byte.class, Boolean.class};
 

@@ -18,14 +18,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.logging.SimpleFormatter;
-import java.util.logging.StreamHandler;
 
 @Category(JUnitTests.class)
 public class ConfigurationPrinterTest extends Assert {
@@ -166,33 +159,40 @@ public class ConfigurationPrinterTest extends Assert {
     }
 
     @Test
-    public void printLogTest() throws NoSuchFieldException, IllegalAccessException {
+    public void printLogTest() {
         Object[] objects = new Object[]{"[string]", 1, 1.1234, 1123456789L, 1.123456D, 123912839F, true, false, 'a', (byte) 100, (short) 10,};
         configurationPrinter.withLogger(logger);
         configurationPrinter.withTitle("Title");
         configurationPrinter.addHeader("Header");
-        String[] enumArray = new String[]{configurationPrinter.withLogLevel(ConfigurationPrinter.LogLevel.DEBUG,
-                configurationPrinter.withLogLevel(ConfigurationPrinter.LogLevel.ERROR,
-                        configurationPrinter.withLogLevel(ConfigurationPrinter.LogLevel.INFO, configurationPrinter.withLogLevel(ConfigurationPrinter.LogLevel.TRACE,
-                                configurationPrinter.withLogLevel(ConfigurationPrinter.LogLevel.WARN};
-        configurationPrinter.withLogLevel(ConfigurationPrinter.LogLevel.DEBUG);
+        ConfigurationPrinter.LogLevel[] enumArray = new ConfigurationPrinter.LogLevel[]{
+                ConfigurationPrinter.LogLevel.DEBUG,
+                ConfigurationPrinter.LogLevel.ERROR,
+                ConfigurationPrinter.LogLevel.INFO,
+                ConfigurationPrinter.LogLevel.TRACE,
+                ConfigurationPrinter.LogLevel.WARN};
         for (Object object:objects){
-            for(String enumArrayVal:enumArray) {
-
+            for(ConfigurationPrinter.LogLevel enumArrayVal:enumArray) {
+                configurationPrinter.withLogLevel(enumArrayVal);
+                configurationPrinter.withTitleAlignment(ConfigurationPrinter.TitleAlignment.CENTER);
+                configurationPrinter.addParameter("parameter",object);
+                configurationPrinter.printLog();
             }
-            configurationPrinter.withTitleAlignment(ConfigurationPrinter.TitleAlignment.CENTER);
-            configurationPrinter.addParameter("parameter",object);
-            configurationPrinter.printLog();
         }
-        for (Object object:objects){
-            configurationPrinter.withTitleAlignment(ConfigurationPrinter.TitleAlignment.LEFT);
-            configurationPrinter.addParameter("parameter",object);
-            configurationPrinter.printLog();
+        for (Object object:objects) {
+            for (ConfigurationPrinter.LogLevel enumArrayVal : enumArray) {
+                configurationPrinter.withLogLevel(enumArrayVal);
+                configurationPrinter.withTitleAlignment(ConfigurationPrinter.TitleAlignment.LEFT);
+                configurationPrinter.addParameter("parameter", object);
+                configurationPrinter.printLog();
+            }
         }
-        for (Object object:objects){
-            configurationPrinter.withTitleAlignment(ConfigurationPrinter.TitleAlignment.RIGHT);
-            configurationPrinter.addParameter("parameter",object);
-            configurationPrinter.printLog();
+        for (Object object:objects) {
+            for (ConfigurationPrinter.LogLevel enumArrayVal : enumArray) {
+                configurationPrinter.withLogLevel(enumArrayVal);
+                configurationPrinter.withTitleAlignment(ConfigurationPrinter.TitleAlignment.RIGHT);
+                configurationPrinter.addParameter("parameter", object);
+                configurationPrinter.printLog();
+            }
         }
     }
 
