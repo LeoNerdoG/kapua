@@ -28,6 +28,9 @@ import org.junit.experimental.categories.Category;
 import java.util.HashMap;
 import java.util.Map;
 
+
+// COMMENT: We have to refactor this class, but not at this time. for now, leave it as it is.
+// just delete the comments bellow.
 @Category(JUnitTests.class)
 public class ConnectorDescriptorTest extends Assert {
 
@@ -52,6 +55,7 @@ public class ConnectorDescriptorTest extends Assert {
         kapuaBrokerJAXBContextLoader.reset();
     }
 
+    // COMMENT: Delete this description please
     /**
      * A simple test to get a default descriptor
      */
@@ -61,6 +65,7 @@ public class ConnectorDescriptorTest extends Assert {
         assertNotNull("Null not expected.", provider);
     }
 
+    // COMMENT: Delete this description please
     /**
      * A simple test to get a descriptor
      */
@@ -71,6 +76,7 @@ public class ConnectorDescriptorTest extends Assert {
         assertNotNull("Null not expected.", descriptor);
     }
 
+    // COMMENT: Delete this description please
     /**
      * A simple test to get a descriptor
      */
@@ -79,6 +85,7 @@ public class ConnectorDescriptorTest extends Assert {
         assertNotNull("Null not expected.", ConnectorDescriptorProviders.getDescriptor("foo"));
     }
 
+    // COMMENT: Delete this description please
     /**
      * Test for getTransportProtocol
      */
@@ -89,6 +96,7 @@ public class ConnectorDescriptorTest extends Assert {
         assertEquals("Expected and actual values should be the same.", "MQTT", descriptor.getTransportProtocol());
     }
 
+    // COMMENT: Delete this description please
     /**
      * Use a default provider, disabling the default descriptor
      * <p>
@@ -107,6 +115,7 @@ public class ConnectorDescriptorTest extends Assert {
         });
     }
 
+    // COMMENT: Delete this description please
     /**
      * Use a default provider, configuring a file which does not exist
      */
@@ -118,6 +127,7 @@ public class ConnectorDescriptorTest extends Assert {
         Tests.runWithProperties(properties, DefaultConnectorDescriptionProvider::new);
     }
 
+    // COMMENT: Delete this description please
     /**
      * Use a default provider, configuring a file which does exist, but allow default fallback
      */
@@ -133,6 +143,7 @@ public class ConnectorDescriptorTest extends Assert {
         });
     }
 
+    // COMMENT: Delete this description please
     /**
      * Use a default provider, configuring an empty file, disabling default
      */
@@ -149,6 +160,7 @@ public class ConnectorDescriptorTest extends Assert {
         });
     }
 
+    // COMMENT: Delete this description please
     /**
      * Use a default provider, configuring a non-empty configuration
      */
@@ -173,6 +185,7 @@ public class ConnectorDescriptorTest extends Assert {
         });
     }
 
+    // COMMENT: Delete this description please
     /**
      * Use a default provider, configuring a non-empty, invalid configuration
      */
@@ -185,6 +198,7 @@ public class ConnectorDescriptorTest extends Assert {
         Tests.runWithProperties(properties, DefaultConnectorDescriptionProvider::new);
     }
 
+    // COMMENT: Delete this description please
     /**
      * Empty configuration URL
      */
