@@ -24,11 +24,15 @@ public class EndPointTest extends Assert {
 
     @Test
     public void replacePlaceholderTest() {
+        // COMMENT: Missing escape characters in regexValues array: \s, \b, \f, \", \1, \2, \3, \4, \5, \6, \7, \0
         String[] regexValues = {null, "\\", "regex","re gex","", "re\\gex", "re\tge", "reg\nex1234567890", "!@#$%^&*()_+=-/.,?><|:;'|", "\'"};
         for (String value : regexValues) {
             assertEquals("Expected and actual values should be the same.", value, EndPoint.replacePlaceholder(value));
         }
     }
+
+    // COMMENT: Can you achieve an exception in replacePlaceholder method? Is there a string that may provoke
+    // this behaviour? Becasue in parseRegex test you achieved this.
 
     @Test
     public void parseRegexNullTest() {

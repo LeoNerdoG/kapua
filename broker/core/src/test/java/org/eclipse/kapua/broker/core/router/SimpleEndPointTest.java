@@ -42,8 +42,10 @@ public class SimpleEndPointTest extends Assert {
         simpleEndPoint = new SimpleEndPoint();
         exchange = Mockito.mock(Exchange.class);
         values = new Object[]{null, true, false, 'c', "String", 10, 10L, 10.11f, 10.11d, 1, 0};
+        // COMMENT: Please add additional strings that include aplhanumeric characters and symbols
         previousList = new String[]{"Previous", "Previous1234567890", "Previous!@#$%^&*()_+?><|/."};
         properties = new HashMap<>();
+        // COMMENT: Same as above.
         topics = new String[]{"originalTopic", "Topic", "Topic1234567890", "Topic!@#$%^&*()_=-/."};
         message = Mockito.mock(Message.class);
         stringBuffer = new StringBuffer();
@@ -96,6 +98,7 @@ public class SimpleEndPointTest extends Assert {
             assertFalse("False expected.", simpleEndPoint.matches(exchange, value, null, properties));
         }
     }
+    // COMMENT: Adding tests for null "value" parameter?
 
     @Test
     public void matchesNullPreviousTrueTest() {
@@ -163,14 +166,18 @@ public class SimpleEndPointTest extends Assert {
 
     @Test
     public void setAndGetEndPointTest() {
+        // COMMENT: Please try with oter string also (alphanumerci characters, symbols...)
         simpleEndPoint.setEndPoint("End Point");
         assertEquals("Expected and actual values should be the same.", "End Point", simpleEndPoint.getEndPoint());
         simpleEndPoint.setEndPoint(null);
         assertNull("Null expected.", simpleEndPoint.getEndPoint());
     }
 
+    // COMMENT: Please move this test above, before tests for set and get endpoint, becasue that is
+    // the order in the tested class.
     @Test
     public void setAndGetRegexTest() {
+        // COMMENT: Please add additional stings as regex-es, including escape characters...?
         assertNull("Null expected.", simpleEndPoint.getRegex());
         simpleEndPoint.setRegex("Regex");
         assertEquals("Expected and actual values should be the same.", "Regex", simpleEndPoint.getRegex());

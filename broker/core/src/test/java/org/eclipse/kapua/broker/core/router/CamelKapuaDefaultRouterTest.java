@@ -63,6 +63,8 @@ public class CamelKapuaDefaultRouterTest extends Assert {
     @Test(expected = KapuaRuntimeException.class)
     public void camelKapuaDefaultRouterExceptionTest() {
         kapuaBrokerJAXBContextLoader.reset();
+        // COMMENT: You can use only "new Camel..." without assigning it to a new variable, becasue the variable
+        // is not used.
         CamelKapuaDefaultRouter defaultRouter = new CamelKapuaDefaultRouter();
     }
 

@@ -56,6 +56,7 @@ public class EndChainEndPointTest extends Assert {
     }
 
     @Test
+    // COMMENT: Two "p" in test name, please fix it.
     public void matchesNullPPropertiesTest() {
         for (Exchange exchange : exchanges) {
             for (Object value : values) {
@@ -65,6 +66,7 @@ public class EndChainEndPointTest extends Assert {
             }
         }
     }
+    // COMMENT: Adding tests for when exchange, value and previous are nulL?
 
     @Test
     public void getEndPointTest() {
@@ -87,6 +89,7 @@ public class EndChainEndPointTest extends Assert {
             }
         }
     }
+    // COMMENT: Adding tests for when exchange, value and previous are nulL?
 
     @Test
     public void toLogTest() {

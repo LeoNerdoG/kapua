@@ -39,6 +39,8 @@ public class EndPointAdapterTest extends Assert {
         endPointAdapter = new EndPointAdapter();
     }
 
+    // COMMENT: This method is not void, so you should use assert if possible. This method returns an Element.
+    // COMMENT: Please test what happens with NULL list and empty list.
     @Test(expected = ClassCastException.class)
     public void marshalTest() throws Exception {
         EndPoint endPoint = new EndChainEndPoint();
@@ -59,6 +61,9 @@ public class EndPointAdapterTest extends Assert {
         assertThat("Instance of List expected.", endPointAdapter.unmarshal(element), IsInstanceOf.instanceOf(List.class));
         assertTrue("True expected", endPointAdapter.unmarshal(element).isEmpty());
     }
+
+    // COMMENT: Please add tests for  null parameters (Element == null)
+    // COMMENT: Can you fill the Element with nodeChilds? So we have an non-empty and valid Element array?
 
     @Test
     public void jaxbContextHandlerTest() {

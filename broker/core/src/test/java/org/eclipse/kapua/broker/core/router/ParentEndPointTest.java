@@ -44,6 +44,8 @@ public class ParentEndPointTest extends Assert {
         parentEndPoint = new ParentEndPoint();
         exchange = Mockito.mock(Exchange.class);
         values = new Object[]{null, true, false, 'c', "String", 10, 10L, 10.11f, 10.11d, 1, 0};
+        // COMMENT: If you are have a string array, I suggest you pu in all possible alphanumeric characters
+        // combined with all other symbols.
         previousList = new String[]{"Previous", "Previous1234567890", "Previous!@#$%^&*()_+?><|/."};
         properties = new HashMap<>();
         message = Mockito.mock(Message.class);
@@ -109,6 +111,7 @@ public class ParentEndPointTest extends Assert {
     }
 
     @Test
+    // COMMENT: Why is this method called ...ChainEndPointTest() ?
     public void setAndGetChainEndPointTest() {
         EndPoint endPoint = new EndChainEndPoint();
         endPoints.add(endPoint);
@@ -156,6 +159,8 @@ public class ParentEndPointTest extends Assert {
 
     @Test
     public void setAndGetRegexTest() {
+        // COMMENT: Can you add additional tests/strings, that include various escape characters, spaces and
+        //  other symbols?
         assertNull("Null expected.", parentEndPoint.getRegex());
         parentEndPoint.setRegex("Regex");
         assertEquals("Expected and actual values should be the same.", "Regex", parentEndPoint.getRegex());

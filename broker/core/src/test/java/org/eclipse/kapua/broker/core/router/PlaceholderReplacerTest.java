@@ -24,6 +24,7 @@ import java.lang.reflect.Modifier;
 public class PlaceholderReplacerTest extends Assert {
 
     @Test
+    // COMMENT: Can you just please replace all the  exceptions thrown into one "Exception"?
     public void placeholderReplacerTest() throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
         Constructor<PlaceholderReplacer> placeholderReplacer = PlaceholderReplacer.class.getDeclaredConstructor();
         assertTrue(Modifier.isPrivate(placeholderReplacer.getModifiers()));
@@ -33,6 +34,7 @@ public class PlaceholderReplacerTest extends Assert {
 
     @Test
     public void replaceTest() {
+        // COMMENT: Can you add additional tests for this? Only testing with "test" string is not enough.
         String stringValue = PlaceholderReplacer.replace("test");
         assertEquals("Expected and actual values should be the same.", "test", stringValue);
     }
