@@ -86,7 +86,7 @@ public class AbstractBaseKapuaSetting<K extends SettingKey> {
     }
 
     /**
-     * Get the property list values for the key 'key'
+     * Get the property list values for the key 'key'LocatorTest
      *
      * @param cls
      * @param key
