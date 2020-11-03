@@ -127,7 +127,7 @@
                                     </run>
                                 </image>
                                 <image>
-                                    <alias>broker</alias>
+                                    <alias>kapua-broker</alias>
                                     <name>kapua/kapua-broker:1.3.0-SNAPSHOT</name>
                                     <run>
                                         <ports>
@@ -160,13 +160,13 @@
                                             <port>8443:8443</port>
                                         </ports>
                                         <dependsOn>
-                                            <container>broker</container>
+                                            <container>kapua-broker</container>
                                             <container>db</container>
                                             <container>es</container>
                                             <container>events-broker</container>
                                         </dependsOn>
                                         <links>
-                                            <link>broker:broker</link>
+                                            <link>kapua-broker:kapua-broker</link>
                                             <link>db:db</link>
                                             <link>es:es</link>
                                             <link>events-broker:events-broker</link>
@@ -186,19 +186,19 @@
                                             <port>8444:8443</port>
                                         </ports>
                                         <dependsOn>
-                                            <container>broker</container>
+                                            <container>kapua-broker</container>
                                             <container>db</container>
                                             <container>es</container>
                                             <container>events-broker</container>
                                         </dependsOn>
                                         <links>
-                                            <link>broker:broker</link>
+                                            <link>kapua-broker:kapua-broker</link>
                                             <link>db:db</link>
                                             <link>es:es</link>
                                             <link>events-broker:events-broker</link>
                                         </links>
                                         <wait>
-                                            <log>Starting service modules...DONE</log>
+                                            <log>org.eclipse.jetty.server.Server - Started</log>
                                             <time>60000</time>
                                         </wait>
                                     </run>
@@ -209,7 +209,6 @@
                         <executions>
                             <execution>
                                 <id>start</id>
-                                <!--<phase>pre-integration-test</phase>-->
                                 <phase>generate-test-resources</phase>
                                 <goals>
                                     <goal>start</goal>
@@ -217,7 +216,6 @@
                             </execution>
                             <execution>
                                 <id>stop</id>
-                                <!--<phase>post-integration-test</phase>-->
                                 <phase>prepare-package</phase>
                                 <goals>
                                     <goal>stop</goal>
@@ -232,7 +230,7 @@
                             <argLine>@{argLine} -Xmx1024m</argLine>
                             <systemPropertyVariables>
                                 <cucumber.options>--tags @integration</cucumber.options>
-                                <groups>'!org.eclipse.kapua.test.junit.JUnitTests'</groups>
+                                <groups>'!org.eclipse.kapua.qa.markers.junit.JUnitTests'</groups>
                                 <commons.settings.hotswap>true</commons.settings.hotswap>
                                 <org.eclipse.kapua.qa.noEmbeddedServers>true</org.eclipse.kapua.qa.noEmbeddedServers>
                                 <commons.db.jdbcConnectionUrlResolver>DEFAULT</commons.db.jdbcConnectionUrlResolver>
