@@ -18,8 +18,11 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.awt.ConstrainableGraphics;
 
+import javax.security.auth.login.Configuration;
 import java.util.ArrayList;
+import java.util.List;
 
 @Category(JUnitTests.class)
 public class ConfigurationPrinterTest extends Assert {
@@ -95,7 +98,29 @@ public class ConfigurationPrinterTest extends Assert {
     }
 
     @Test
-    public void getConfigurationTest() {
+    public void getConfigurationAddHeaderAndParameterTest() {
+        List list = new ArrayList();
+        ConfigurationPrinter configurationPrinterAddHeader = configurationPrinter;
+        ConfigurationPrinter configurationPrinterAddParameter = configurationPrinter;
+
+        assertEquals("Expected and actual values should be the same",
+                list, configurationPrinter.getConfigurations());
+        configurationPrinter.addHeader("Header");
+        assertNotEquals("Expected and actual values should not be the same", list, configurationPrinterAddHeader.getConfigurations());
+        configurationPrinterAddParameter.addParameter("Parameter", null);
+        assertNotEquals("Expected and actual values should not be the same", list, configurationPrinterAddParameter.getConfigurations());
+// tukaj se moras: ce das header ali parameter null
+
+    }
+
+    @Test
+    public void addHeaderTest() {
+
+
+    }
+
+    @Test
+    public void addParameterTest() {
         assertEquals("Expected and actual values should be the same",
                 new ArrayList<>(), configurationPrinter.getConfigurations());
 
@@ -103,11 +128,19 @@ public class ConfigurationPrinterTest extends Assert {
 
     @Test
     public void increaseIndentationTest() {
-//        metoda increaseIdentation povecuje zamik pred novo vrstico
-//        ali naj z printom testiram???
 
         assertEquals("Expected and actual values should be the same",
                 configurationPrinter, configurationPrinter.increaseIndentation());
+
+//        ConfigurationPrinter configurationPrinter1 = configurationPrinter.addHeader("Header");
+//        ConfigurationPrinter configurationPrinter2 = configurationPrinter1.increaseIndentation();
+//        assertNotEquals("Expected and actual values should not be the same", configurationPrinter1, configurationPrinter2);
+
+//        String what = configurationPrinter.toString();
+
+//        List listConfigurations = configurationPrinter.getConfigurations();
+//        System.out.println(listConfigurations.get(0).toString());
+        configurationPrinter.addHeader("Header");
     }
     @Test
     public void printLogTest() {
