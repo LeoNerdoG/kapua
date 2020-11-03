@@ -18,9 +18,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.awt.ConstrainableGraphics;
 
-import javax.security.auth.login.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +81,7 @@ public class ConfigurationPrinterTest extends Assert {
     @Test
     public void getAndWithTitleAlignmentTest() {
         ConfigurationPrinter configurationPrinter = new ConfigurationPrinter();
-        ConfigurationPrinter.TitleAlignment[] titleAlignment  = new ConfigurationPrinter.TitleAlignment[] {
+        ConfigurationPrinter.TitleAlignment[] titleAlignment = new ConfigurationPrinter.TitleAlignment[] {
                 ConfigurationPrinter.TitleAlignment.CENTER,
                 ConfigurationPrinter.TitleAlignment.LEFT,
                 ConfigurationPrinter.TitleAlignment.RIGHT
@@ -112,23 +110,24 @@ public class ConfigurationPrinterTest extends Assert {
         assertNotEquals("Expected and actual values should not be the same", list, configurationPrinterAddParameter.getConfigurations());
     }
 
-
-
     @Test
     public void increaseIndentationTest() {
 
-        assertEquals("Expected and actual values should be the same",
-                configurationPrinter, configurationPrinter.increaseIndentation());
+//        assertNotEquals("Expected and actual values should not be the same",
+//                configurationPrinter.getConfigurations(), configurationPrinter.increaseIndentation().getConfigurations());
 
-//        ConfigurationPrinter configurationPrinter1 = configurationPrinter.addHeader("Header");
-//        ConfigurationPrinter configurationPrinter2 = configurationPrinter1.increaseIndentation();
-//        assertNotEquals("Expected and actual values should not be the same", configurationPrinter1, configurationPrinter2);
+        ConfigurationPrinter configurationPrinter1 = configurationPrinter.addHeader("Header");
+        ConfigurationPrinter configurationPrinter2 = configurationPrinter1;
+        configurationPrinter2.increaseIndentation();
+        assertNotEquals("Expected and actual values should not be the same",
+                configurationPrinter1.getConfigurations(),
+                configurationPrinter2.getConfigurations());
 
 //        String what = configurationPrinter.toString();
 
 //        List listConfigurations = configurationPrinter.getConfigurations();
 //        System.out.println(listConfigurations.get(0).toString());
-        configurationPrinter.addHeader("Header");
+//        configurationPrinter.addHeader("Header");
     }
     @Test
     public void printLogTest() {
