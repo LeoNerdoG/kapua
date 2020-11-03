@@ -103,28 +103,16 @@ public class ConfigurationPrinterTest extends Assert {
         ConfigurationPrinter configurationPrinterAddHeader = configurationPrinter;
         ConfigurationPrinter configurationPrinterAddParameter = configurationPrinter;
 
-        assertEquals("Expected and actual values should be the same",
-                list, configurationPrinter.getConfigurations());
+        assertEquals("Expected and actual values should be the same", list, configurationPrinter.getConfigurations());
+
         configurationPrinter.addHeader("Header");
-        assertNotEquals("Expected and actual values should not be the same", list, configurationPrinterAddHeader.getConfigurations());
         configurationPrinterAddParameter.addParameter("Parameter", null);
+
+        assertNotEquals("Expected and actual values should not be the same", list, configurationPrinterAddHeader.getConfigurations());
         assertNotEquals("Expected and actual values should not be the same", list, configurationPrinterAddParameter.getConfigurations());
-// tukaj se moras: ce das header ali parameter null
-
     }
 
-    @Test
-    public void addHeaderTest() {
 
-
-    }
-
-    @Test
-    public void addParameterTest() {
-        assertEquals("Expected and actual values should be the same",
-                new ArrayList<>(), configurationPrinter.getConfigurations());
-
-    }
 
     @Test
     public void increaseIndentationTest() {
