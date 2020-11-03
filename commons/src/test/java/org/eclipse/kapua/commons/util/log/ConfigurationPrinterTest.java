@@ -13,20 +13,31 @@ package org.eclipse.kapua.commons.util.log;
 
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 @Category(JUnitTests.class)
 public class ConfigurationPrinterTest extends Assert {
 
+    ConfigurationPrinter configurationPrinter;
+    @Before
+    public void initialize() {
+        configurationPrinter = new ConfigurationPrinter();
+    }
+
+    @Test
+    public void createTest() {
+        assertNotEquals("Expected and actual values should not be the same", configurationPrinter, ConfigurationPrinter.create());
+
+    }
+
     @Test
     public void getAndWithParentLoggerTest() {
-        ConfigurationPrinter configurationPrinter = new ConfigurationPrinter();
         Logger logger = LoggerFactory.getLogger(ConfigurationPrinter.class);
 
         assertNull("Null expected", configurationPrinter.getParentLogger());
@@ -38,7 +49,6 @@ public class ConfigurationPrinterTest extends Assert {
 
     @Test
     public void getAndWithLogLevelTest() {
-        ConfigurationPrinter configurationPrinter = new ConfigurationPrinter();
         ConfigurationPrinter.LogLevel[] logLevel = new ConfigurationPrinter.LogLevel[]{
                 ConfigurationPrinter.LogLevel.DEBUG,
                 ConfigurationPrinter.LogLevel.ERROR,
@@ -56,7 +66,6 @@ public class ConfigurationPrinterTest extends Assert {
 
     @Test
     public void getAndWithTitleTest() {
-        ConfigurationPrinter configurationPrinter = new ConfigurationPrinter();
         String title = "string";
 
         assertNull("Null expected", configurationPrinter.getTitle());
@@ -77,9 +86,6 @@ public class ConfigurationPrinterTest extends Assert {
                 ConfigurationPrinter.TitleAlignment.RIGHT
         };
 
-        assertEquals("Expected and actual values should be the same",
-                ConfigurationPrinter.TitleAlignment.CENTER, configurationPrinter.getTitleAlignment());
-
         for (ConfigurationPrinter.TitleAlignment tA : titleAlignment) {
             configurationPrinter.withTitleAlignment(tA);
             assertEquals("Expected and actual values should be the same",tA,
@@ -90,12 +96,24 @@ public class ConfigurationPrinterTest extends Assert {
 
     @Test
     public void getConfigurationTest() {
-        ConfigurationPrinter configurationPrinter = new ConfigurationPrinter();
-
         assertEquals("Expected and actual values should be the same",
                 new ArrayList<>(), configurationPrinter.getConfigurations());
 
     }
+
+    @Test
+    public void increaseIndentationTest() {
+//        metoda increaseIdentation povecuje zamik pred novo vrstico
+//        ali naj z printom testiram???
+
+        assertEquals("Expected and actual values should be the same",
+                configurationPrinter, configurationPrinter.increaseIndentation());
+    }
+    @Test
+    public void printLogTest() {
+
+    }
+
 
 
 
