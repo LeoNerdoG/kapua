@@ -129,10 +129,10 @@ public class ConfigurationPrinterTest extends Assert {
 //        System.out.println(listConfigurations.get(0).toString());
 //        configurationPrinter.addHeader("Header");
     }
-    
+
     @Test
     public void printLogTest() {
-
+        System.out.println();
     }
 
 
