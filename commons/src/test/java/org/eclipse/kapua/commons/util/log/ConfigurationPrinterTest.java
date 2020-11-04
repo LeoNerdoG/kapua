@@ -12,10 +12,12 @@
 package org.eclipse.kapua.commons.util.log;
 
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,15 +28,18 @@ import java.util.List;
 public class ConfigurationPrinterTest extends Assert {
 
     ConfigurationPrinter configurationPrinter;
+    Logger mockLogger;
+
     @Before
     public void initialize() {
         configurationPrinter = new ConfigurationPrinter();
+        mockLogger = Mockito.mock(Logger.class);
     }
 
     @Test
     public void createTest() {
-        assertNotEquals("Expected and actual values should not be the same", configurationPrinter, ConfigurationPrinter.create());
-
+        assertNotNull("Null not expected", configurationPrinter);
+        assertThat("Instance of ConfigurationPrinter expected.", ConfigurationPrinter.create(), IsInstanceOf.instanceOf(ConfigurationPrinter.class));
     }
 
     @Test
@@ -67,14 +72,25 @@ public class ConfigurationPrinterTest extends Assert {
 
     @Test
     public void getAndWithTitleTest() {
-        String title = "string";
+        String title = "Title";
 
         assertNull("Null expected", configurationPrinter.getTitle());
 
         configurationPrinter.withTitle(title);
 
-        assertEquals("Expected and actual values should be the same", "string",
+        assertEquals("Expected and actual values should be the same", "Title",
                 configurationPrinter.getTitle());
+
+    }
+
+    @Test
+    public void withTitleTest() {
+        ConfigurationPrinter.create()
+                .withLogger(mockLogger)
+                .withTitle("Title")
+                .printLog();
+
+
 
     }
 
@@ -113,21 +129,6 @@ public class ConfigurationPrinterTest extends Assert {
     @Test
     public void increaseIndentationTest() {
 
-//        assertNotEquals("Expected and actual values should not be the same",
-//                configurationPrinter.getConfigurations(), configurationPrinter.increaseIndentation().getConfigurations());
-
-        ConfigurationPrinter configurationPrinter1 = configurationPrinter.addHeader("Header");
-        ConfigurationPrinter configurationPrinter2 = configurationPrinter1;
-        configurationPrinter2.increaseIndentation();
-        assertNotEquals("Expected and actual values should not be the same",
-                configurationPrinter1.getConfigurations(),
-                configurationPrinter2.getConfigurations());
-
-//        String what = configurationPrinter.toString();
-
-//        List listConfigurations = configurationPrinter.getConfigurations();
-//        System.out.println(listConfigurations.get(0).toString());
-//        configurationPrinter.addHeader("Header");
     }
 
     @Test
