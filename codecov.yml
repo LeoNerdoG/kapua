@@ -29,5 +29,6 @@ parsers:
 
 ignore:
     - "qa"
+    - "**/shiro"
     - "**/test/"
     - "**/test-steps/"
