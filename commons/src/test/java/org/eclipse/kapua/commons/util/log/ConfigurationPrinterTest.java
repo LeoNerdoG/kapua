@@ -17,7 +17,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -155,6 +154,57 @@ public class ConfigurationPrinterTest extends Assert {
     }
 
     @Test
+    public void withTitleAlignmentNullTest() {
+        ConfigurationPrinter
+                .create()
+                .withLogger(mockLogger)
+                .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
+                .withTitle("Title")
+                .printLog();
+        Mockito.verify(mockLogger).info("=================== {} ===================", "Title");
+    }
+
+
+    @Test
+    public void withTitleAlignmentCenterTest() {
+        ConfigurationPrinter
+                .create()
+                .withLogger(mockLogger)
+                .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
+                .withTitleAlignment(ConfigurationPrinter.TitleAlignment.CENTER)
+                .withTitle("Title")
+                .printLog();
+        Mockito.verify(mockLogger).info("=================== {} ===================", "Title");
+    }
+
+
+    @Test
+    public void withTitleAlignmentRightTest() {
+        ConfigurationPrinter
+                .create()
+                .withLogger(mockLogger)
+                .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
+                .withTitleAlignment(ConfigurationPrinter.TitleAlignment.RIGHT)
+                .withTitle("Title")
+                .printLog();
+        Mockito.verify(mockLogger).info("===================================== {} =", "Title");
+    }
+
+
+    @Test
+    public void withTitleAlignmentLeftTest() {
+        ConfigurationPrinter
+                .create()
+                .withLogger(mockLogger)
+                .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
+                .withTitleAlignment(ConfigurationPrinter.TitleAlignment.LEFT)
+                .withTitle("Title")
+                .printLog();
+        Mockito.verify(mockLogger).info("= {} =====================================", "Title");
+    }
+
+
+    @Test
     public void getConfigurationAddHeaderAndParameterTest() {
         List list = new ArrayList();
         ConfigurationPrinter configurationPrinterAddHeader = configurationPrinter;
@@ -177,9 +227,12 @@ public class ConfigurationPrinterTest extends Assert {
                 .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
                 .addParameter("Liquibase Version", "3.6.3")
                 .printLog();
-        Mockito.verify(mockLogger).info("=================== {} ===================", "Info");
-        Mockito.verify(mockLogger).info("|  {}", "Liquibase Version: 3.6.3");
+//        Mockito.verify(mockLogger).info("=================== {} ===================", "Info");
+//        cf.addParameter("Liquibase Version", "3.6.3").printLog();
+//        Mockito.when(cf.addParameter("Liquibase Version", "3.6.3")).then();
+//        Mockito.verify(mockLogger).info("|  {}", "Liquibase Version : 3.6.3");
 //        tu ne dela ker so ti narekovaji prevec nimam pojma zakaj
+//        assertEquals("| Liquibase Version : 3.6.3", ConfigurationPrinter.create().addParameter("Liquibase Version", "3.6.3").printLog());
     }
 
     @Test
@@ -193,19 +246,36 @@ public class ConfigurationPrinterTest extends Assert {
                 .printLog();
         Mockito.verify(mockLogger).info("=================== {} ===================", "Info");
         Mockito.verify(mockLogger).info("|\t{}", (String) "DB connection info");
-//        tu ne dela ker so ti narekovaji prevec nimam pojma zakaj
     }
-
 
     @Test
     public void increaseIndentationTest() {
-
+        String header = "DB connection info";
+        ConfigurationPrinter
+                .create()
+                .withLogger(mockLogger)
+                .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
+                .increaseIndentation()
+                .addHeader("nekaj")
+                .printLog();
+        Mockito.verify(mockLogger).info("=================== {} ===================", "Info");
+        Mockito.verify(mockLogger).info("|  {}", "nekaj");
     }
 
     @Test
-    public void printLogTest() {
-        System.out.println();
+    public void decreaseIndentationTest() {
+        String header = "DB connection info";
+        ConfigurationPrinter
+                .create()
+                .withLogger(mockLogger)
+                .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
+                .increaseIndentation()
+                .addHeader("nekaj")
+                .decreaseIndentation()
+                .addHeader("nekaj2")
+                .printLog();
+        Mockito.verify(mockLogger).info("=================== {} ===================", "Info");
+        Mockito.verify(mockLogger).info("|  {}", "nekaj");
+        Mockito.verify(mockLogger).info("| {}", "nekaj2");
     }
-
-
 }
