@@ -29,19 +29,24 @@ public class ConfigurationPrinterTest extends Assert {
 
     ConfigurationPrinter configurationPrinter;
     Logger mockLogger;
-    ConfigurationPrinter cf;
 
     @Before
     public void initialize() {
         configurationPrinter = new ConfigurationPrinter();
         mockLogger = Mockito.mock(Logger.class);
-        cf = Mockito.mock((ConfigurationPrinter.class));
     }
 
     @Test
     public void createTest() {
         assertNotNull("Null not expected", configurationPrinter);
         assertThat("Instance of ConfigurationPrinter expected.", ConfigurationPrinter.create(), IsInstanceOf.instanceOf(ConfigurationPrinter.class));
+    }
+
+
+    @Test
+    public void withParentLoggerNullTest() {
+        configurationPrinter.printLog();
+        assertNotNull(configurationPrinter.getParentLogger());
     }
 
     @Test
