@@ -86,6 +86,61 @@ public class ConfigurationPrinterTest extends Assert {
         Mockito.verify(mockLogger).info("=================== {} ===================", "Title");
     }
 
+    @Test
+    public void withLogLevelDebugTest() {
+        ConfigurationPrinter
+                .create()
+                .withLogger(mockLogger)
+                .withLogLevel(ConfigurationPrinter.LogLevel.DEBUG)
+                .withTitle("Title")
+                .printLog();
+        Mockito.verify(mockLogger).debug("=================== {} ===================", "Title");
+    }
+
+    @Test
+    public void withLogLevelErrorTest() {
+        ConfigurationPrinter
+                .create()
+                .withLogger(mockLogger)
+                .withLogLevel(ConfigurationPrinter.LogLevel.ERROR)
+                .withTitle("Title")
+                .printLog();
+        Mockito.verify(mockLogger).error("=================== {} ===================", "Title");
+    }
+
+    @Test
+    public void withLogLevelInfoTest() {
+        ConfigurationPrinter
+                .create()
+                .withLogger(mockLogger)
+                .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
+                .withTitle("Title")
+                .printLog();
+        Mockito.verify(mockLogger).info("=================== {} ===================", "Title");
+    }
+
+    @Test
+    public void withLogLevelTraceTest() {
+        ConfigurationPrinter
+                .create()
+                .withLogger(mockLogger)
+                .withLogLevel(ConfigurationPrinter.LogLevel.TRACE)
+                .withTitle("Title")
+                .printLog();
+        Mockito.verify(mockLogger).trace("=================== {} ===================", "Title");
+    }
+
+    @Test
+    public void withLogLevelWarnTest() {
+        ConfigurationPrinter
+                .create()
+                .withLogger(mockLogger)
+                .withLogLevel(ConfigurationPrinter.LogLevel.WARN)
+                .withTitle("Title")
+                .printLog();
+        Mockito.verify(mockLogger).warn("=================== {} ===================", "Title");
+    }
+
 
 //    @Test
 //    public void getAndWithTitleTest() {
