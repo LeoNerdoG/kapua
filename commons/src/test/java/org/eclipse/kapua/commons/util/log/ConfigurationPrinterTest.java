@@ -28,26 +28,14 @@ import java.util.List;
 public class ConfigurationPrinterTest extends Assert {
 
     ConfigurationPrinter configurationPrinter;
-    Logger mockLogger;
+    Logger mockedLogger;
 
     @Before
-    public void initialize() {
+    public void setUp() {
         configurationPrinter = new ConfigurationPrinter();
-        mockLogger = Mockito.mock(Logger.class);
+        mockedLogger = Mockito.mock(Logger.class);
     }
 
-    @Test
-    public void createTest() {
-        assertNotNull("Null not expected", configurationPrinter);
-        assertThat("Instance of ConfigurationPrinter expected.", ConfigurationPrinter.create(), IsInstanceOf.instanceOf(ConfigurationPrinter.class));
-    }
-
-
-    @Test
-    public void withParentLoggerNullTest() {
-        configurationPrinter.printLog();
-        assertNotNull(configurationPrinter.getParentLogger());
-    }
 
     @Test
     public void getAndWithParentLoggerTest() {
@@ -61,88 +49,23 @@ public class ConfigurationPrinterTest extends Assert {
     }
 
     @Test
-    public void getAndWithLogLevelNotNullTest() {
-        ConfigurationPrinter.LogLevel[] logLevel = new ConfigurationPrinter.LogLevel[]{
+    public void getAndWithLogLevelTest() {
+        ConfigurationPrinter.LogLevel[] logLevels = new ConfigurationPrinter.LogLevel[]{
                 ConfigurationPrinter.LogLevel.DEBUG,
                 ConfigurationPrinter.LogLevel.ERROR,
                 ConfigurationPrinter.LogLevel.INFO,
                 ConfigurationPrinter.LogLevel.TRACE,
                 ConfigurationPrinter.LogLevel.WARN
         };
-        for (ConfigurationPrinter.LogLevel level : logLevel) {
-            configurationPrinter.withLogLevel(level);
-            assertEquals("Expected and actual values should be the same", level,
+        for (ConfigurationPrinter.LogLevel logLevel : logLevels) {
+            configurationPrinter.withLogLevel(logLevel);
+            assertEquals("Expected and actual values should be the same", logLevel,
                     configurationPrinter.getLogLevel());
         }
     }
 
-    @Test
-    public void withLogLevelNullTest() {
-        ConfigurationPrinter
-                .create()
-                .withLogger(mockLogger)
-                .withTitle("Title")
-                .printLog();
-        Mockito.verify(mockLogger).info("=================== {} ===================", "Title");
-    }
 
-    @Test
-    public void withLogLevelDebugTest() {
-        ConfigurationPrinter
-                .create()
-                .withLogger(mockLogger)
-                .withLogLevel(ConfigurationPrinter.LogLevel.DEBUG)
-                .withTitle("Title")
-                .printLog();
-        Mockito.verify(mockLogger).debug("=================== {} ===================", "Title");
-    }
-
-    @Test
-    public void withLogLevelErrorTest() {
-        ConfigurationPrinter
-                .create()
-                .withLogger(mockLogger)
-                .withLogLevel(ConfigurationPrinter.LogLevel.ERROR)
-                .withTitle("Title")
-                .printLog();
-        Mockito.verify(mockLogger).error("=================== {} ===================", "Title");
-    }
-
-    @Test
-    public void withLogLevelInfoTest() {
-        ConfigurationPrinter
-                .create()
-                .withLogger(mockLogger)
-                .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
-                .withTitle("Title")
-                .printLog();
-        Mockito.verify(mockLogger).info("=================== {} ===================", "Title");
-    }
-
-    @Test
-    public void withLogLevelTraceTest() {
-        ConfigurationPrinter
-                .create()
-                .withLogger(mockLogger)
-                .withLogLevel(ConfigurationPrinter.LogLevel.TRACE)
-                .withTitle("Title")
-                .printLog();
-        Mockito.verify(mockLogger).trace("=================== {} ===================", "Title");
-    }
-
-    @Test
-    public void withLogLevelWarnTest() {
-        ConfigurationPrinter
-                .create()
-                .withLogger(mockLogger)
-                .withLogLevel(ConfigurationPrinter.LogLevel.WARN)
-                .withTitle("Title")
-                .printLog();
-        Mockito.verify(mockLogger).warn("=================== {} ===================", "Title");
-    }
-
-
-//    @Test
+    //    @Test
 //    public void getAndWithTitleTest() {
 //        String title = "Title";
 //
@@ -156,24 +79,24 @@ public class ConfigurationPrinterTest extends Assert {
 //    }
 
     @Test
+//    tukaj moras spremenit, da dodas se razlicne stringe noter
     public void withTitleTest() {
-        ConfigurationPrinter
-                .create()
-                .withLogger(mockLogger)
-                .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
-                .withTitle("Title")
-                .printLog();
-        Mockito.verify(mockLogger).info("=================== {} ===================", "Title");
-    }
+        String[] specialSymbols = new String[]{"!", "\"", "#", "$", "%", "&", "'", "(", ")", "=", "/", "?", "+", "*", "<", ">", ",", ";",
+                ".", ":", "-", "_", "⁄", "@", "‹", "›", "€", "–", "°", "·", "", "Œ", "„", "‰", "”", "’", "Ø", "∏", "{", "}", "Æ", "æ", "Ò", "", "Å",
+                "Í", "Î", "~", "«", "◊", "Ñ", "¯", "È", "ˇ", " "};
+        String[] title = new String[]{"", "a", "qwertyuiiopasdfghjklšđčćžzxcvbnm!", "1234567890", "QWERTYUIOPŠĐASDFGHJKLČĆŽZXCVBNM"};
+        for (String titleVal : title) {
+            for (String specSymVal : specialSymbols) {
+                ConfigurationPrinter
+                        .create()
+                        .withLogger(mockedLogger)
+                        .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
+                        .withTitle(titleVal + specSymVal)
+                        .printLog();
+                Mockito.verify(mockedLogger, Mockito.times(1)).info("=================== {} ===================", titleVal + specSymVal);
+            }
+        }
 
-    @Test
-    public void withTitleNullTest() {
-        ConfigurationPrinter
-                .create()
-                .withLogger(mockLogger)
-                .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
-                .printLog();
-        Mockito.verify(mockLogger).info("=================== {} ===================", "Info");
     }
 
     @Test
@@ -194,89 +117,221 @@ public class ConfigurationPrinterTest extends Assert {
     public void withTitleAlignmentNullTest() {
         ConfigurationPrinter
                 .create()
-                .withLogger(mockLogger)
+                .withLogger(mockedLogger)
                 .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
                 .withTitle("Title")
                 .printLog();
-        Mockito.verify(mockLogger).info("=================== {} ===================", "Title");
+        Mockito.verify(mockedLogger).info("=================== {} ===================", "Title");
     }
-
 
     @Test
     public void withTitleAlignmentCenterTest() {
         ConfigurationPrinter
                 .create()
-                .withLogger(mockLogger)
+                .withLogger(mockedLogger)
                 .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
                 .withTitleAlignment(ConfigurationPrinter.TitleAlignment.CENTER)
                 .withTitle("Title")
                 .printLog();
-        Mockito.verify(mockLogger).info("=================== {} ===================", "Title");
+        Mockito.verify(mockedLogger).info("=================== {} ===================", "Title");
     }
-
 
     @Test
     public void withTitleAlignmentRightTest() {
         ConfigurationPrinter
                 .create()
-                .withLogger(mockLogger)
+                .withLogger(mockedLogger)
                 .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
                 .withTitleAlignment(ConfigurationPrinter.TitleAlignment.RIGHT)
                 .withTitle("Title")
                 .printLog();
-        Mockito.verify(mockLogger).info("===================================== {} =", "Title");
+        Mockito.verify(mockedLogger).info("===================================== {} =", "Title");
     }
-
 
     @Test
     public void withTitleAlignmentLeftTest() {
         ConfigurationPrinter
                 .create()
-                .withLogger(mockLogger)
+                .withLogger(mockedLogger)
                 .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
                 .withTitleAlignment(ConfigurationPrinter.TitleAlignment.LEFT)
                 .withTitle("Title")
                 .printLog();
-        Mockito.verify(mockLogger).info("= {} =====================================", "Title");
+        Mockito.verify(mockedLogger).info("= {} =====================================", "Title");
+    }
+
+//    @Test
+////    tole bos morala razdelit - pomoc koda od Leonarda
+//    public void getConfigurationAddHeaderAndParameterTest() {
+//        List list = new ArrayList();
+//        ConfigurationPrinter configurationPrinterAddHeader = configurationPrinter;
+//        ConfigurationPrinter configurationPrinterAddParameter = configurationPrinter;
+//
+//        assertEquals("Expected and actual values should be the same", list, configurationPrinter.getConfigurations());
+//
+//        configurationPrinter.addHeader("Header");
+//        configurationPrinterAddParameter.addParameter("Parameter", null);
+//
+//        assertNotEquals("Expected and actual values should not be the same", list, configurationPrinterAddHeader.getConfigurations());
+//        assertNotEquals("Expected and actual values should not be the same", list, configurationPrinterAddParameter.getConfigurations());
+//    }
+
+    @Test
+    public void getConfigurationsNullTest() {
+        assertEquals("Expected and actual values are not the same!", new ArrayList<>(), configurationPrinter.getConfigurations());
+    }
+
+    @Test
+    public void addHeaderTest() throws NoSuchFieldException {
+        String[] specialSymbols = new String[]{"!", "\"", "#", "$", "%", "&", "'", "(", ")", "=", "/", "?", "+", "*", "<", ">", ",", ";",
+                ".", ":", "-", "_", "⁄", "@", "‹", "›", "€", "€", "–", "°", "·", "", "Œ", "„", "‰", "”", "’", "Ø", "∏", "{", "}", "Æ", "æ", "Ò", "", "Å",
+                "Í", "Î", "~", "«", "◊", "Ñ", "¯", "È", "ˇ", " "};
+        String[] title = new String[]{"", "a", "qwertyuiiopasdfghjklšđčćžzxcvbnm!", "1234567890", "QWERTYUIOPŠĐASDFGHJKLČĆŽZXCVBNM"};
+        for (String titleVal : title) {
+            for (String specSymVal : specialSymbols) {
+                assertTrue("Returned value should an instance of ConfigurationPrinter!", configurationPrinter.addHeader(titleVal + specSymVal) instanceof ConfigurationPrinter);
+            }
+        }
+    }
+
+    @Test
+    public void addParameterNullTests() {
+        Object object = new Object();
+        assertTrue("Returned value should be an instance of ConfigurationPrinter", configurationPrinter.addParameter(null, null) instanceof ConfigurationPrinter);
+        assertTrue("Returned value should be an instance of ConfigurationPrinter", configurationPrinter.addParameter("string", null) instanceof ConfigurationPrinter);
+        assertTrue("Returned value should be an instance of ConfigurationPrinter", configurationPrinter.addParameter(null, object) instanceof ConfigurationPrinter);
+    }
+
+    @Test
+    public void addParameterTest() {
+        Object[] objects = new Object[]{"[string]", 1, 1.1234, 1123456789L, 1.123456D, 123912839F, true, false, 'a', (byte) 100, (short) 10,};
+        String[] stringArray = new String[]{"", "a", "abc", "ABC", "123",
+                "qwertyuiopšđasdfghjklčćžzxcvbnmQWERTYUIOPŠĐASDFGHJKLČĆŽZXCVBNM123457890"};
+        for (String stringArrayVal : stringArray) {
+            for (Object object : objects) {
+                assertTrue("Returned value should be an instance of ConfigurationPrinter", configurationPrinter.addParameter(stringArrayVal, object) instanceof ConfigurationPrinter);
+            }
+        }
+    }
+
+    @Test
+    public void increaseIndentationTest() {
+        for (int i = 0; i < 10; i++) {
+            assertTrue("Expected and actual values are not the same!", configurationPrinter.increaseIndentation() instanceof ConfigurationPrinter);
+        }
+    }
+
+    @Test
+    public void decreaseIndentationTest() {
+        for (int i = 0; i < 10; i++) {
+            configurationPrinter.increaseIndentation();
+        }
+        for (int i = 10; i >= 0; i--) {
+            assertTrue("Expected and actual values are not the same!", configurationPrinter.decreaseIndentation() instanceof ConfigurationPrinter);
+        }
+    }
+
+    @Test
+    public void printLogParentLoggerNullTest() {
+        configurationPrinter.printLog();
+        assertNotNull(configurationPrinter.getParentLogger());
+    }
+
+    @Test
+    public void printLogLogLevelNullTest() {
+        ConfigurationPrinter
+                .create()
+                .withLogger(mockedLogger)
+                .withTitle("Title")
+                .printLog();
+        Mockito.verify(mockedLogger).info("=================== {} ===================", "Title");
     }
 
 
     @Test
-    public void getConfigurationAddHeaderAndParameterTest() {
-        List list = new ArrayList();
-        ConfigurationPrinter configurationPrinterAddHeader = configurationPrinter;
-        ConfigurationPrinter configurationPrinterAddParameter = configurationPrinter;
-
-        assertEquals("Expected and actual values should be the same", list, configurationPrinter.getConfigurations());
-
-        configurationPrinter.addHeader("Header");
-        configurationPrinterAddParameter.addParameter("Parameter", null);
-
-        assertNotEquals("Expected and actual values should not be the same", list, configurationPrinterAddHeader.getConfigurations());
-        assertNotEquals("Expected and actual values should not be the same", list, configurationPrinterAddParameter.getConfigurations());
+    public void printLogLogLevelDebugTest() {
+        ConfigurationPrinter
+                .create()
+                .withLogger(mockedLogger)
+                .withLogLevel(ConfigurationPrinter.LogLevel.DEBUG)
+                .withTitle("Title")
+                .printLog();
+        Mockito.verify(mockedLogger).debug("=================== {} ===================", "Title");
     }
 
-//    @Test
-//    public void addParameterTest() {
-//        ConfigurationPrinter
-//                .create()
-//                .withLogger(mockLogger)
-//                .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
-//                .addParameter("Liquibase Version", "3.6.3")
-//                .printLog();
-//    }
+    @Test
+    public void printLogLogLevelErrorTest() {
+        ConfigurationPrinter
+                .create()
+                .withLogger(mockedLogger)
+                .withLogLevel(ConfigurationPrinter.LogLevel.ERROR)
+                .withTitle("Title")
+                .printLog();
+        Mockito.verify(mockedLogger).error("=================== {} ===================", "Title");
+    }
 
-//    @Test
-//    public void addHeaderTest() {
-//        String header = "DB connection info";
-//        ConfigurationPrinter
-//                .create()
-//                .withLogger(mockLogger)
-//                .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
-//                .addHeader("DB connection info")
-//                .printLog();
-//        Mockito.verify(mockLogger).info("=================== {} ===================", "Info");
-//        Mockito.verify(mockLogger).info("|  {}", (String) "DB connection info");
-//    }
+    @Test
+    public void printLogLogLevelInfoTest() {
+        ConfigurationPrinter
+                .create()
+                .withLogger(mockedLogger)
+                .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
+                .withTitle("Title")
+                .printLog();
+        Mockito.verify(mockedLogger).info("=================== {} ===================", "Title");
+    }
+
+    @Test
+    public void printLogLogLevelTraceTest() {
+        ConfigurationPrinter
+                .create()
+                .withLogger(mockedLogger)
+                .withLogLevel(ConfigurationPrinter.LogLevel.TRACE)
+                .withTitle("Title")
+                .printLog();
+        Mockito.verify(mockedLogger).trace("=================== {} ===================", "Title");
+    }
+
+    @Test
+    public void printLogLogLevelWarnTest() {
+        ConfigurationPrinter
+                .create()
+                .withLogger(mockedLogger)
+                .withLogLevel(ConfigurationPrinter.LogLevel.WARN)
+                .withTitle("Title")
+                .printLog();
+        Mockito.verify(mockedLogger).warn("=================== {} ===================", "Title");
+    }
+
+    @Test
+    public void printLogTitleNullTest() {
+        ConfigurationPrinter
+                .create()
+                .withLogger(mockedLogger)
+                .withLogLevel(ConfigurationPrinter.LogLevel.INFO)
+                .printLog();
+        Mockito.verify(mockedLogger).info("=================== {} ===================", "Info");
+    }
+
+    @Test
+    public void createTest() {
+        assertThat("Instance of ConfigurationPrinter expected.", ConfigurationPrinter.create(), IsInstanceOf.instanceOf(ConfigurationPrinter.class));
+    }
+
+    @Test
+    public void logLevelEnumTest() {
+        assertNotNull(ConfigurationPrinter.LogLevel.valueOf("DEBUG"));
+        assertNotNull(ConfigurationPrinter.LogLevel.valueOf("ERROR"));
+        assertNotNull(ConfigurationPrinter.LogLevel.valueOf("INFO"));
+        assertNotNull(ConfigurationPrinter.LogLevel.valueOf("TRACE"));
+        assertNotNull(ConfigurationPrinter.LogLevel.valueOf("WARN"));
+    }
+
+    @Test
+    public void titleAlignmentEnumTest() {
+        assertNotNull(ConfigurationPrinter.TitleAlignment.valueOf("LEFT"));
+        assertNotNull(ConfigurationPrinter.TitleAlignment.valueOf("RIGHT"));
+        assertNotNull(ConfigurationPrinter.TitleAlignment.valueOf("CENTER"));
+    }
 
 }
