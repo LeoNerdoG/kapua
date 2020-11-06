@@ -22,7 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Category(JUnitTests.class)
 public class ConfigurationPrinterTest extends Assert {
@@ -38,7 +37,7 @@ public class ConfigurationPrinterTest extends Assert {
 
 
     @Test
-    public void getAndWithParentLoggerTest() {
+    public void withParentLoggerTest() {
         Logger logger = LoggerFactory.getLogger(ConfigurationPrinter.class);
 
         assertNull("Null expected", configurationPrinter.getParentLogger());
@@ -49,7 +48,7 @@ public class ConfigurationPrinterTest extends Assert {
     }
 
     @Test
-    public void getAndWithLogLevelTest() {
+    public void withLogLevelTest() {
         ConfigurationPrinter.LogLevel[] logLevels = new ConfigurationPrinter.LogLevel[]{
                 ConfigurationPrinter.LogLevel.DEBUG,
                 ConfigurationPrinter.LogLevel.ERROR,
@@ -64,22 +63,7 @@ public class ConfigurationPrinterTest extends Assert {
         }
     }
 
-
-    //    @Test
-//    public void getAndWithTitleTest() {
-//        String title = "Title";
-//
-//        assertNull("Null expected", configurationPrinter.getTitle());
-//
-//        configurationPrinter.withTitle(title);
-//
-//        assertEquals("Expected and actual values should be the same", "Title",
-//                configurationPrinter.getTitle());
-//
-//    }
-
     @Test
-//    tukaj moras spremenit, da dodas se razlicne stringe noter
     public void withTitleTest() {
         String[] specialSymbols = new String[]{"!", "\"", "#", "$", "%", "&", "'", "(", ")", "=", "/", "?", "+", "*", "<", ">", ",", ";",
                 ".", ":", "-", "_", "⁄", "@", "‹", "›", "€", "–", "°", "·", "", "Œ", "„", "‰", "”", "’", "Ø", "∏", "{", "}", "Æ", "æ", "Ò", "", "Å",
@@ -100,7 +84,7 @@ public class ConfigurationPrinterTest extends Assert {
     }
 
     @Test
-    public void getAndWithTitleAlignmentTest() {
+    public void withTitleAlignmentTest() {
         ConfigurationPrinter.TitleAlignment[] titleAlignment = new ConfigurationPrinter.TitleAlignment[]{
                 ConfigurationPrinter.TitleAlignment.CENTER,
                 ConfigurationPrinter.TitleAlignment.LEFT,
@@ -160,36 +144,20 @@ public class ConfigurationPrinterTest extends Assert {
         Mockito.verify(mockedLogger).info("= {} =====================================", "Title");
     }
 
-//    @Test
-////    tole bos morala razdelit - pomoc koda od Leonarda
-//    public void getConfigurationAddHeaderAndParameterTest() {
-//        List list = new ArrayList();
-//        ConfigurationPrinter configurationPrinterAddHeader = configurationPrinter;
-//        ConfigurationPrinter configurationPrinterAddParameter = configurationPrinter;
-//
-//        assertEquals("Expected and actual values should be the same", list, configurationPrinter.getConfigurations());
-//
-//        configurationPrinter.addHeader("Header");
-//        configurationPrinterAddParameter.addParameter("Parameter", null);
-//
-//        assertNotEquals("Expected and actual values should not be the same", list, configurationPrinterAddHeader.getConfigurations());
-//        assertNotEquals("Expected and actual values should not be the same", list, configurationPrinterAddParameter.getConfigurations());
-//    }
-
     @Test
     public void getConfigurationsNullTest() {
         assertEquals("Expected and actual values are not the same!", new ArrayList<>(), configurationPrinter.getConfigurations());
     }
 
     @Test
-    public void addHeaderTest() throws NoSuchFieldException {
+    public void addHeaderTest() {
         String[] specialSymbols = new String[]{"!", "\"", "#", "$", "%", "&", "'", "(", ")", "=", "/", "?", "+", "*", "<", ">", ",", ";",
                 ".", ":", "-", "_", "⁄", "@", "‹", "›", "€", "€", "–", "°", "·", "", "Œ", "„", "‰", "”", "’", "Ø", "∏", "{", "}", "Æ", "æ", "Ò", "", "Å",
                 "Í", "Î", "~", "«", "◊", "Ñ", "¯", "È", "ˇ", " "};
         String[] title = new String[]{"", "a", "qwertyuiiopasdfghjklšđčćžzxcvbnm!", "1234567890", "QWERTYUIOPŠĐASDFGHJKLČĆŽZXCVBNM"};
         for (String titleVal : title) {
             for (String specSymVal : specialSymbols) {
-                assertTrue("Returned value should an instance of ConfigurationPrinter!", configurationPrinter.addHeader(titleVal + specSymVal) instanceof ConfigurationPrinter);
+                assertNotNull("Returned value should an instance of ConfigurationPrinter!", configurationPrinter.addHeader(titleVal + specSymVal));
             }
         }
     }
@@ -197,9 +165,9 @@ public class ConfigurationPrinterTest extends Assert {
     @Test
     public void addParameterNullTests() {
         Object object = new Object();
-        assertTrue("Returned value should be an instance of ConfigurationPrinter", configurationPrinter.addParameter(null, null) instanceof ConfigurationPrinter);
-        assertTrue("Returned value should be an instance of ConfigurationPrinter", configurationPrinter.addParameter("string", null) instanceof ConfigurationPrinter);
-        assertTrue("Returned value should be an instance of ConfigurationPrinter", configurationPrinter.addParameter(null, object) instanceof ConfigurationPrinter);
+        assertNotNull("Returned value should be an instance of ConfigurationPrinter", configurationPrinter.addParameter(null, null));
+        assertNotNull("Returned value should be an instance of ConfigurationPrinter", configurationPrinter.addParameter("string", null));
+        assertNotNull("Returned value should be an instance of ConfigurationPrinter", configurationPrinter.addParameter(null, object));
     }
 
     @Test
@@ -209,7 +177,7 @@ public class ConfigurationPrinterTest extends Assert {
                 "qwertyuiopšđasdfghjklčćžzxcvbnmQWERTYUIOPŠĐASDFGHJKLČĆŽZXCVBNM123457890"};
         for (String stringArrayVal : stringArray) {
             for (Object object : objects) {
-                assertTrue("Returned value should be an instance of ConfigurationPrinter", configurationPrinter.addParameter(stringArrayVal, object) instanceof ConfigurationPrinter);
+                assertNotNull("Returned value should be an instance of ConfigurationPrinter", configurationPrinter.addParameter(stringArrayVal, object));
             }
         }
     }
@@ -217,7 +185,7 @@ public class ConfigurationPrinterTest extends Assert {
     @Test
     public void increaseIndentationTest() {
         for (int i = 0; i < 10; i++) {
-            assertTrue("Expected and actual values are not the same!", configurationPrinter.increaseIndentation() instanceof ConfigurationPrinter);
+            assertNotNull("Expected and actual values are not the same!", configurationPrinter.increaseIndentation());
         }
     }
 
@@ -227,7 +195,7 @@ public class ConfigurationPrinterTest extends Assert {
             configurationPrinter.increaseIndentation();
         }
         for (int i = 10; i >= 0; i--) {
-            assertTrue("Expected and actual values are not the same!", configurationPrinter.decreaseIndentation() instanceof ConfigurationPrinter);
+            assertNotNull("Expected and actual values are not the same!", configurationPrinter.decreaseIndentation());
         }
     }
 
@@ -235,6 +203,46 @@ public class ConfigurationPrinterTest extends Assert {
     public void printLogParentLoggerNullTest() {
         configurationPrinter.printLog();
         assertNotNull(configurationPrinter.getParentLogger());
+        assertNotNull("Returned value should be instance of ConfigurationPrinter!", configurationPrinter.getParentLogger());
+    }
+
+    @Test
+    public void printLogTest() {
+        Logger logger = LoggerFactory.getLogger(ConfigurationPrinter.class);
+        Object[] objects = new Object[]{"[string]", 1, 1.1234, 1123456789L, 1.123456D, 123912839F, true, false, 'a', (byte) 100, (short) 10,};
+        configurationPrinter.withLogger(logger);
+        configurationPrinter.withTitle("Title");
+        configurationPrinter.addHeader("Header");
+        ConfigurationPrinter.LogLevel[] enumArray = new ConfigurationPrinter.LogLevel[]{
+                ConfigurationPrinter.LogLevel.DEBUG,
+                ConfigurationPrinter.LogLevel.ERROR,
+                ConfigurationPrinter.LogLevel.INFO,
+                ConfigurationPrinter.LogLevel.TRACE,
+                ConfigurationPrinter.LogLevel.WARN};
+        for (Object object : objects) {
+            for (ConfigurationPrinter.LogLevel enumArrayVal : enumArray) {
+                configurationPrinter.withLogLevel(enumArrayVal);
+                configurationPrinter.withTitleAlignment(ConfigurationPrinter.TitleAlignment.CENTER);
+                configurationPrinter.addParameter("parameter", object);
+                configurationPrinter.printLog();
+            }
+        }
+        for (Object object : objects) {
+            for (ConfigurationPrinter.LogLevel enumArrayVal : enumArray) {
+                configurationPrinter.withLogLevel(enumArrayVal);
+                configurationPrinter.withTitleAlignment(ConfigurationPrinter.TitleAlignment.LEFT);
+                configurationPrinter.addParameter("parameter", object);
+                configurationPrinter.printLog();
+            }
+        }
+        for (Object object : objects) {
+            for (ConfigurationPrinter.LogLevel enumArrayVal : enumArray) {
+                configurationPrinter.withLogLevel(enumArrayVal);
+                configurationPrinter.withTitleAlignment(ConfigurationPrinter.TitleAlignment.RIGHT);
+                configurationPrinter.addParameter("parameter", object);
+                configurationPrinter.printLog();
+            }
+        }
     }
 
     @Test
