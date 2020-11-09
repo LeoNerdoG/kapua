@@ -13,13 +13,13 @@ package org.eclipse.kapua.integration.misc;
 
 import org.eclipse.kapua.commons.configuration.metatype.TscalarImpl;
 import org.eclipse.kapua.model.config.metatype.KapuaTscalarAdapter;
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+//import org.eclipse.kapua.qa.markers.junit.JUnitTests;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
+//import org.junit.experimental.categories.Category;
 
-@Category(JUnitTests.class)
+//@Category(JUnitTests.class)
 public class KapuaTscalarAdapterTest extends Assert {
 
     KapuaTscalarAdapter kapuaTscalarAdapter;

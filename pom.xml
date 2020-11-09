@@ -464,6 +464,7 @@
                         <broker.host>localhost</broker.host>
                         <jetty.war.file>target/war/api.war</jetty.war.file>
                     </systemPropertyVariables>
+<!--                    <groups>org.eclipse.kapua.qa.markers.junit.JUnitTests</groups>-->
                 </configuration>
             </plugin>
             <plugin>
@@ -1840,6 +1841,24 @@
             <id>console</id>
             <modules>
                 <module>console</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>unitTests</id>
+            <modules>
+                <module>commons</module>
+                <module>locator</module>
+                <module>service</module>
+                <module>message</module>
+                <module>transport</module>
+                <module>translator</module>
+                <module>sso</module>
+                <module>rest-api</module>
+                <module>job-engine</module>
+                <module>broker</module>
+                <module>client</module>
+                <module>simulator-kura</module>
             </modules>
         </profile>
 
