@@ -12,7 +12,6 @@
 package org.eclipse.kapua.sso.exception;
 
 import org.eclipse.kapua.KapuaErrorCode;
-import org.eclipse.kapua.KapuaErrorCodes;
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,9 +21,12 @@ import org.junit.experimental.categories.Category;
 @Category(JUnitTests.class)
 public class SsoExceptionTest extends Assert {
 
-    String expectedErrorMessage;
+    String KAPUA_ERROR_MESSAGES;
     KapuaErrorCode[] kapuaErrorCodes;
     Object argument1, argument2, argument3;
+    String[] messages = new String[]{"An error occurred while retrieving the SSO login URI", "An error occurred while retrieving the SSO logout URI", "An error occurred while getting the access token",
+            "An error occurred while extracting the Jwt from the string: {0}", "An error occurred while processing the Jwt: {0}", "An error occurred while retrieving the SSO Jwt URI",
+            "An illegal value was provided for the argument {0}: {1}.", "An illegal value was provided for the URI {0}: {1}."};
 
     private class ActualSsoException extends SsoException {
 
@@ -50,22 +52,25 @@ public class SsoExceptionTest extends Assert {
 
     @Before
     public void SetUp() {
-        expectedErrorMessage = "sso-error-messages";
-        kapuaErrorCodes = new KapuaErrorCodes[]{KapuaErrorCodes.ILLEGAL_ARGUMENT, KapuaErrorCodes.ENTITY_NOT_FOUND};
+        KAPUA_ERROR_MESSAGES = "sso-error-messages";
+        kapuaErrorCodes = new SsoErrorCodes[]{SsoErrorCodes.LOGIN_URI_ERROR, SsoErrorCodes.LOGOUT_URI_ERROR, SsoErrorCodes.ACCESS_TOKEN_ERROR, SsoErrorCodes.JWT_EXTRACTION_ERROR,
+                SsoErrorCodes.JWT_PROCESS_ERROR, SsoErrorCodes.JWT_URI_ERROR, SsoErrorCodes.ILLEGAL_ARGUMENT, SsoErrorCodes.ILLEGAL_URI};
         argument1 = "arg1";
-        argument2 = 2;
+        argument2 = "arg2";
         argument3 = "arg3";
     }
 
     @Test
     public void ssoExceptionKapuaErrorCodeParameterTest() {
+        int i = 0;
         for (KapuaErrorCode kapuaErrorCode : kapuaErrorCodes) {
             SsoException ssoException = new ActualSsoException(kapuaErrorCode);
-            //Izpisuje "Error: "
-            assertEquals("An illegal value was provided for the argument {0}: {1}.", ssoException.getMessage());
-            assertEquals(kapuaErrorCode, ssoException.getCode());
             assertNull("Null expected.", ssoException.getCause());
-            assertEquals(expectedErrorMessage, ssoException.getKapuaErrorMessagesBundle());
+            assertEquals("Expected and actual values should be the same.", kapuaErrorCode, ssoException.getCode());
+            assertEquals("Expected and actual values should be the same.", KAPUA_ERROR_MESSAGES, ssoException.getKapuaErrorMessagesBundle());
+            assertEquals("Expected and actual values should be the same.", messages[i], ssoException.getMessage());
+            assertEquals("Expected and actual values should be the same.", messages[i], ssoException.getLocalizedMessage());
+            i++;
         }
     }
 
@@ -74,10 +79,10 @@ public class SsoExceptionTest extends Assert {
         SsoException ssoException = new ActualSsoException(null);
         assertNull("Null expected.", ssoException.getCode());
         assertNull("Null expected.", ssoException.getCause());
-        assertEquals("Expected and actual values should be the same.", expectedErrorMessage, ssoException.getKapuaErrorMessagesBundle());
+        assertEquals("Expected and actual values should be the same.", KAPUA_ERROR_MESSAGES, ssoException.getKapuaErrorMessagesBundle());
         try {
             ssoException.getMessage();
-            fail("Null pointer expected");
+            fail("Null pointer expected.");
         } catch (Exception e) {
             assertEquals("Null pointer exception expected.", new NullPointerException().toString(), e.toString());
         }
@@ -92,7 +97,22 @@ public class SsoExceptionTest extends Assert {
 
     @Test
     public void ssoExceptionKapuaErrorCodeObjectParametersTest() {
-//        SsoException ssoException = new ActualSsoException(kapuaErrorCode, argument1, argument2, argument3);
+        String[] messages = new String[]{"An error occurred while retrieving the SSO login URI", "An error occurred while retrieving the SSO logout URI", "An error occurred while getting the access token",
+                "An error occurred while extracting the Jwt from the string: " + argument1, "An error occurred while processing the Jwt: " + argument1, "An error occurred while retrieving the SSO Jwt URI",
+                "An illegal value was provided for the argument " + argument1 + ": " + argument2 + ".", "An illegal value was provided for the URI " + argument1 + ": " + argument2 + "."};
+
+        int i = 0;
+        for (KapuaErrorCode kapuaErrorCode : kapuaErrorCodes) {
+            SsoException ssoException = new ActualSsoException(kapuaErrorCode, argument1, argument2, argument3);
+
+            assertNull("Null expected.", ssoException.getCause());
+            assertEquals("Expected and actual values should be the same.", kapuaErrorCode, ssoException.getCode());
+            assertEquals("Expected and actual values should be the same.", KAPUA_ERROR_MESSAGES, ssoException.getKapuaErrorMessagesBundle());
+
+            assertEquals("Expected and actual values should be the same.", messages[i], ssoException.getMessage());
+            assertEquals("Expected and actual values should be the same.", messages[i], ssoException.getLocalizedMessage());
+            i++;
+        }
 
     }
 
@@ -101,6 +121,18 @@ public class SsoExceptionTest extends Assert {
         SsoException ssoException = new ActualSsoException(null, argument1, argument2, argument3);
         assertNull("Null expected.", ssoException.getCode());
         assertNull("Null expected.", ssoException.getCause());
+        try {
+            ssoException.getMessage();
+            fail("Null pointer expected.");
+        } catch (Exception e) {
+            assertEquals(new NullPointerException().toString(), e.toString());
+        }
+        try {
+            ssoException.getLocalizedMessage();
+            fail("Null pointer expected.");
+        } catch (Exception e) {
+            assertEquals(new NullPointerException().toString(), e.toString());
+        }
 
     }
 
@@ -112,6 +144,7 @@ public class SsoExceptionTest extends Assert {
 
     @Test
     public void ssoExceptionKapuaErrorCodeThrowableObjectParametersTest() {
+
 //        SsoException ssoException = new ActualSsoException(kapuaErrorCode, argument1, argument2, argument3);
 
     }
