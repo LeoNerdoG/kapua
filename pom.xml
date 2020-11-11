@@ -455,9 +455,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <excludes>
-                        <exclude>**/qa/*</exclude>
-                    </excludes>
                     <!-- Travis has an overall 3GB limit -->
                     <argLine>@{argLine} -Xmx1024m</argLine>
                     <systemPropertyVariables>
@@ -467,7 +464,6 @@
                         <broker.host>localhost</broker.host>
                         <jetty.war.file>target/war/api.war</jetty.war.file>
                     </systemPropertyVariables>
-<!--                    <groups>org.eclipse.kapua.qa.markers.junit.JUnitTests</groups>-->
                 </configuration>
             </plugin>
             <plugin>
@@ -1848,7 +1844,22 @@
         </profile>
 
         <profile>
+            <id>skipTests</id>
+            <properties>
+                <maven.skip.tests>true</maven.skip.tests>
+            </properties>
+        </profile>
+
+        <profile>
             <id>unitTests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
             <modules>
                 <module>commons</module>
                 <module>locator</module>

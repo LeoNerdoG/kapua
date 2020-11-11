@@ -36,6 +36,10 @@ already done in the parent module. -->
         </plugins>
     </build>
 
+        <properties>
+            <maven.test.skip>true</maven.test.skip>
+        </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.eclipse.kapua</groupId>
@@ -239,9 +243,5 @@ already done in the parent module. -->
             <artifactId>apache-jstl</artifactId>
         </dependency>
     </dependencies>
-
-<!--    <properties>-->
-<!--        <maven.test.skip>true</maven.test.skip>-->
-<!--    </properties>-->
 
 </project>

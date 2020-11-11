@@ -36,6 +36,10 @@ already done in the parent module. -->
         </plugins>
     </build>
 
+        <properties>
+            <maven.test.skip>true</maven.test.skip>
+        </properties>
+
     <dependencies>
         <!-- Required service interfaces -->
         <dependency>
@@ -403,9 +407,5 @@ already done in the parent module. -->
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-<!--    <properties>-->
-<!--        <maven.test.skip>true</maven.test.skip>-->
-<!--    </properties>-->
 
 </project>
