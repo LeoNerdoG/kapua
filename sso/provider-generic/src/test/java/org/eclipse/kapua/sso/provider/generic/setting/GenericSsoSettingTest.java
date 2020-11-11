@@ -1,2 +1,4 @@
-package org.eclipse.kapua.sso.provider.generic.setting;public class GenericSsoSettingTest {
+package org.eclipse.kapua.sso.provider.generic.setting;
+
+public class GenericSsoSettingTest {
 }

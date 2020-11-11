@@ -1,2 +1,4 @@
-package org.eclipse.kapua.sso.provider.keycloak.setting;public class KeycloakSsoSettingTest {
+package org.eclipse.kapua.sso.provider.keycloak.setting;
+
+public class KeycloakSsoSettingTest {
 }
