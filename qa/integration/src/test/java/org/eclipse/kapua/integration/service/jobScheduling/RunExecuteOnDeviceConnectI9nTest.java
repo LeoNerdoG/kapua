@@ -14,6 +14,8 @@ package org.eclipse.kapua.integration.service.jobScheduling;
 
 import cucumber.api.CucumberOptions;
 import org.eclipse.kapua.qa.common.cucumber.CucumberWithProperties;
+import org.eclipse.kapua.qa.markers.Categories;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 @RunWith(CucumberWithProperties.class)
@@ -33,5 +35,7 @@ import org.junit.runner.RunWith;
                 "json:target/cucumber.json" },
         strict = true,
         monochrome = true)
+
+@Category(value = Categories.integrationTests.class)
 public class RunExecuteOnDeviceConnectI9nTest {
 }

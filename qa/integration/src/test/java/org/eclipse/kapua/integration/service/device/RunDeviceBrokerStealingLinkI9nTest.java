@@ -15,6 +15,8 @@ package org.eclipse.kapua.integration.service.device;
 import cucumber.api.CucumberOptions;
 import org.eclipse.kapua.qa.common.cucumber.CucumberProperty;
 import org.eclipse.kapua.qa.common.cucumber.CucumberWithProperties;
+import org.eclipse.kapua.qa.markers.Categories;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 @RunWith(CucumberWithProperties.class)
@@ -32,6 +34,8 @@ import org.junit.runner.RunWith;
                  },
         strict = true,
         monochrome = true )
+
+@Category(value = Categories.integrationTests.class)
 @CucumberProperty(key="broker.ip", value="localhost")
 @CucumberProperty(key="kapua.config.url", value="")
 public class RunDeviceBrokerStealingLinkI9nTest {}

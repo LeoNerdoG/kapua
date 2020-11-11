@@ -13,7 +13,7 @@
 package org.eclipse.kapua.commons.util;
 
 import org.eclipse.kapua.commons.setting.KapuaSettingException;
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -24,7 +24,7 @@ import java.lang.reflect.Constructor;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class KapuaFileUtilsTest extends Assert {
 
     @Test
@@ -53,7 +53,7 @@ public class KapuaFileUtilsTest extends Assert {
     //this test is adjusted to method implementation getAsFile().
     //therefore, the method was tested in this way without any assertion only with specific output.
     public void getAsFilePositiveAndNegativeTest() throws IOException, KapuaSettingException {
-        String[] permittedFormats = new String[]{"https://www.w3.org/TR/PNG/iso_8859-1.txt", "http://txt2html.sourceforge.net/sample.txt",
+        String[] permittedFormats = new String[]{"https://www.w3.org/TR/PNG/iso_8859-1.txt", /*"http://txt2html.sourceforge.net/sample.txt",*/
                 "https://www.lipsum.com/"};
         String[] invalidFormats = new String[]{"file:/hostname/path/the%20file.txt", "file://", "http://www.example.com:10800000000000/docs/resource1.html",
                 "/c:/WINDOWS/clock.example", "https://www.w3.org/TR/PNG/iso_88591.txt", "p://txt2html.sourceforge.net/invalidName.txt"};
@@ -68,7 +68,7 @@ public class KapuaFileUtilsTest extends Assert {
                     System.out.println("File has not been created.");
                 }
             } catch (Exception ex) {
-                fail("Inappropriate http scheme.");
+                fail("Inappropriate http scheme for " + value);
             }
         }
 

@@ -22,6 +22,46 @@
 
     <artifactId>kapua-qa-markers</artifactId>
 
+    <!-- This is required to skip docker container creation in the module, because it's
+already done in the parent module. -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-surefire-plugin</artifactId>-->
+<!--                <version>2.12.4</version>-->
+<!--                <configuration>-->
+<!--                    <excludes>-->
+<!--                        <exclude>qa</exclude>-->
+<!--                        <exclude>**/*.feature</exclude>-->
+<!--                        <exclude>**/EventStoreDAO.java</exclude>-->
+<!--                        <exclude>**/EventStoreServiceImplTest.java</exclude>-->
+<!--                        <exclude>**/JsonServiceEventMarshalerTest.java</exclude>-->
+<!--                        <exclude>**/KapuaIdAdapterTest.java</exclude>-->
+<!--                        <exclude>**/KapuaLocatorTest.java</exclude>-->
+<!--                        <exclude>**/KapuaTscalarAdapterTest.java</exclude>-->
+<!--                        <exclude>**/MetatypeXmlRegistryTest.java</exclude>-->
+<!--                        <exclude>**/MqttClientTest.java</exclude>-->
+<!--                        <exclude>**/XmlServiceEventMarshalerTest.java</exclude>-->
+<!--                        <exclude>**/BrokerClient.java</exclude>-->
+<!--                        <exclude>**/BrokerConfigData.java</exclude>-->
+<!--                        <exclude>**/DockerSteps.java</exclude>-->
+<!--                        <exclude>**/RestClientSteps.java</exclude>-->
+<!--                        <exclude>**/RestJAXBContextProvider.java</exclude>-->
+<!--                        <exclude>**/Run*.java</exclude>-->
+<!--                    </excludes>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+        </plugins>
+    </build>
+
     <properties>
         <maven.test.skip>true</maven.test.skip>
     </properties>

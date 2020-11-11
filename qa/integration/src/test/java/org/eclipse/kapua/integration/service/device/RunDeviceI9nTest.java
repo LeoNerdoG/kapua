@@ -14,6 +14,8 @@ package org.eclipse.kapua.integration.service.device;
 
 import org.eclipse.kapua.qa.common.cucumber.CucumberProperty;
 import org.eclipse.kapua.qa.common.cucumber.CucumberWithProperties;
+import org.eclipse.kapua.qa.markers.Categories;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 import cucumber.api.CucumberOptions;
@@ -34,5 +36,7 @@ import cucumber.api.CucumberOptions;
                  },
         strict = true,
         monochrome = true )
+
+@Category(value = Categories.integrationTests.class)
 @CucumberProperty(key="kapua.config.url", value="")
 public class RunDeviceI9nTest {}

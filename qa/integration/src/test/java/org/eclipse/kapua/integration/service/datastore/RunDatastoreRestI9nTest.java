@@ -15,6 +15,8 @@ package org.eclipse.kapua.integration.service.datastore;
 import cucumber.api.CucumberOptions;
 import org.eclipse.kapua.qa.common.cucumber.CucumberProperty;
 import org.eclipse.kapua.qa.common.cucumber.CucumberWithProperties;
+import org.eclipse.kapua.qa.markers.Categories;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 @RunWith(CucumberWithProperties.class)
@@ -32,6 +34,8 @@ import org.junit.runner.RunWith;
                 "json:target/DatastoreRestI9n_cucumber.json"},
         strict = true,
         monochrome = true)
+
+@Category(value = Categories.integrationTests.class)
 @CucumberProperty(key = "broker.ip", value = "localhost")
 @CucumberProperty(key = "commons.db.schema", value = "kapuadb")
 @CucumberProperty(key = "commons.settings.hotswap", value = "true")

@@ -10,6 +10,7 @@
 # Contributors:
 #     Eurotech - initial API and implementation
 ###############################################################################
+@Category(value = Categories.cucumberUnitTests.class)
 @unit
 @account
 Feature: User Account Service

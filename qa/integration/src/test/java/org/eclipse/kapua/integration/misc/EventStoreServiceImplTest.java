@@ -18,8 +18,8 @@ import org.eclipse.kapua.commons.service.event.store.api.EventStoreRecordCreator
 import org.eclipse.kapua.commons.service.event.store.internal.EventStoreRecordCreatorImpl;
 import org.eclipse.kapua.commons.service.event.store.internal.EventStoreServiceImpl;
 
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
 
+import org.eclipse.kapua.qa.markers.Categories;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,7 +28,7 @@ import org.mockito.Mockito;
 
 import java.math.BigInteger;
 
-@Category(JUnitTests.class)
+@Category(value = Categories.integrationTests.class)
 public class EventStoreServiceImplTest extends Assert {
 
     @Test

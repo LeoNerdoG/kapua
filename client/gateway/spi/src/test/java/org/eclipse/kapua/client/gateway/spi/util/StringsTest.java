@@ -12,9 +12,8 @@
  *******************************************************************************/
 package org.eclipse.kapua.client.gateway.spi.util;
 
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
 import org.junit.Assert;
-import org.junit.Test;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -23,7 +22,7 @@ import org.junit.runners.Parameterized.Parameters;
 import java.util.Arrays;
 import java.util.Collection;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 @RunWith(value = Parameterized.class)
 public class StringsTest extends Assert {
 
@@ -48,20 +47,5 @@ public class StringsTest extends Assert {
                 {"!#$%&'()=?⁄@‹›€°·‚,.-;:_Èˇ¿<>«‘”’ÉØ∏{}|ÆæÒuF8FFÔÓÌÏÎÅ«»Ç◊Ñˆ¯Èˇ", "!#$%&'()=?⁄@‹›€°·‚,.-;:_Èˇ¿<>«‘”’ÉØ∏{}|ÆæÒuF8FFÔÓÌÏÎÅ«»Ç◊Ñˆ¯Èˇ"},
                 {"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefg", "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefg"},
         });
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void nonEmptyTextNullStringTest() {
-        Strings.nonEmptyText(null, fieldName);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void nonEmptyTextEmptyStringTest() {
-        Strings.nonEmptyText("", fieldName);
-    }
-
-    @Test
-    public void nonEmptyTextTest() {
-        Strings.nonEmptyText(string, fieldName);
     }
 }

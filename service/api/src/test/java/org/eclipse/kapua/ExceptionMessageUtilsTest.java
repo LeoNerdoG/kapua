@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.kapua;
 
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +25,7 @@ import java.lang.reflect.Modifier;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class ExceptionMessageUtilsTest extends Assert {
 
     String[] resourceBundleName;

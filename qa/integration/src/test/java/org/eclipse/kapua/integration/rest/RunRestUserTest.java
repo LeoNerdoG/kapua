@@ -15,6 +15,8 @@ package org.eclipse.kapua.integration.rest;
 import cucumber.api.CucumberOptions;
 import org.eclipse.kapua.qa.common.cucumber.CucumberProperty;
 import org.eclipse.kapua.qa.common.cucumber.CucumberWithProperties;
+import org.eclipse.kapua.qa.markers.Categories;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 @RunWith(CucumberWithProperties.class)
@@ -32,6 +34,7 @@ import org.junit.runner.RunWith;
         strict = true,
         monochrome = true)
 
+@Category(value = Categories.integrationTests.class)
 @CucumberProperty(key="certificate.jwt.private.key", value= "certificates/key.pk8")
 @CucumberProperty(key="certificate.jwt.certificate", value= "certificates/certificate.pem")
 @CucumberProperty(key="commons.db.schema", value="kapuadb")

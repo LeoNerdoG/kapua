@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.kapua.model.type;
 
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,7 +23,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class ByteArrayConverterTest extends Assert {
 
     Byte[] byteClassArray;

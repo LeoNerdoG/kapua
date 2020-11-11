@@ -14,9 +14,12 @@ package org.eclipse.kapua.service.account.test;
 
 import cucumber.api.CucumberOptions;
 import org.eclipse.kapua.qa.common.cucumber.CucumberProperty;
-import org.junit.runner.RunWith;
+import org.eclipse.kapua.qa.markers.Categories;
+import org.junit.experimental.categories.Category;
+//import org.junit.runner.RunWith;
 
-@RunWith(CucumberWithPropertiesForAccount.class)
+@Category(value = Categories.cucumberUnitTests.class)
+//@RunWith(CucumberWithPropertiesForAccount.class)
 
 @CucumberOptions(
         features = { "classpath:features/AccountService.feature"
@@ -32,8 +35,8 @@ import org.junit.runner.RunWith;
 
 @CucumberProperty(key="locator.class.impl", value="org.eclipse.kapua.qa.common.MockedLocator")
 @CucumberProperty(key="test.type", value="unit")
-@CucumberProperty(key="commons.db.schema", value="kapuadb")
-@CucumberProperty(key="commons.db.schema.update", value="true")
+//@CucumberProperty(key="commons.db.schema", value="kapuadb")
+//@CucumberProperty(key="commons.db.schema.update", value="true")
 
 public class RunAccountUnitTest {
 }

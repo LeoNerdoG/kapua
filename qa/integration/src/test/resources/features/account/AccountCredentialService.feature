@@ -13,7 +13,6 @@
 @account
 @credential
 @integration
-
 Feature: Account Credential Service Integration Tests
 
 Scenario: Init Security Context for all scenarios

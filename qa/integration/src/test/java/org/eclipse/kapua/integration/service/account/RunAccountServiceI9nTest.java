@@ -16,8 +16,11 @@ package org.eclipse.kapua.integration.service.account;
 import cucumber.api.CucumberOptions;
 import org.eclipse.kapua.qa.common.cucumber.CucumberProperty;
 import org.eclipse.kapua.qa.common.cucumber.CucumberWithProperties;
+import org.eclipse.kapua.qa.markers.Categories;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
+@Category(value = Categories.integrationTests.class)
 @RunWith(CucumberWithProperties.class)
 @CucumberOptions(
         features = {

@@ -15,6 +15,8 @@ package org.eclipse.kapua.integration.service.datastore;
 import cucumber.api.CucumberOptions;
 import org.eclipse.kapua.qa.common.cucumber.CucumberProperty;
 import org.eclipse.kapua.qa.common.cucumber.CucumberWithProperties;
+import org.eclipse.kapua.qa.markers.Categories;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 @RunWith(CucumberWithProperties.class)
@@ -31,6 +33,8 @@ import org.junit.runner.RunWith;
                 "json:target/DatastoreNewIndex_cucumber.json"},
         strict = true,
         monochrome = true)
+
+@Category(value = Categories.integrationTests.class)
 @CucumberProperty(key = "commons.settings.hotswap", value = "true")
 @CucumberProperty(key = "datastore.elasticsearch.nodes", value = "127.0.0.1:9200")
 @CucumberProperty(key = "datastore.elasticsearch.provider", value = "org.eclipse.kapua.service.elasticsearch.client.rest.RestElasticsearchClientProvider")

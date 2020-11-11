@@ -15,7 +15,7 @@ package org.eclipse.kapua.client.gateway.profile.kura;
 import org.eclipse.kapua.client.gateway.Client;
 import org.eclipse.kapua.client.gateway.Credentials;
 import org.eclipse.kapua.client.gateway.mqtt.fuse.FuseChannel;
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Assert;
 import org.junit.Before;
@@ -26,7 +26,7 @@ import org.mockito.Mockito;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class KuraMqttProfileTest extends Assert {
 
     Supplier supplier;

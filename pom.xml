@@ -139,14 +139,14 @@
         <!-- -->
         <!-- Database configuration for local installs and tests -->
         <!-- Database host address is the one exported by the dev-tools/vagrant/Vagrantfile -->
-        <db.host>192.168.33.10</db.host>
-        <db.name>kapuadb</db.name>
-        <db.schema>kapuadb</db.schema>
-        <db.conn.properties>schema=${db.schema}</db.conn.properties>
-        <db.conn.url>jdbc:h2:tcp://${db.host}:3306/${db.name};${db.conn.properties}</db.conn.url>
-        <db.username>kapua</db.username>
-        <db.password>kapua</db.password>
-        <db.driver>org.h2.Driver</db.driver>
+<!--        <db.host>192.168.33.10</db.host>-->
+<!--        <db.name>kapuadb</db.name>-->
+<!--        <db.schema>kapuadb</db.schema>-->
+<!--        <db.conn.properties>schema=${db.schema}</db.conn.properties>-->
+<!--        <db.conn.url>jdbc:h2:tcp://${db.host}:3306/${db.name};${db.conn.properties}</db.conn.url>-->
+<!--        <db.username>kapua</db.username>-->
+<!--        <db.password>kapua</db.password>-->
+<!--        <db.driver>org.h2.Driver</db.driver>-->
     </properties>
 
     <build>
@@ -265,24 +265,24 @@
                 </plugin>
 
 
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>sql-maven-plugin</artifactId>
-                    <version>${sql-maven-plugin.version}</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>com.h2database</groupId>
-                            <artifactId>h2</artifactId>
-                            <version>${h2.version}</version>
-                        </dependency>
-                    </dependencies>
-                    <configuration>
-                        <driver>${db.driver}</driver>
-                        <url>${db.conn.url}</url>
-                        <username>${db.username}</username>
-                        <password>${db.password}</password>
-                    </configuration>
-                </plugin>
+<!--                <plugin>-->
+<!--                    <groupId>org.codehaus.mojo</groupId>-->
+<!--                    <artifactId>sql-maven-plugin</artifactId>-->
+<!--                    <version>${sql-maven-plugin.version}</version>-->
+<!--                    <dependencies>-->
+<!--                        <dependency>-->
+<!--                            <groupId>com.h2database</groupId>-->
+<!--                            <artifactId>h2</artifactId>-->
+<!--                            <version>${h2.version}</version>-->
+<!--                        </dependency>-->
+<!--                    </dependencies>-->
+<!--                    <configuration>-->
+<!--                        <driver>${db.driver}</driver>-->
+<!--                        <url>${db.conn.url}</url>-->
+<!--                        <username>${db.username}</username>-->
+<!--                        <password>${db.password}</password>-->
+<!--                    </configuration>-->
+<!--                </plugin>-->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>license-maven-plugin</artifactId>
@@ -451,21 +451,21 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <!-- Travis has an overall 3GB limit -->
-                    <argLine>@{argLine} -Xmx1024m</argLine>
-                    <systemPropertyVariables>
-                        <cucumber.options>--tags ~@rest</cucumber.options>
-                        <commons.db.schema>kapuadb</commons.db.schema>
-                        <commons.settings.hotswap>true</commons.settings.hotswap>
-                        <broker.host>localhost</broker.host>
-                        <jetty.war.file>target/war/api.war</jetty.war.file>
-                    </systemPropertyVariables>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-surefire-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash; Travis has an overall 3GB limit &ndash;&gt;-->
+<!--                    <argLine>@{argLine} -Xmx1024m</argLine>-->
+<!--                    <systemPropertyVariables>-->
+<!--                        <cucumber.options>&#45;&#45;tags ~@rest</cucumber.options>-->
+<!--                        <commons.db.schema>kapuadb</commons.db.schema>-->
+<!--                        <commons.settings.hotswap>true</commons.settings.hotswap>-->
+<!--                        <broker.host>localhost</broker.host>-->
+<!--                        <jetty.war.file>target/war/api.war</jetty.war.file>-->
+<!--                    </systemPropertyVariables>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -1101,12 +1101,12 @@
                 <version>${project.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.eclipse.kapua</groupId>
-                <artifactId>kapua-console-web</artifactId>
-                <version>${project.version}</version>
-                <type>war</type>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.eclipse.kapua</groupId>-->
+<!--                <artifactId>kapua-console-web</artifactId>-->
+<!--                <version>${project.version}</version>-->
+<!--                <type>war</type>-->
+<!--            </dependency>-->
 
             <!-- -->
             <!-- External dependencies -->
@@ -1788,36 +1788,36 @@
             </dependency>
 
             <!-- Jetty-->
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-server</artifactId>
-                <version>${jetty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-webapp</artifactId>
-                <version>${jetty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-jmx</artifactId>
-                <version>${jetty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-annotations</artifactId>
-                <version>${jetty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>apache-jsp</artifactId>
-                <version>${jetty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>apache-jstl</artifactId>
-                <version>${jetty.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.eclipse.jetty</groupId>-->
+<!--                <artifactId>jetty-server</artifactId>-->
+<!--                <version>${jetty.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.eclipse.jetty</groupId>-->
+<!--                <artifactId>jetty-webapp</artifactId>-->
+<!--                <version>${jetty.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.eclipse.jetty</groupId>-->
+<!--                <artifactId>jetty-jmx</artifactId>-->
+<!--                <version>${jetty.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.eclipse.jetty</groupId>-->
+<!--                <artifactId>jetty-annotations</artifactId>-->
+<!--                <version>${jetty.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.eclipse.jetty</groupId>-->
+<!--                <artifactId>apache-jsp</artifactId>-->
+<!--                <version>${jetty.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.eclipse.jetty</groupId>-->
+<!--                <artifactId>apache-jstl</artifactId>-->
+<!--                <version>${jetty.version}</version>-->
+<!--            </dependency>-->
 
             <!-- Spring -->
             <dependency>
@@ -1903,6 +1903,32 @@
                 <module>console</module>
             </modules>
         </profile>
+
+        <profile>
+            <id>unitTests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemPropertyVariables>
+                                <groups>'org.eclipse.kapua.qa.markers.Categories$junitTests'</groups>
+                                <exclude>**/*.feature</exclude>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Profile used to exclude external dependency modules -->
+        <!-- <profile>
+            <id>external</id>
+            <modules>
+                <module>external</module>
+            </modules>
+        </profile> -->
 
         <!-- Profile used only during release process. -->
         <profile>

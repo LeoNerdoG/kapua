@@ -15,7 +15,7 @@ package org.eclipse.kapua.integration.misc;
 import org.eclipse.kapua.model.id.KapuaId;
 import org.eclipse.kapua.model.id.KapuaIdAdapter;
 import org.eclipse.kapua.model.id.KapuaIdStatic;
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +23,7 @@ import org.junit.experimental.categories.Category;
 
 import java.math.BigInteger;
 
-@Category(JUnitTests.class)
+@Category(value = Categories.integrationTests.class)
 public class KapuaIdAdapterTest extends Assert {
 
     KapuaIdAdapter kapuaIdAdapter;

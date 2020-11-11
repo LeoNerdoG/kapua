@@ -14,6 +14,8 @@ package org.eclipse.kapua.service.tag.test;
 
 import cucumber.api.CucumberOptions;
 import org.eclipse.kapua.qa.common.cucumber.CucumberProperty;
+import org.eclipse.kapua.qa.markers.Categories;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 @RunWith(CucumberWithPropertiesForTag.class)
@@ -29,6 +31,8 @@ import org.junit.runner.RunWith;
                    "json:target/cucumber.json" },
         strict = true,
         monochrome = true)
+
+@Category(value = Categories.integrationTests.class)
 @CucumberProperty(key="locator.class.impl", value="org.eclipse.kapua.qa.common.MockedLocator")
 @CucumberProperty(key="test.type", value="unit")
 @CucumberProperty(key="commons.db.schema", value="kapuadb")

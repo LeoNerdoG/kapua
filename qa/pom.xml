@@ -130,6 +130,8 @@
                                 <image>
                                     <alias>broker</alias>
                                     <name>kapua/kapua-broker:1.5.0-SNAPSHOT</name>
+                                    <alias>kapua-broker</alias>
+                                    <name>kapua/kapua-broker:1.4.0-SNAPSHOT</name>
                                     <run>
                                         <ports>
                                             <port>1883:1883</port>
@@ -161,13 +163,13 @@
                                             <port>8443:8443</port>
                                         </ports>
                                         <dependsOn>
-                                            <container>broker</container>
+                                            <container>kapua-broker</container>
                                             <container>db</container>
                                             <container>es</container>
                                             <container>events-broker</container>
                                         </dependsOn>
                                         <links>
-                                            <link>broker:broker</link>
+                                            <link>kapua-broker:kapua-broker</link>
                                             <link>db:db</link>
                                             <link>es:es</link>
                                             <link>events-broker:events-broker</link>
@@ -187,19 +189,19 @@
                                             <port>8444:8443</port>
                                         </ports>
                                         <dependsOn>
-                                            <container>broker</container>
+                                            <container>kapua-broker</container>
                                             <container>db</container>
                                             <container>es</container>
                                             <container>events-broker</container>
                                         </dependsOn>
                                         <links>
-                                            <link>broker:broker</link>
+                                            <link>kapua-broker:kapua-broker</link>
                                             <link>db:db</link>
                                             <link>es:es</link>
                                             <link>events-broker:events-broker</link>
                                         </links>
                                         <wait>
-                                            <log>Starting service modules...DONE</log>
+                                            <log>org.eclipse.jetty.server.Server - Started</log>
                                             <time>60000</time>
                                         </wait>
                                     </run>
@@ -233,7 +235,7 @@
                             <argLine>@{argLine} -Xmx1024m</argLine>
                             <systemPropertyVariables>
                                 <cucumber.options>--tags @integration</cucumber.options>
-                                <groups>'!org.eclipse.kapua.test.junit.JUnitTests'</groups>
+                                <groups>'!org.eclipse.kapua.qa.markers.Categories$junitTests'</groups>
                                 <commons.settings.hotswap>true</commons.settings.hotswap>
                                 <org.eclipse.kapua.qa.noEmbeddedServers>true</org.eclipse.kapua.qa.noEmbeddedServers>
                                 <commons.db.jdbcConnectionUrlResolver>DEFAULT</commons.db.jdbcConnectionUrlResolver>

@@ -10,6 +10,7 @@
 # Contributors:
 #     Eurotech
 ###############################################################################
+@Category(value = Categories.cucumberUnitTests.class)
 @unit
 @scheduler
 Feature: Scheduler Service

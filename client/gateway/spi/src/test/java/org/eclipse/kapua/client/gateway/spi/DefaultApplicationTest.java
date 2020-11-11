@@ -16,7 +16,7 @@ import org.eclipse.kapua.client.gateway.ErrorHandler;
 import org.eclipse.kapua.client.gateway.MessageHandler;
 import org.eclipse.kapua.client.gateway.Payload;
 import org.eclipse.kapua.client.gateway.Topic;
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,7 +27,7 @@ import org.mockito.Mockito;
 import java.util.ArrayList;
 import java.util.List;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class DefaultApplicationTest extends Assert {
 
     private AbstractClient.Context context;
