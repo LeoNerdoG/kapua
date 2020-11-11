@@ -13,7 +13,7 @@ package org.eclipse.kapua.commons.event;
 
 import org.eclipse.kapua.KapuaRuntimeException;
 import org.eclipse.kapua.event.ServiceEvent;
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +22,7 @@ import org.junit.experimental.categories.Category;
 import java.lang.reflect.Field;
 import java.util.Stack;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class ServiceEventScopeTest extends Assert {
 
     ServiceEvent serviceEvent;

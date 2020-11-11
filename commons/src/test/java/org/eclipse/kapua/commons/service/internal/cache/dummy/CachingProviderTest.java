@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.kapua.commons.service.internal.cache.dummy;
 
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,7 +22,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Properties;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class CachingProviderTest extends Assert {
 
     @Test

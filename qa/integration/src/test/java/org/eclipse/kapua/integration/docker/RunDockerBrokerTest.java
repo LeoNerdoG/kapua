@@ -28,6 +28,7 @@ import org.junit.runner.RunWith;
                 "json:target/DockerBroker_cucumber.json"
         },
         monochrome = true)
+
 @Category(value = Categories.integrationTests.class)
 public class RunDockerBrokerTest {
 }

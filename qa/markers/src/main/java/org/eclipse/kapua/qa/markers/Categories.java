@@ -12,6 +12,8 @@
 package org.eclipse.kapua.qa.markers;
 
 public interface Categories {
+
     interface junitTests {}
+
     interface integrationTests {}
 }

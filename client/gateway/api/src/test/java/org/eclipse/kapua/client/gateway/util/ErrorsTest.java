@@ -13,8 +13,11 @@ package org.eclipse.kapua.client.gateway.util;
 
 import java.util.Optional;
 
+import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
+@Category(Categories.junitTests.class)
 public class ErrorsTest {
 
     @Test

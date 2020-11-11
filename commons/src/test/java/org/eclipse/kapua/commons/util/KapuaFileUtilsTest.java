@@ -12,7 +12,7 @@
 package org.eclipse.kapua.commons.util;
 
 import org.eclipse.kapua.commons.setting.KapuaSettingException;
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -23,7 +23,7 @@ import java.lang.reflect.Constructor;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class KapuaFileUtilsTest extends Assert {
 
     @Test

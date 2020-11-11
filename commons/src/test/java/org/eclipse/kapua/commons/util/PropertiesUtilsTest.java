@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.kapua.commons.util;
 
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.Assert;
 import org.junit.ComparisonFailure;
 import org.junit.Test;
@@ -21,7 +21,7 @@ import java.lang.reflect.Constructor;
 import java.util.Date;
 import java.util.Properties;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class PropertiesUtilsTest extends Assert {
 
     @Test

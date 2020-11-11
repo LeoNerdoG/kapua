@@ -12,7 +12,7 @@
 package org.eclipse.kapua.commons.event;
 
 import com.codahale.metrics.Counter;
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +21,7 @@ import org.junit.experimental.categories.Category;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class RaiseServiceEventInterceptorTest extends Assert {
 
     @Before

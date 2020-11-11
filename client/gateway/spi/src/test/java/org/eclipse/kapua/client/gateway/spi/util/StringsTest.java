@@ -11,11 +11,11 @@
  *******************************************************************************/
 package org.eclipse.kapua.client.gateway.spi.util;
 
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class StringsTest {
 
     @Test(expected = IllegalArgumentException.class)

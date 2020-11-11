@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.kapua.transport.mqtt.test.mqtt;
 
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.eclipse.kapua.transport.mqtt.MqttClientConnectionOptions;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,7 +21,7 @@ import org.junit.experimental.categories.Category;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class MqttClientConnectionOptionsTest extends Assert {
 
     MqttClientConnectionOptions connectOptions;

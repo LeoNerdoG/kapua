@@ -21,8 +21,7 @@ import org.eclipse.kapua.KapuaDuplicateNameException;
 import org.eclipse.kapua.KapuaException;
 import org.eclipse.kapua.KapuaIllegalNullArgumentException;
 import org.eclipse.kapua.KapuaOptimisticLockingException;
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
-
+import org.eclipse.kapua.qa.markers.Categories;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,7 +29,7 @@ import org.junit.experimental.categories.Category;
 
 import org.mockito.Mockito;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class KapuaExceptionUtilsTest extends Assert {
 
     @Test

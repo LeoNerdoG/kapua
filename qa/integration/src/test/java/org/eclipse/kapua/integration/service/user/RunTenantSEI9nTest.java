@@ -14,6 +14,8 @@ package org.eclipse.kapua.integration.service.user;
 import cucumber.api.CucumberOptions;
 import org.eclipse.kapua.qa.common.cucumber.CucumberProperty;
 import org.eclipse.kapua.qa.common.cucumber.CucumberWithProperties;
+import org.eclipse.kapua.qa.markers.Categories;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 @RunWith(CucumberWithProperties.class)
@@ -29,6 +31,8 @@ import org.junit.runner.RunWith;
         },
         strict = true,
         monochrome = true)
+
+@Category(value = Categories.integrationTests.class)
 @CucumberProperty(key = "datastore.elasticsearch.provider", value = "org.eclipse.kapua.service.elasticsearch.client.rest.RestElasticsearchClientProvider")
 @CucumberProperty(key = "org.eclipse.kapua.qa.datastore.extraStartupDelay", value = "1")
 @CucumberProperty(key = "org.eclipse.kapua.qa.broker.extraStartupDelay", value = "1")

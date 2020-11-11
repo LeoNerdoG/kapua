@@ -12,7 +12,7 @@
 package org.eclipse.kapua.commons.model.query;
 
 import org.eclipse.kapua.model.query.SortOrder;
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -22,7 +22,7 @@ import org.junit.runners.Parameterized.Parameters;
 
 import java.util.Arrays;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 @RunWith(value = Parameterized.class)
 public class FieldSortCriteriaImplTest extends Assert {
 
