@@ -12,7 +12,8 @@
 @account
 @credential
 @integration
-
+  
+@Category(Categories.junitTests.class)
 Feature: Account Credential Service Integration Tests
 
 Scenario: Init Security Context for all scenarios

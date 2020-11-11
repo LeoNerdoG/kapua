@@ -14,6 +14,8 @@ package org.eclipse.kapua.integration.service.authorization;
 
 import org.eclipse.kapua.qa.common.cucumber.CucumberProperty;
 import org.eclipse.kapua.qa.common.cucumber.CucumberWithProperties;
+import org.eclipse.kapua.qa.markers.Categories;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 import cucumber.api.CucumberOptions;
@@ -38,6 +40,8 @@ import cucumber.api.CucumberOptions;
                  },
         strict = true,
         monochrome = true)
+
+@Category(value = Categories.integrationTests.class)
 @CucumberProperty(key="test.type", value="integration")
 @CucumberProperty(key="commons.db.schema", value="kapuadb")
 @CucumberProperty(key="commons.db.schema.update", value="true")

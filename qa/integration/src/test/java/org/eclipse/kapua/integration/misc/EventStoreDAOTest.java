@@ -23,12 +23,11 @@ import org.eclipse.kapua.commons.service.event.store.internal.EventStoreRecordIm
 import org.eclipse.kapua.model.KapuaEntity;
 import org.eclipse.kapua.model.id.KapuaId;
 import org.eclipse.kapua.model.query.KapuaQuery;
-//import org.eclipse.kapua.qa.markers.junit.JUnitTests;
-
+import org.eclipse.kapua.qa.markers.Categories;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Assert;
 import org.junit.Test;
-//import org.junit.experimental.categories.Category;
+import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 
 import javax.persistence.EntityExistsException;
@@ -45,7 +44,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Category(JUnitTests.class)
+@Category(value = Categories.junitTests.class)
 public class EventStoreDAOTest extends Assert {
 
     @Test
