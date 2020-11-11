@@ -26,7 +26,9 @@ import java.util.Random;
 
 @Category(JUnitTests.class)
 @RunWith(value = Parameterized.class)
-public class KapuaEidConverterTest extends Assert {
+public class
+
+KapuaEidConverterTest extends Assert {
 
     private final static Random RANDOM = RandomUtils.getInstance();
 

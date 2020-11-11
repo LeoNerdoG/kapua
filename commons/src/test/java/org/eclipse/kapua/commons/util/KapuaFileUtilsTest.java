@@ -67,7 +67,7 @@ public class KapuaFileUtilsTest extends Assert {
                     System.out.println("File has not been created.");
                 }
             } catch (Exception ex) {
-                fail("Inappropriate http scheme.");
+                fail("Inappropriate http scheme for " + value);
             }
         }
 
