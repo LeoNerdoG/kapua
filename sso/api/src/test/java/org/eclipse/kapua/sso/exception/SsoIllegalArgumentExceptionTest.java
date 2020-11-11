@@ -24,17 +24,49 @@ import org.junit.experimental.categories.Category;
 public class SsoIllegalArgumentExceptionTest extends Assert {
     String[] argumentName;
     String[] argumentValue;
-    KapuaErrorCodes[] kapuaErrorCodes;
+    SsoErrorCodes[] ssoErrorCodes;
 
     @Before
     public void SetUp() {
         argumentName = new String[]{"Argument Name", null};
         argumentValue = new String[]{"Argument Value", null};
+        ssoErrorCodes = new SsoErrorCodes[]{SsoErrorCodes.ACCESS_TOKEN_ERROR, SsoErrorCodes.ILLEGAL_ARGUMENT, SsoErrorCodes.ILLEGAL_URI, SsoErrorCodes.JWT_EXTRACTION_ERROR,
+                SsoErrorCodes.JWT_PROCESS_ERROR, SsoErrorCodes.JWT_URI_ERROR, SsoErrorCodes.LOGIN_URI_ERROR, SsoErrorCodes.LOGOUT_URI_ERROR};
 
     }
 
     @Test
     public void ssoExceptionKapuaErrorCodeParameterTest() {
+        for (String name : argumentName) {
+            for (String value : argumentValue) {
+                SsoIllegalArgumentException ssoIllegalArgumentException = new SsoIllegalArgumentException(name, value);
+                assertEquals(SsoErrorCodes.ILLEGAL_ARGUMENT, ssoIllegalArgumentException.getCode());
+                assertEquals(name, ssoIllegalArgumentException.getArgumentName());
+                assertEquals(value, ssoIllegalArgumentException.getArgumentValue());
+                assertEquals("An illegal value was provided for the argument " + name + ": " + value + ".", ssoIllegalArgumentException.getMessage());
+                assertNull(ssoIllegalArgumentException.getCause());
+            }
+        }
+    }
+
+    @Test(expected = SsoIllegalArgumentException.class)
+    public void throwingExceptionStringParametersTest() throws SsoIllegalArgumentException {
+        for (String name : argumentName) {
+            for (String value : argumentValue) {
+                throw new SsoIllegalArgumentException(name, value);
+            }
+        }
+    }
+
+    @Test(expected = SsoIllegalArgumentException.class)
+    public void throwingExceptionKapuaErrorCodesStringParametersTest() throws SsoIllegalArgumentException {
+        for (String name : argumentName) {
+            for (String value : argumentValue) {
+                for (SsoErrorCodes ssoErrorCode : ssoErrorCodes) {
+                    throw new SsoIllegalArgumentException(ssoErrorCode, name, value);
+                }
+            }
+        }
     }
 
     @Test(expected = SsoIllegalArgumentException.class)
