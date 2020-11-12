@@ -27,6 +27,7 @@ public class GenericSingleSignOnLocatorTest extends Assert {
         assertThat(genericSingleSignOnLocator.getService(), IsInstanceOf.instanceOf(GenericSingleSignOnService.class));
     }
 
+//    to ne dela
     @Test
     public void getProcessorTest() throws  SsoException {
         assertThat(genericSingleSignOnLocator.getProcessor(), IsInstanceOf.instanceOf(JwtProcessor.class));
