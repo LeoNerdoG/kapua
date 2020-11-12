@@ -1,4 +1,4 @@
 package org.eclipse.kapua.sso.provider.generic.setting;
 
-public class GenericSsoSettingKeys {
+public class GenericSsoSettingKeysTest {
 }
