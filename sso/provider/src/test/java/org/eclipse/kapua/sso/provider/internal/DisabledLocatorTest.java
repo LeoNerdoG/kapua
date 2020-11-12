@@ -12,7 +12,6 @@
 package org.eclipse.kapua.sso.provider.internal;
 
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
-import org.eclipse.kapua.sso.provider.SingleSignOnProvider;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,6 +25,7 @@ public class DisabledLocatorTest extends Assert {
     public void setUp() {
 //        disabledLocator = new SingleSignOnProvider.ProviderLocator();
     }
+
     @Test
     public void isEnabledTest() {
 //        assertFalse();
