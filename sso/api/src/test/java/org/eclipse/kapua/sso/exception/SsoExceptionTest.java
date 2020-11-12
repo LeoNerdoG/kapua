@@ -27,6 +27,7 @@ public class SsoExceptionTest extends Assert {
     String[] messages = new String[]{"An error occurred while retrieving the SSO login URI", "An error occurred while retrieving the SSO logout URI", "An error occurred while getting the access token",
             "An error occurred while extracting the Jwt from the string: {0}", "An error occurred while processing the Jwt: {0}", "An error occurred while retrieving the SSO Jwt URI",
             "An illegal value was provided for the argument {0}: {1}.", "An illegal value was provided for the URI {0}: {1}."};
+    Throwable[] throwables;
 
     private class ActualSsoException extends SsoException {
 
@@ -58,6 +59,7 @@ public class SsoExceptionTest extends Assert {
         argument1 = "arg1";
         argument2 = "arg2";
         argument3 = "arg3";
+        throwables = new Throwable[]{new Throwable(), null};
     }
 
     @Test
@@ -144,9 +146,16 @@ public class SsoExceptionTest extends Assert {
 
     @Test
     public void ssoExceptionKapuaErrorCodeThrowableObjectParametersTest() {
+        for (Throwable throwable : throwables) {
+            SsoException ssoException = new ActualSsoException(SsoErrorCodes.ILLEGAL_ARGUMENT, throwable, argument1, argument2);
 
-//        SsoException ssoException = new ActualSsoException(kapuaErrorCode, argument1, argument2, argument3);
+            assertEquals("Expected and actual values should be the same.", SsoErrorCodes.ILLEGAL_ARGUMENT, ssoException.getCode());
+            assertEquals("Expected and actual values should be the same.", throwable, ssoException.getCause());
+            assertEquals("Expected and actual values should be the same.", KAPUA_ERROR_MESSAGES, ssoException.getKapuaErrorMessagesBundle());
+            assertEquals("Expected and actual values should be the same.", "An illegal value was provided for the argument " + argument1 + ": " + argument2 + ".", ssoException.getMessage());
+            assertEquals("Expected and actual values should be the same.", "An illegal value was provided for the argument " + argument1 + ": " + argument2 + ".", ssoException.getLocalizedMessage());
 
+        }
     }
 
     @Test

@@ -85,15 +85,15 @@ public class ConfigurationPrinterTest extends Assert {
 
     @Test
     public void withTitleAlignmentTest() {
-        ConfigurationPrinter.TitleAlignment[] titleAlignment = new ConfigurationPrinter.TitleAlignment[]{
+        ConfigurationPrinter.TitleAlignment[] titleAlignments = new ConfigurationPrinter.TitleAlignment[]{
                 ConfigurationPrinter.TitleAlignment.CENTER,
                 ConfigurationPrinter.TitleAlignment.LEFT,
                 ConfigurationPrinter.TitleAlignment.RIGHT
         };
 
-        for (ConfigurationPrinter.TitleAlignment tA : titleAlignment) {
-            configurationPrinter.withTitleAlignment(tA);
-            assertEquals("Expected and actual values should be the same.", tA, configurationPrinter.getTitleAlignment());
+        for (ConfigurationPrinter.TitleAlignment titleAlignment : titleAlignments) {
+            configurationPrinter.withTitleAlignment(titleAlignment);
+            assertEquals("Expected and actual values should be the same.", titleAlignment, configurationPrinter.getTitleAlignment());
         }
     }
 
@@ -157,7 +157,7 @@ public class ConfigurationPrinterTest extends Assert {
         String[] title = new String[]{"", "a", "qwertyuiiopasdfghjklšđčćžzxcvbnm!", "1234567890", "QWERTYUIOPŠĐASDFGHJKLČĆŽZXCVBNM"};
         for (String titleVal : title) {
             for (String specSymVal : specialSymbols) {
-                assertNotNull("Returned value should an instance of ConfigurationPrinter!", configurationPrinter.addHeader(titleVal + specSymVal));
+                assertNotNull("Not null expected!", configurationPrinter.addHeader(titleVal + specSymVal));
             }
         }
     }
@@ -165,9 +165,9 @@ public class ConfigurationPrinterTest extends Assert {
     @Test
     public void addParameterNullTests() {
         Object object = new Object();
-        assertNotNull("Returned value should be an instance of ConfigurationPrinter.", configurationPrinter.addParameter(null, null));
-        assertNotNull("Returned value should be an instance of ConfigurationPrinter.", configurationPrinter.addParameter("string", null));
-        assertNotNull("Returned value should be an instance of ConfigurationPrinter.", configurationPrinter.addParameter(null, object));
+        assertNotNull("Not null expected!", configurationPrinter.addParameter(null, null));
+        assertNotNull("Not null expected!", configurationPrinter.addParameter("string", null));
+        assertNotNull("Not null expected!", configurationPrinter.addParameter(null, object));
     }
 
     @Test
@@ -177,7 +177,7 @@ public class ConfigurationPrinterTest extends Assert {
                 "qwertyuiopšđasdfghjklčćžzxcvbnmQWERTYUIOPŠĐASDFGHJKLČĆŽZXCVBNM123457890"};
         for (String stringArrayVal : stringArray) {
             for (Object object : objects) {
-                assertNotNull("Returned value should be an instance of ConfigurationPrinter.", configurationPrinter.addParameter(stringArrayVal, object));
+                assertNotNull("Not null expected!", configurationPrinter.addParameter(stringArrayVal, object));
             }
         }
     }
@@ -185,7 +185,7 @@ public class ConfigurationPrinterTest extends Assert {
     @Test
     public void increaseIndentationTest() {
         for (int i = 0; i < 10; i++) {
-            assertNotNull("Expected and actual values are not the same!", configurationPrinter.increaseIndentation());
+            assertNotNull("Not null expected!", configurationPrinter.increaseIndentation());
         }
     }
 
@@ -195,15 +195,15 @@ public class ConfigurationPrinterTest extends Assert {
             configurationPrinter.increaseIndentation();
         }
         for (int i = 10; i >= 0; i--) {
-            assertNotNull("Expected and actual values are not the same!", configurationPrinter.decreaseIndentation());
+            assertNotNull("Not null expected!", configurationPrinter.decreaseIndentation());
         }
     }
 
     @Test
     public void printLogParentLoggerNullTest() {
         configurationPrinter.printLog();
-        assertNotNull(configurationPrinter.getParentLogger());
-        assertNotNull("Returned value should be instance of ConfigurationPrinter!", configurationPrinter.getParentLogger());
+        assertNotNull("Not null expected!", configurationPrinter.getParentLogger());
+        assertNotNull("Not null expected!", configurationPrinter.getParentLogger());
     }
 
     @Test

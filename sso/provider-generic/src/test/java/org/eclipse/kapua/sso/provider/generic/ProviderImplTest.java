@@ -11,9 +11,11 @@
  *******************************************************************************/
 package org.eclipse.kapua.sso.provider.generic;
 
+import javassist.expr.Instanceof;
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
 // drug import uporabi da naredis instanco providerImpl
 import org.eclipse.kapua.sso.provider.SingleSignOnProvider;
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,6 +32,11 @@ public class ProviderImplTest extends Assert {
 
     @Test
     public void getIdTest() {
-        assertEquals("keycloak", SingleSignOnProvider.getId());
+        assertEquals("generic", providerImpl.getId());
+    }
+
+    @Test
+    public void createLocatorTest() {
+        assertThat("Instance of GenericSingleSignOnLocator expected.", providerImpl.createLocator(), IsInstanceOf.instanceOf(GenericSingleSignOnLocator.class));
     }
 }
