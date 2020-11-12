@@ -1843,67 +1843,6 @@
             </modules>
         </profile>
 
-        <profile>
-            <id>skipTests</id>
-            <properties>
-                <maven.skip.tests>true</maven.skip.tests>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>intTests</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>test</phase>
-                                    <goals>
-                                        <goal>test</goal>
-                                    </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>unitTests</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>test</phase>
-                                <goals>
-                                    <goal>test</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-            <modules>
-                <module>commons</module>
-                <module>locator</module>
-                <module>service</module>
-                <module>message</module>
-                <module>transport</module>
-                <module>translator</module>
-                <module>sso</module>
-                <module>rest-api</module>
-                <module>job-engine</module>
-                <module>broker</module>
-                <module>client</module>
-                <module>simulator-kura</module>
-            </modules>
-        </profile>
-
         <!-- Profile used to exclude external dependency modules -->
         <!-- <profile>
             <id>external</id>

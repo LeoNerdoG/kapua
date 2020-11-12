@@ -13,7 +13,6 @@ package org.eclipse.kapua.broker.core.plugin;
 
 import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.experimental.categories.Category;
-
 import java.util.HashMap;
 import java.util.Map;
 

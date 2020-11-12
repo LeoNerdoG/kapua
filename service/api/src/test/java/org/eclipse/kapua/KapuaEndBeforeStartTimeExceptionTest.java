@@ -12,7 +12,6 @@
 package org.eclipse.kapua;
 
 import org.eclipse.kapua.qa.markers.Categories;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
