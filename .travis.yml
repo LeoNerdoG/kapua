@@ -3,7 +3,6 @@ language: java
 jdk:
 - openjdk8
 
-sudo: false
 dist: trusty
 
 # The cache is stored per-branch
