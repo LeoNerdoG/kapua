@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.experimental.categories.Category;
 
 @Category(JUnitTests.class)
-public class KeycloakSsoSettingTest extends Assert{
+public class KeycloakSsoSettingTest extends Assert {
 
     @Test
     public void constructorTest() {
