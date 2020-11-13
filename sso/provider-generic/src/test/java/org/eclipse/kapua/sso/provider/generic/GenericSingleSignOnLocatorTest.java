@@ -1,7 +1,6 @@
 package org.eclipse.kapua.sso.provider.generic;
 
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
-import org.eclipse.kapua.sso.JwtProcessor;
 import org.eclipse.kapua.sso.exception.SsoException;
 import org.eclipse.kapua.sso.provider.generic.jwt.GenericJwtProcessor;
 import org.hamcrest.core.IsInstanceOf;
@@ -26,6 +25,8 @@ public class GenericSingleSignOnLocatorTest extends Assert {
     }
 
     //    to ne dela
+    //    Ta seznam je prazen v src/main/java/org/eclipse/kapua/sso/provider/generic/jwt/GenericJwtProcessor.java
+    //            List<String> jwtAudiences = GenericSsoSetting.getInstance().getList(String.class, GenericSsoSettingKeys.SSO_OPENID_JWT_AUDIENCE_ALLOWED);
     @Test
     public void getProcessorTest() throws SsoException {
         assertThat(genericSingleSignOnLocator.getProcessor(), IsInstanceOf.instanceOf(GenericJwtProcessor.class));
