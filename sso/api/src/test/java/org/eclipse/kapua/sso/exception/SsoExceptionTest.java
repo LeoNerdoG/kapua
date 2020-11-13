@@ -140,8 +140,12 @@ public class SsoExceptionTest extends Assert {
 
     @Test
     public void ssoExceptionKapuaErrorCodeNullObjectParametersTest() {
-//        SsoException ssoException = new ActualSsoException(kapuaErrorCode, argument1, argument2, argument3);
-
+        SsoException ssoException = new ActualSsoException(SsoErrorCodes.ILLEGAL_ARGUMENT, null);
+        assertEquals("Expected and actual values should be the same.", SsoErrorCodes.ILLEGAL_ARGUMENT, ssoException.getCode());
+        assertNull("Null expected.", ssoException.getCause());
+        assertEquals("Expected and actual values should be the same.", "An illegal value was provided for the argument {0}: {1}.", ssoException.getMessage());
+        assertEquals("Expected and actual values should be the same.", "An illegal value was provided for the argument {0}: {1}.", ssoException.getLocalizedMessage());
+        assertEquals("Expected and actual values should be the same.", kapuaErrorMessages, ssoException.getKapuaErrorMessagesBundle());
     }
 
     @Test
@@ -154,19 +158,125 @@ public class SsoExceptionTest extends Assert {
             assertEquals("Expected and actual values should be the same.", kapuaErrorMessages, ssoException.getKapuaErrorMessagesBundle());
             assertEquals("Expected and actual values should be the same.", "An illegal value was provided for the argument " + argument1 + ": " + argument2 + ".", ssoException.getMessage());
             assertEquals("Expected and actual values should be the same.", "An illegal value was provided for the argument " + argument1 + ": " + argument2 + ".", ssoException.getLocalizedMessage());
-
         }
     }
 
     @Test
     public void ssoExceptionNullKapuaErrorCodeThrowableObjectParametersTest() {
-        SsoException ssoException = new ActualSsoException(null, argument1, argument2, argument3);
+        for (Throwable throwable : throwables) {
+            SsoException ssoException = new ActualSsoException(null, throwable, argument1, argument2, argument3);
+            assertEquals("Expected and actual values should be the same.", throwable, ssoException.getCause());
+            assertNull("Null expected.", ssoException.getCode());
+            try {
+                ssoException.getMessage();
+                fail("Null pointer expected.");
+            } catch (Exception e) {
+                assertEquals(new NullPointerException().toString(), e.toString());
+            }
+            try {
+                ssoException.getLocalizedMessage();
+                fail("Null pointer expected.");
+            } catch (Exception e) {
+                assertEquals(new NullPointerException().toString(), e.toString());
+            }
+        }
+    }
+
+    @Test
+    public void ssoExceptionKapuaErrorCodeThrowableNullObjectParametersTest() {
+        for (Throwable throwable : throwables) {
+            SsoException ssoException = new ActualSsoException(SsoErrorCodes.ILLEGAL_ARGUMENT, throwable, null);
+
+            assertEquals("Expected and actual values should be the same.", SsoErrorCodes.ILLEGAL_ARGUMENT, ssoException.getCode());
+            assertEquals("Expected and actual values should be the same.", throwable, ssoException.getCause());
+            assertEquals("Expected and actual values should be the same.", kapuaErrorMessages, ssoException.getKapuaErrorMessagesBundle());
+            assertEquals("Expected and actual values should be the same.", "An illegal value was provided for the argument {0}: {1}.", ssoException.getMessage());
+            assertEquals("Expected and actual values should be the same.", "An illegal value was provided for the argument {0}: {1}.", ssoException.getLocalizedMessage());
+        }
+    }
+
+    @Test
+    public void ssoExceptionNullKapuaErrorCodeThrowableNullObjectParametersTest() {
+        for (Throwable throwable : throwables) {
+            SsoException ssoException = new ActualSsoException(null, throwable, null);
+            assertEquals("Expected and actual values should be the same.", throwable, ssoException.getCause());
+            assertNull("Null expected.", ssoException.getCode());
+            try {
+                ssoException.getMessage();
+                fail("NullPointerException expected.");
+            } catch (Exception e) {
+                assertEquals(new NullPointerException().toString(), e.toString());
+            }
+            try {
+                ssoException.getLocalizedMessage();
+                fail("NullPointerException expected.");
+            } catch (Exception e) {
+                assertEquals("NullPointerException expected.", new NullPointerException().toString(), e.toString());
+            }
+        }
 
     }
 
     @Test
-    public void ssoExceptionKapuaErrorCodeNullThrowableObjectParametersTest() {
+    public void ssoExceptionKapuaErrorCodeNullThrowableNullObjectParametersTest() {
 //        SsoException ssoException = new ActualSsoException(kapuaErrorCode, argument1, argument2, argument3);
 
+    }
+
+    @Test(expected = SsoException.class)
+    public void throwingExceptionKapuaErrorCodeParameterTest() throws SsoException {
+        throw new ActualSsoException(SsoErrorCodes.ILLEGAL_ARGUMENT);
+    }
+
+    @Test(expected = SsoException.class)
+    public void throwingExceptionNullKapuaErrorCodeParameterTest() throws SsoException {
+        throw new ActualSsoException(null);
+    }
+
+    @Test(expected = SsoException.class)
+    public void throwingExceptionKapuaErrorCodeObjectParameterTest() throws SsoException {
+        throw new ActualSsoException(SsoErrorCodes.ILLEGAL_ARGUMENT, argument1, argument2, argument3);
+    }
+
+    @Test(expected = SsoException.class)
+    public void throwingExceptionNullKapuaErrorCodeObjectParameterTest() throws SsoException {
+        throw new ActualSsoException(null, argument1, argument2, argument3);
+    }
+
+    @Test(expected = SsoException.class)
+    public void throwingExceptionKapuaErrorCodeNullObjectParameterTest() throws SsoException {
+        throw new ActualSsoException(SsoErrorCodes.ILLEGAL_ARGUMENT, null);
+    }
+
+    @Test(expected = SsoException.class)
+    public void throwingExceptionNullKapuaErrorCodeNullObjectParameterTest() throws SsoException {
+        throw new ActualSsoException(null, null);
+    }
+
+    @Test(expected = SsoException.class)
+    public void throwingExceptionKapuaErrorCodeObjectThrowableParameterTest() throws SsoException {
+        for (Throwable throwable : throwables) {
+            throw new ActualSsoException(SsoErrorCodes.ILLEGAL_ARGUMENT, throwable, argument1, argument2, argument3);
+        }
+    }
+
+    @Test(expected = SsoException.class)
+    public void throwingExceptionNullKapuaErrorCodeObjectThrowableParameterTest() throws SsoException {
+        for (Throwable throwable : throwables) {
+            throw new ActualSsoException(null, throwable, argument1, argument2, argument3);
+        }
+    }
+
+    @Test(expected = SsoException.class)
+    public void throwingExceptionKapuaErrorCodeNullObjectThrowableParameterTest() throws SsoException {
+        for (Throwable throwable : throwables) {
+            throw new ActualSsoException(SsoErrorCodes.ILLEGAL_ARGUMENT, throwable, null);
+        }
+    }
+
+    @Test
+    public void getKapuaErrorMessagesBundleTest() {
+        SsoException ssoException = new ActualSsoException(SsoErrorCodes.ILLEGAL_ARGUMENT, new Throwable(), argument1, argument2);
+        assertEquals("Expected and actual values should be the same.", kapuaErrorMessages, ssoException.getKapuaErrorMessagesBundle());
     }
 }

@@ -52,7 +52,7 @@ public class GenericSsoSettingKeysTest extends Assert {
 //    UPORABI REFLECTION
 //    @Test
 //    public void ConstructorGenericSsoSettingKeysTest() {
-//        GenericSsoSettingKeys genericSsoSettingKeys = new GenericSsoSettingKeys("sso.generic.openid.server.endpoint.auth");
+//        GenericSsoSettingKeys genericSsoSettingKeys = new GenericSsoSettingKeys(GenericSsoSettingKeys.SSO_OPENID_JWT_AUDIENCE_ALLOWED.key());
 //        assertEquals("sso.generic.openid.server.endpoint.auth", genericSsoSettingKeys.key());
 //    }
 
