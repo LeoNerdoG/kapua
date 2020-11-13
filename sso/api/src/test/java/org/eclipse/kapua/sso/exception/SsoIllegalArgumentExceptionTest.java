@@ -24,7 +24,7 @@ public class SsoIllegalArgumentExceptionTest extends Assert {
     SsoErrorCodes[] ssoErrorCodes;
 
     @Before
-    public void SetUp() {
+    public void setUp() {
         argumentName = new String[]{"Argument Name", null};
         argumentValue = new String[]{"Argument Value", null};
         ssoErrorCodes = new SsoErrorCodes[]{SsoErrorCodes.ACCESS_TOKEN_ERROR, SsoErrorCodes.ILLEGAL_ARGUMENT, SsoErrorCodes.ILLEGAL_URI, SsoErrorCodes.JWT_EXTRACTION_ERROR,
@@ -37,7 +37,7 @@ public class SsoIllegalArgumentExceptionTest extends Assert {
         for (String name : argumentName) {
             for (String value : argumentValue) {
                 SsoIllegalArgumentException ssoIllegalArgumentException = new SsoIllegalArgumentException(name, value);
-                assertEquals("Expected and actual values should be the same!",SsoErrorCodes.ILLEGAL_ARGUMENT, ssoIllegalArgumentException.getCode());
+                assertEquals("Expected and actual values should be the same!", SsoErrorCodes.ILLEGAL_ARGUMENT, ssoIllegalArgumentException.getCode());
                 assertEquals("Expected and actual values should be the same!", name, ssoIllegalArgumentException.getArgumentName());
                 assertEquals("Expected and actual values should be the same!", value, ssoIllegalArgumentException.getArgumentValue());
                 assertEquals("An illegal value was provided for the argument " + name + ": " + value + ".", ssoIllegalArgumentException.getMessage());

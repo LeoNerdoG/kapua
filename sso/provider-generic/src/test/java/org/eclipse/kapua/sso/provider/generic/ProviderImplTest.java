@@ -11,10 +11,7 @@
  *******************************************************************************/
 package org.eclipse.kapua.sso.provider.generic;
 
-import javassist.expr.Instanceof;
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
-// drug import uporabi da naredis instanco providerImpl
-import org.eclipse.kapua.sso.provider.SingleSignOnProvider;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,6 +20,7 @@ import org.junit.experimental.categories.Category;
 
 @Category(JUnitTests.class)
 public class ProviderImplTest extends Assert {
+
     ProviderImpl providerImpl;
 
     @Before

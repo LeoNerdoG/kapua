@@ -52,7 +52,7 @@ public class SsoExceptionTest extends Assert {
     }
 
     @Before
-    public void SetUp() {
+    public void setUp() {
         KAPUA_ERROR_MESSAGES = "sso-error-messages";
         kapuaErrorCodes = new SsoErrorCodes[]{SsoErrorCodes.LOGIN_URI_ERROR, SsoErrorCodes.LOGOUT_URI_ERROR, SsoErrorCodes.ACCESS_TOKEN_ERROR, SsoErrorCodes.JWT_EXTRACTION_ERROR,
                 SsoErrorCodes.JWT_PROCESS_ERROR, SsoErrorCodes.JWT_URI_ERROR, SsoErrorCodes.ILLEGAL_ARGUMENT, SsoErrorCodes.ILLEGAL_URI};
