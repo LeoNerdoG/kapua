@@ -11,9 +11,6 @@
  *******************************************************************************/
 package org.eclipse.kapua.sso.exception;
 
-import org.eclipse.kapua.KapuaErrorCode;
-import org.eclipse.kapua.KapuaErrorCodes;
-import org.eclipse.kapua.KapuaIllegalArgumentException;
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
 import org.junit.Assert;
 import org.junit.Before;
@@ -40,9 +37,9 @@ public class SsoIllegalArgumentExceptionTest extends Assert {
         for (String name : argumentName) {
             for (String value : argumentValue) {
                 SsoIllegalArgumentException ssoIllegalArgumentException = new SsoIllegalArgumentException(name, value);
-                assertEquals(SsoErrorCodes.ILLEGAL_ARGUMENT, ssoIllegalArgumentException.getCode());
-                assertEquals(name, ssoIllegalArgumentException.getArgumentName());
-                assertEquals(value, ssoIllegalArgumentException.getArgumentValue());
+                assertEquals("Expected and actual values should be the same!",SsoErrorCodes.ILLEGAL_ARGUMENT, ssoIllegalArgumentException.getCode());
+                assertEquals("Expected and actual values should be the same!", name, ssoIllegalArgumentException.getArgumentName());
+                assertEquals("Expected and actual values should be the same!", value, ssoIllegalArgumentException.getArgumentValue());
                 assertEquals("An illegal value was provided for the argument " + name + ": " + value + ".", ssoIllegalArgumentException.getMessage());
                 assertNull(ssoIllegalArgumentException.getCause());
             }
