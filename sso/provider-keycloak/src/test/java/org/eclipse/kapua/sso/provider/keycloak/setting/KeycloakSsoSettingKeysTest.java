@@ -30,5 +30,4 @@ public class KeycloakSsoSettingKeysTest extends Assert {
         assertNotNull(KeycloakSsoSettingKeys.valueOf("KEYCLOAK_REALM"));
         assertEquals("Expected and actual values should be the same!", "sso.keycloak.realm", KeycloakSsoSettingKeys.KEYCLOAK_REALM.key());
     }
-//    UPORABI REFLECTIONZA CONSTRUCTOR
 }

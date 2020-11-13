@@ -40,6 +40,11 @@ public class GenericSingleSignOnLocatorTest extends Assert {
     //            List<String> jwtAudiences = GenericSsoSetting.getInstance().getList(String.class, GenericSsoSettingKeys.SSO_OPENID_JWT_AUDIENCE_ALLOWED);
     @Test
     public void getProcessorTest() throws SsoException {
+        System.setProperty("sso.generic.openid.jwt.audience.allowed", "console");
+        System.setProperty("sso.generic.openid.jwt.issuer.allowed", "http://localhost:9090/auth/realms/kapua");
+        System.setProperty("sso.generic.openid.server.endpoint.auth", "http://localhost:9090/auth/realms/kapua/protocol/openid-connect/auth");
+        System.setProperty("sso.generic.openid.server.endpoint.logout", "http://localhost:9090/auth/realms/kapua/protocol/openid-connect/logout");
+        System.setProperty("sso.generic.openid.server.endpoint.token", "http://localhost:9090/auth/realms/kapua/protocol/openid-connect/token");
         assertThat(genericSingleSignOnLocator.getProcessor(), IsInstanceOf.instanceOf(GenericJwtProcessor.class));
     }
 

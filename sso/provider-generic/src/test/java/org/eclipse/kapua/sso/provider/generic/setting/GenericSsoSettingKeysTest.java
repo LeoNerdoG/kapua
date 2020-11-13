@@ -16,6 +16,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
+
 @Category(JUnitTests.class)
 public class GenericSsoSettingKeysTest extends Assert {
 
@@ -48,12 +51,5 @@ public class GenericSsoSettingKeysTest extends Assert {
         assertNotNull("Not null expected.", GenericSsoSettingKeys.valueOf("SSO_OPENID_JWT_ISSUER_ALLOWED"));
         assertEquals("Expected and actual values should be the same!", "sso.generic.openid.jwt.issuer.allowed", GenericSsoSettingKeys.SSO_OPENID_JWT_ISSUER_ALLOWED.key());
     }
-
-//    UPORABI REFLECTION
-//    @Test
-//    public void ConstructorGenericSsoSettingKeysTest() {
-//        GenericSsoSettingKeys genericSsoSettingKeys = new GenericSsoSettingKeys(GenericSsoSettingKeys.SSO_OPENID_JWT_AUDIENCE_ALLOWED.key());
-//        assertEquals("sso.generic.openid.server.endpoint.auth", genericSsoSettingKeys.key());
-//    }
 
 }
