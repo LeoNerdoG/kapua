@@ -21,7 +21,7 @@ import org.junit.experimental.categories.Category;
 @Category(JUnitTests.class)
 public class SsoExceptionTest extends Assert {
 
-    String KAPUA_ERROR_MESSAGES;
+    String kapuaErrorMessages;
     KapuaErrorCode[] kapuaErrorCodes;
     Object argument1, argument2, argument3;
     String[] messages = new String[]{"An error occurred while retrieving the SSO login URI", "An error occurred while retrieving the SSO logout URI", "An error occurred while getting the access token",
@@ -53,7 +53,7 @@ public class SsoExceptionTest extends Assert {
 
     @Before
     public void setUp() {
-        KAPUA_ERROR_MESSAGES = "sso-error-messages";
+        kapuaErrorMessages = "sso-error-messages";
         kapuaErrorCodes = new SsoErrorCodes[]{SsoErrorCodes.LOGIN_URI_ERROR, SsoErrorCodes.LOGOUT_URI_ERROR, SsoErrorCodes.ACCESS_TOKEN_ERROR, SsoErrorCodes.JWT_EXTRACTION_ERROR,
                 SsoErrorCodes.JWT_PROCESS_ERROR, SsoErrorCodes.JWT_URI_ERROR, SsoErrorCodes.ILLEGAL_ARGUMENT, SsoErrorCodes.ILLEGAL_URI};
         argument1 = "arg1";
@@ -69,7 +69,7 @@ public class SsoExceptionTest extends Assert {
             SsoException ssoException = new ActualSsoException(kapuaErrorCode);
             assertNull("Null expected.", ssoException.getCause());
             assertEquals("Expected and actual values should be the same.", kapuaErrorCode, ssoException.getCode());
-            assertEquals("Expected and actual values should be the same.", KAPUA_ERROR_MESSAGES, ssoException.getKapuaErrorMessagesBundle());
+            assertEquals("Expected and actual values should be the same.", kapuaErrorMessages, ssoException.getKapuaErrorMessagesBundle());
             assertEquals("Expected and actual values should be the same.", messages[i], ssoException.getMessage());
             assertEquals("Expected and actual values should be the same.", messages[i], ssoException.getLocalizedMessage());
             i++;
@@ -81,7 +81,7 @@ public class SsoExceptionTest extends Assert {
         SsoException ssoException = new ActualSsoException(null);
         assertNull("Null expected.", ssoException.getCode());
         assertNull("Null expected.", ssoException.getCause());
-        assertEquals("Expected and actual values should be the same.", KAPUA_ERROR_MESSAGES, ssoException.getKapuaErrorMessagesBundle());
+        assertEquals("Expected and actual values should be the same.", kapuaErrorMessages, ssoException.getKapuaErrorMessagesBundle());
         try {
             ssoException.getMessage();
             fail("Null pointer expected.");
@@ -109,7 +109,7 @@ public class SsoExceptionTest extends Assert {
 
             assertNull("Null expected.", ssoException.getCause());
             assertEquals("Expected and actual values should be the same.", kapuaErrorCode, ssoException.getCode());
-            assertEquals("Expected and actual values should be the same.", KAPUA_ERROR_MESSAGES, ssoException.getKapuaErrorMessagesBundle());
+            assertEquals("Expected and actual values should be the same.", kapuaErrorMessages, ssoException.getKapuaErrorMessagesBundle());
 
             assertEquals("Expected and actual values should be the same.", messages[i], ssoException.getMessage());
             assertEquals("Expected and actual values should be the same.", messages[i], ssoException.getLocalizedMessage());
@@ -151,7 +151,7 @@ public class SsoExceptionTest extends Assert {
 
             assertEquals("Expected and actual values should be the same.", SsoErrorCodes.ILLEGAL_ARGUMENT, ssoException.getCode());
             assertEquals("Expected and actual values should be the same.", throwable, ssoException.getCause());
-            assertEquals("Expected and actual values should be the same.", KAPUA_ERROR_MESSAGES, ssoException.getKapuaErrorMessagesBundle());
+            assertEquals("Expected and actual values should be the same.", kapuaErrorMessages, ssoException.getKapuaErrorMessagesBundle());
             assertEquals("Expected and actual values should be the same.", "An illegal value was provided for the argument " + argument1 + ": " + argument2 + ".", ssoException.getMessage());
             assertEquals("Expected and actual values should be the same.", "An illegal value was provided for the argument " + argument1 + ": " + argument2 + ".", ssoException.getLocalizedMessage());
 
