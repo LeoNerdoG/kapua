@@ -459,16 +459,16 @@ public class DockerSteps {
         return ContainerConfig.builder()
                 .hostConfig(hostConfig)
                 .exposedPorts(String.valueOf(keycloakPort))
-                .addVolume("imports")
-                .env(
-                        "KEYCLOAK_USER=admin",
-                        "KEYCLOAK_PASSWORD=admin",
-                        "KEYCLOAK_IMPORT=/imports/kapua-realm.json"
-                )
-                .image("jboss/keycloak:8.0.1")
-                .cmd(
-                        "-b 0.0.0.0 -Dkeycloak.import=/imports/kapua-realm.json"
-                )
+//                .addVolume("imports")
+//                .env(
+//                        "KEYCLOAK_USER=admin",
+//                        "KEYCLOAK_PASSWORD=admin",
+//                        "KEYCLOAK_IMPORT=/imports/kapua-realm.json"
+//                )
+                .image("keycloak:sso")
+//                .cmd(
+//                        "-b 0.0.0.0 -Dkeycloak.import=/imports/kapua-realm.json"
+//                )
                 .build();
     }
 
