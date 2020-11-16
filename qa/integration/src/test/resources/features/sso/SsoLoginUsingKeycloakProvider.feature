@@ -19,10 +19,11 @@ Feature: Sso Login using Keycloak Provider
 
   Scenario: Start Keycloak
 
-    Given Pull image "jboss/keycloak:8.0.1"
+    When I start the build script for sso
+#    Given Pull image "jboss/keycloak:8.0.1"
     When Create network
-    Then Start Keycloak container with name "keycloak"
-    Then I wait 45 seconds
+#    Then Start Keycloak container with name "keycloak"
+    Then I wait 30 seconds
     And Initialize shiro ini file
 
   Scenario: Create external user using the the SimpleRegistrationProcessor

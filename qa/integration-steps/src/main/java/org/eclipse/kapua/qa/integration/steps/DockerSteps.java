@@ -42,8 +42,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -269,6 +271,18 @@ public class DockerSteps {
         logger.info("Message Broker {} container started: {}", bcData.getName(), containerId);
     }
 
+    @And("^I start the build script for sso$")
+    public void executedBuildScript() throws IOException {
+        ProcessBuilder pb = new ProcessBuilder("/kapua/deployment/commons/sso/keycloak/build.sh");
+        Process p = pb.start();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line = null;
+        while ((line = reader.readLine()) != null)
+        {
+            System.out.println(line);
+        }
+    }
+
     @And("^Start Keycloak container with name \"(.*)\"$")
     public void startKeycloakContainer(String name) throws DockerException, InterruptedException, IOException, URISyntaxException {
         logger.info("Starting Keycloak container...");
@@ -276,7 +290,7 @@ public class DockerSteps {
         ContainerCreation keycloakContainerCreation = docker.createContainer(keycloakConfig, name);
         String containerId = keycloakContainerCreation.id();
 
-        docker.copyToContainer(Paths.get(getClass().getResource("/keycloak").toURI()), "keycloak", "/imports");
+//        docker.copyToContainer(Paths.get(getClass().getResource("/keycloak").toURI()), "keycloak", "/imports");
         docker.startContainer(containerId);
         docker.connectToNetwork(containerId, networkId);
         CONTAINER_MAP.put(name, containerId);
@@ -459,6 +473,9 @@ public class DockerSteps {
         return ContainerConfig.builder()
                 .hostConfig(hostConfig)
                 .exposedPorts(String.valueOf(keycloakPort))
+//                .cmd(
+//                        "/kapua/deployment/commons/sso/keycloak/build.sh"
+//                )
 //                .addVolume("imports")
 //                .env(
 //                        "KEYCLOAK_USER=admin",
