@@ -13,14 +13,20 @@
 package org.eclipse.kapua.commons.event;
 
 import com.codahale.metrics.Counter;
+import org.aopalliance.intercept.MethodInvocation;
+import org.eclipse.kapua.commons.security.KapuaSecurityUtils;
+import org.eclipse.kapua.commons.security.KapuaSession;
 import org.eclipse.kapua.qa.markers.junit.JUnitTests;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mockito;
 
+import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 @Category(JUnitTests.class)
 public class RaiseServiceEventInterceptorTest extends Assert {

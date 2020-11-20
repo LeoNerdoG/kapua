@@ -14,5 +14,5 @@
 
 Feature: Sso Login using Generic Provider
 
-  Scenario: Configure environment for SSO with the Generic provider
-    Given Set environment variables for generic provider
+#  Scenario: Configure environment for SSO with the Generic provider
+#    Given Set environment variables for generic provider

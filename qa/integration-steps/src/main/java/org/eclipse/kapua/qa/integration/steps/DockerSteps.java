@@ -42,17 +42,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Paths;
+//import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @ScenarioScoped
 public class DockerSteps {
@@ -272,19 +270,62 @@ public class DockerSteps {
     }
 
     @And("^I start the build script for sso$")
-    public void executedBuildScript() throws IOException {
-        ProcessBuilder pb = new ProcessBuilder("/kapua/deployment/commons/sso/keycloak/build.sh");
-        Process p = pb.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line = null;
-        while ((line = reader.readLine()) != null)
-        {
-            System.out.println(line);
+    public void executedBuildScript() throws IOException, InterruptedException {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+
+        processBuilder.command("bash", "-c", "sh /Users/leonardo/kapua/deployment/docker/unix/sso/sso-docker-deploy.sh");
+        try {
+
+            Process process = processBuilder.start();
+
+            StringBuilder output = new StringBuilder();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line + "\n");
+            }
+
+            int exitVal = process.waitFor();
+            if (exitVal == 0) {
+                System.out.println(output);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+//        try {
+//            System.out.println("in executeduildScript...");
+////            List<String> cmdList = new ArrayList<>();
+////            cmdList.add("/bin/bash");
+////            cmdList.add("-c");
+////            cmdList.add("/kapua/deployment/commons/sso/keycloak/build.sh");
+//
+//            ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash","/Users/leonardo/kapua/deployment/commons/sso/keycloak/build.sh");
+//            System.out.println("New process builder created...");
+//            Process process = processBuilder.start();
+//            System.out.println("30 seconds timeout...");
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+//            StringBuilder builder = new StringBuilder();
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                System.out.println(line);
+//            }
+//            String result = builder.toString();
+//            System.out.print(result);
+//            System.out.println("end of script execution");
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
     }
 
-    @And("^Start Keycloak container with name \"(.*)\"$")
-    public void startKeycloakContainer(String name) throws DockerException, InterruptedException, IOException, URISyntaxException {
+//    @And("^Start Keycloak container with name \"(.*)\"$")
+    @And("^Start Keycloak container$")
+    public void startKeycloakContainer() throws DockerException, InterruptedException, IOException, URISyntaxException {
+        String name = "keycloak";
         logger.info("Starting Keycloak container...");
         ContainerConfig keycloakConfig = getKeycloakContainerConfig();
         ContainerCreation keycloakContainerCreation = docker.createContainer(keycloakConfig, name);
