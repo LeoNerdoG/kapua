@@ -9,8 +9,12 @@
     SPDX-License-Identifier: EPL-2.0
 
     Contributors:
+<<<<<<< HEAD:plug-ins/sso/openid-connect/pom.xml
         Red Hat Inc - initial API and implementation
         Eurotech
+=======
+        Eurotech - initial API and implementation
+>>>>>>> Added tests for SSO using keycloak provider:sso/pom.xml
  -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -32,6 +36,7 @@
         <module>provider</module>
         <module>provider-generic</module>
         <module>provider-keycloak</module>
+        <module>test-steps</module>
     </modules>
 
 </project>
