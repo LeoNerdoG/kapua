@@ -276,25 +276,15 @@ public class DockerSteps {
 
         processBuilder.command("bash", "-c", "sh /Users/leonardo/kapua/deployment/docker/unix/sso/sso-docker-deploy.sh");
         try {
-
             Process process = processBuilder.start();
-
             StringBuilder output = new StringBuilder();
-
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
             String line;
             while ((line = reader.readLine()) != null) {
                 output.append(line + "\n");
             }
-
-            int exitVal = process.waitFor();
-            if (exitVal == 0) {
                 System.out.println(output);
-            }
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 //        try {
