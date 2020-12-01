@@ -274,7 +274,8 @@ public class DockerSteps {
     public void executedBuildScript() throws IOException, InterruptedException {
         ProcessBuilder processBuilder = new ProcessBuilder();
 
-        processBuilder.command("bash", "-c", "sh /Users/leonardo/kapua/deployment/docker/unix/sso/sso-docker-deploy.sh");
+//        processBuilder.command("bash", "-c", "sh /Users/leonardo/kapua/deployment/docker/unix/sso/sso-docker-deploy.sh");
+        processBuilder.command("bash", "sh /Users/leonardo/kapua/deployment/docker/unix/sso/sso-docker-deploy.sh");
         try {
             Process process = processBuilder.start();
             StringBuilder output = new StringBuilder();
@@ -282,8 +283,9 @@ public class DockerSteps {
             String line;
             while ((line = reader.readLine()) != null) {
                 output.append(line + "\n");
-            }
                 System.out.println(output);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
