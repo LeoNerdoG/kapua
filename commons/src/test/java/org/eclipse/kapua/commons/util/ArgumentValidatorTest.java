@@ -31,13 +31,13 @@ public class ArgumentValidatorTest extends Assert {
 
     @Test
     public void testConstructor() throws Exception {
-        Constructor<ArgumentValidator> argvalidator = ArgumentValidator.class.getDeclaredConstructor();
-        argvalidator.setAccessible(true);
-        argvalidator.newInstance();
+        Constructor<ArgumentValidator> argValidator = ArgumentValidator.class.getDeclaredConstructor();
+        argValidator.setAccessible(true);
+        argValidator.newInstance();
     }
 
     @Test
-    public void testMatchNotNull() throws KapuaIllegalArgumentException {
+    public void testMatchNotNull() {
         String argVal = null;
         try {
             ArgumentValidator.match(argVal, CommonsValidationRegex.SIMPLE_NAME_REGEXP, "Null_test_case");

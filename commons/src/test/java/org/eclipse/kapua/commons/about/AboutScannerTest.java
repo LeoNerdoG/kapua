@@ -47,12 +47,10 @@ public class AboutScannerTest extends Assert {
     public void scanWithParameterTest() {
         AboutScanner scanner = AboutScanner.scan(ClasspathHelper.forClassLoader().stream());
         assertNotNull("Null not expected", scanner);
-
-        NullPointerException nullPointerException = new NullPointerException();
         try {
-            AboutScanner invalidScanner = AboutScanner.scan(null);
+            AboutScanner.scan(null);
         } catch (Exception e) {
-            assertEquals("NullPointerException expected", nullPointerException.toString(), e.toString());
+            assertEquals("NullPointerException expected", new NullPointerException().toString(), e.toString());
         }
     }
 } 
