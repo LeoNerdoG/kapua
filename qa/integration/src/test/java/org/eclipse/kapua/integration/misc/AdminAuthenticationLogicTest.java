@@ -19,7 +19,7 @@ import org.eclipse.kapua.broker.core.plugin.KapuaSecurityContext;
 import org.eclipse.kapua.broker.core.plugin.authentication.AdminAuthenticationLogic;
 import org.eclipse.kapua.broker.core.plugin.authentication.AuthorizationEntry;
 import org.eclipse.kapua.broker.core.plugin.metric.LoginMetric;
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class AdminAuthenticationLogicTest extends Assert {
 
     Map<String, Object> options;

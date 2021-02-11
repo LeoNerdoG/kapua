@@ -36,9 +36,9 @@ Example response with time:
 
 ## Using Embedded Servers
 By default, tests are run with embedded servers providing Kapua infrastructure services, such as
-database, event-broker, message broker, Elaticsearch.
+database, event-broker, message broker, ElasticSearch.
 
-To to run those use default profile and run:
+To run those use default profile and run:
 
     mvn clean install
     or

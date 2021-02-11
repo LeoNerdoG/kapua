@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.kapua.client.gateway.spi.util;
 
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Assert;
 import org.junit.Test;
@@ -25,7 +25,7 @@ import java.lang.reflect.Modifier;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class FuturesTest extends Assert {
 
     @Test
