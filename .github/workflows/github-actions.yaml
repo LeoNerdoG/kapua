@@ -24,7 +24,6 @@ jobs:
             ${{ runner.os }}-maven-
       - run: mvn -v
       - run: mvn -B ${BUILD_OPTS} -DskipTests clean install
-      - run: bash <(curl -s https://codecov.io/bash)
   test-brokerAcl:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -45,7 +44,8 @@ jobs:
           retry_on: error
           max_attempts: 3
           command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @brokerAcl" verify
-      - run: bash <(curl -s https://codecov.io/bash)
+#      - uses: actions/checkout@v2
+#      - uses: codecov/codecov-action@v1
   test-tag:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -66,7 +66,8 @@ jobs:
           retry_on: error
           max_attempts: 3
           command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @tag" verify
-      - run: bash <(curl -s https://codecov.io/bash)
+#      - uses: actions/checkout@v2
+#      - uses: codecov/codecov-action@v1
   test-broker:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -87,7 +88,8 @@ jobs:
           retry_on: error
           max_attempts: 3
           command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @broker" verify
-      - run: bash <(curl -s https://codecov.io/bash)
+#      - uses: actions/checkout@v2
+#      - uses: codecov/codecov-action@v1
   test-device:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -108,7 +110,8 @@ jobs:
           retry_on: error
           max_attempts: 3
           command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @device" verify
-      - run: bash <(curl -s https://codecov.io/bash)
+#      - uses: actions/checkout@v2
+#      - uses: codecov/codecov-action@v1
   test-connection:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -129,7 +132,8 @@ jobs:
           retry_on: error
           max_attempts: 3
           command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @connection" verify
-      - run: bash <(curl -s https://codecov.io/bash)
+#      - uses: actions/checkout@v2
+#      - uses: codecov/codecov-action@v1
   test-datastore:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -150,7 +154,8 @@ jobs:
           retry_on: error
           max_attempts: 3
           command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @datastore" verify
-      - run: bash <(curl -s https://codecov.io/bash)
+#      - uses: actions/checkout@v2
+#      - uses: codecov/codecov-action@v1
   test-user:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -171,7 +176,8 @@ jobs:
           retry_on: error
           max_attempts: 3
           command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @user" verify
-      - run: bash <(curl -s https://codecov.io/bash)
+#      - uses: actions/checkout@v2
+#      - uses: codecov/codecov-action@v1
   test-security:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -192,7 +198,8 @@ jobs:
           retry_on: error
           max_attempts: 3
           command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @security" verify
-      - run: bash <(curl -s https://codecov.io/bash)
+#      - uses: actions/checkout@v2
+#      - uses: codecov/codecov-action@v1
   test-jobs:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -213,7 +220,8 @@ jobs:
           retry_on: error
           max_attempts: 3
           command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobs" verify
-      - run: bash <(curl -s https://codecov.io/bash)
+#      - uses: actions/checkout@v2
+#      - uses: codecov/codecov-action@v1
   test-triggerService:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -234,7 +242,8 @@ jobs:
           retry_on: error
           max_attempts: 3
           command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @triggerService" verify
-      - run: bash <(curl -s https://codecov.io/bash)
+#      - uses: actions/checkout@v2
+#      - uses: codecov/codecov-action@v1
   test-account:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -255,7 +264,8 @@ jobs:
           retry_on: error
           max_attempts: 3
           command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @account" verify
-      - run: bash <(curl -s https://codecov.io/bash)
+#      - uses: actions/checkout@v2
+#      - uses: codecov/codecov-action@v1
   test-jobEngineStartOfflineDevice:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -276,7 +286,8 @@ jobs:
           retry_on: error
           max_attempts: 3
           command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineStartOfflineDevice" verify
-      - run: bash <(curl -s https://codecov.io/bash)
+#      - uses: actions/checkout@v2
+#      - uses: codecov/codecov-action@v1
   test-jobEngineStartOnlineDevice:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -297,7 +308,8 @@ jobs:
           retry_on: error
           max_attempts: 3
           command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineStartOnlineDevice" verify
-      - run: bash <(curl -s https://codecov.io/bash)
+#      - uses: actions/checkout@v2
+#      - uses: codecov/codecov-action@v1
   test-jobEngineRestartOfflineDevice:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -318,7 +330,8 @@ jobs:
           retry_on: error
           max_attempts: 3
           command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineRestartOfflineDevice" verify
-      - run: bash <(curl -s https://codecov.io/bash)
+#      - uses: actions/checkout@v2
+#      - uses: codecov/codecov-action@v1
   test-jobEngineRestartOnlineDevice:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -339,7 +352,8 @@ jobs:
           retry_on: error
           max_attempts: 3
           command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineRestartOnlineDevice" verify
-      - run: bash <(curl -s https://codecov.io/bash)
+#      - uses: actions/checkout@v2
+#      - uses: codecov/codecov-action@v1
   test-jobEngineRestartOnlineDeviceSecondPart:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -360,7 +374,8 @@ jobs:
           retry_on: error
           max_attempts: 3
           command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineRestartOnlineDeviceSecondPart" verify
-      - run: bash <(curl -s https://codecov.io/bash)
+#      - uses: actions/checkout@v2
+#      - uses: codecov/codecov-action@v1
   test-jobEngineServiceStop:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -381,7 +396,8 @@ jobs:
           retry_on: error
           max_attempts: 3
           command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineServiceStop" verify
-      - run: bash <(curl -s https://codecov.io/bash)
+#        - uses: actions/checkout@v2
+#        - uses: codecov/codecov-action@v1
   junit-tests:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -402,7 +418,8 @@ jobs:
           retry_on: error
           max_attempts: 3
           command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='org.eclipse.kapua.qa.markers.junit.JUnitTests' verify
-      - run: bash <(curl -s https://codecov.io/bash)
+#      - uses: actions/checkout@v2
+#      - uses: codecov/codecov-action@v1
   build-javadoc:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -418,4 +435,45 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
       - run: mvn -B -DskipTests install javadoc:jar
+#      - uses: actions/checkout@v2
+#      - uses: codecov/codecov-action@v1
+  test-coverage:
+    needs: [build-kapua, test-brokerAcl, test-tag, test-broker, test-device,
+            test-connection, test-datastore, test-user, test-security, test-jobs,
+            test-triggerService, test-account, test-jobEngineStartOfflineDevice,
+            test-jobEngineStartOnlineDevice, test-jobEngineRestartOfflineDevice,
+            test-jobEngineRestartOnlineDevice, test-jobEngineRestartOnlineDeviceSecondPart,
+            test-jobEngineServiceStop, junit-tests, build-javadoc]
+    runs-on: ubuntu-latest
+    steps:
       - run: bash <(curl -s https://codecov.io/bash)
+
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: r-lib/actions/setup-r@v1
+#      - uses: r-lib/actions/setup-pandoc@v1
+#
+#      - name: Query dependencies
+#        run: |
+#          install.packages('remotes')
+#          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+#          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+#        shell: Rscript {0}
+#
+#      - name: Cache R packages
+#        uses: actions/cache@v2
+#        with:
+#          path: ${{ env.R_LIBS_USER }}
+#          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
+#          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+#
+#      - name: Install dependencies
+#        run: |
+#          install.packages(c("remotes"))
+#          remotes::install_deps(dependencies = TRUE)
+#          remotes::install_cran("covr")
+#        shell: Rscript {0}
+#
+#      - name: Test coverage
+#        run: covr::codecov()
+#        shell: Rscript {0}
