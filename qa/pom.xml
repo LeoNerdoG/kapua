@@ -89,7 +89,7 @@
                                         </ports>
                                         <wait>
                                             <log>TCP server running at</log>
-                                            <time>20000</time>
+                                            <time>60000</time>
                                         </wait>
                                     </run>
                                 </image>
@@ -110,7 +110,7 @@
                                         </env>
                                         <wait>
                                             <log>started</log>
-                                            <time>20000</time>
+                                            <time>60000</time>
                                         </wait>
                                     </run>
                                 </image>
@@ -123,7 +123,7 @@
                                         </ports>
                                         <wait>
                                             <log>HTTP Server started at</log>
-                                            <time>20000</time>
+                                            <time>60000</time>
                                         </wait>
                                     </run>
                                 </image>
@@ -148,7 +148,7 @@
                                         </links>
                                         <wait>
                                             <log>started</log>
-                                            <time>20000</time>
+                                            <time>60000</time>
                                         </wait>
                                     </run>
                                 </image>
@@ -199,8 +199,8 @@
                                             <link>events-broker:events-broker</link>
                                         </links>
                                         <wait>
-                                            <log>Starting service modules...DONE</log>
-                                            <time>60000</time>
+                                            <log>org.eclipse.jetty.server.Server - Started</log>
+                                            <time>120000</time>
                                         </wait>
                                     </run>
                                 </image>
@@ -230,19 +230,22 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-                            <argLine>@{argLine} -Xmx1024m</argLine>
+                            <excludedGroups>org.eclipse.kapua.qa.markers.junit.JUnitTests</excludedGroups>
                             <systemPropertyVariables>
                                 <cucumber.options>--tags @integration</cucumber.options>
-                                <groups>'!org.eclipse.kapua.test.junit.JUnitTests'</groups>
+                                <cucumber.options>--tags ~@rest</cucumber.options>
                                 <commons.settings.hotswap>true</commons.settings.hotswap>
+                                <commons.db.schema>kapuadb</commons.db.schema>
+                                <broker.host>localhost</broker.host>
+<!--                            </systemPropertyVariables>-->
+<!--                            <argLine>@{argLine} -Xmx1024m</argLine>-->
+<!--                            <systemPropertyVariables>-->
                                 <org.eclipse.kapua.qa.noEmbeddedServers>true</org.eclipse.kapua.qa.noEmbeddedServers>
                                 <commons.db.jdbcConnectionUrlResolver>DEFAULT</commons.db.jdbcConnectionUrlResolver>
                                 <commons.db.schema.update>true</commons.db.schema.update>
                                 <commons.db.connection.host>localhost</commons.db.connection.host>
                                 <commons.db.connection.port>3306</commons.db.connection.port>
-                                <commons.db.schema>kapuadb</commons.db.schema>
                                 <commons.db.connection.scheme>jdbc:h2:tcp</commons.db.connection.scheme>
-                                <broker.host>localhost</broker.host>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>

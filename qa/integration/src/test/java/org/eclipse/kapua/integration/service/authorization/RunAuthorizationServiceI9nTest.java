@@ -21,11 +21,11 @@ import cucumber.api.CucumberOptions;
 
 @RunWith(CucumberWithProperties.class)
 @CucumberOptions(
-        features = { "classpath:features/authorization/AccessInfoService.feature",
-                     "classpath:features/authorization/DomainService.feature",
+        features = { "classpath:features/authorization/DomainService.feature",
                      "classpath:features/authorization/GroupService.feature",
                      "classpath:features/authorization/MiscAuthorization.feature",
-                     "classpath:features/authorization/RoleService.feature"
+                     "classpath:features/authorization/RoleService.feature",
+                     "classpath:features/authorization/AccessInfoService.feature"
                    },
         glue = { "org.eclipse.kapua.qa.common",
                  "org.eclipse.kapua.service.authorization.steps",
@@ -39,7 +39,19 @@ import cucumber.api.CucumberOptions;
                  },
         strict = true,
         monochrome = true)
+
 @CucumberProperty(key="test.type", value="integration")
 @CucumberProperty(key="commons.db.schema", value="kapuadb")
 @CucumberProperty(key="commons.db.schema.update", value="true")
+@CucumberProperty(key = "DOCKER_HOST", value = "")
+@CucumberProperty(key = "DOCKER_CERT_PATH", value = "")
+@CucumberProperty(key = "commons.db.schema.update", value = "")
+@CucumberProperty(key = "commons.db.connection.host", value = "")
+@CucumberProperty(key = "commons.db.connection.port", value = "")
+@CucumberProperty(key = "commons.eventbus.url", value = "")
+@CucumberProperty(key = "broker.ip", value = "")
+@CucumberProperty(key = "certificate.jwt.private.key", value = "")
+@CucumberProperty(key = "certificate.jwt.certificate", value = "")
+@CucumberProperty(key = "datastore.elasticsearch.nodes", value = "")
+@CucumberProperty(key = "datastore.elasticsearch.provider", value = "")
 public class RunAuthorizationServiceI9nTest {}

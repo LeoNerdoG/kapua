@@ -259,6 +259,7 @@ Scenario: Init Security Context for all scenarios
   Exception should not be raised
 
     Given I login as user with name "kapua-sys" and password "kapua-password"
+#    THIS ONE NOT DELETED
     And I create endpoint with schema "Schema1", domain "abc.com" and port 65535
     Then No exception was thrown
     And I logout
@@ -329,7 +330,7 @@ Scenario: Init Security Context for all scenarios
     And I create endpoint with schema "Schema1", domain "abc.com" and port 2222
     Then I edit last created endpoint Schema to "Schema2"
     And No exception was thrown
-    Then I delete endpoint with schema "Schema1", domain "abc.com" and port 2222
+    Then I delete endpoint with schema "Schema2", domain "abc.com" and port 2222
     And I logout
 
   Scenario: Editing Endpoint Schema To Non-unique Value
@@ -380,7 +381,7 @@ Scenario: Init Security Context for all scenarios
     And I create endpoint with schema "Schema1", domain "abc.com" and port 2222
     When I edit last created endpoint Schema to "BpCIO90RoOspstaZOvIsHaflsrnY6lYS9jQHBsL7SzvlaqYUkyz9vtvJcnzMZlwo"
     Then No exception was thrown
-    Then I delete endpoint with schema "Schema1", domain "abc.com" and port 2222
+    Then I delete endpoint with schema "BpCIO90RoOspstaZOvIsHaflsrnY6lYS9jQHBsL7SzvlaqYUkyz9vtvJcnzMZlwo", domain "abc.com" and port 2222
     And I logout
 
   Scenario: Editing Endpoint Schema So It Has Min Length
@@ -392,7 +393,7 @@ Scenario: Init Security Context for all scenarios
     And I create endpoint with schema "Schema1", domain "abc.com" and port 2222
     When I edit last created endpoint Schema to "a"
     Then No exception was thrown
-    Then I delete endpoint with schema "Schema1", domain "abc.com" and port 2222
+    Then I delete endpoint with schema "a", domain "abc.com" and port 2222
     And I logout
 
   Scenario: Editing Endpoint Schema So It Contains "http://"
@@ -443,7 +444,7 @@ Scenario: Init Security Context for all scenarios
     And I create endpoint with schema "Schema1", domain "abc.com" and port 2222
     Then I edit last created endpoint Domain Name to "abd.com"
     And No exception was thrown
-    Then I delete endpoint with schema "Schema1", domain "abc.com" and port 2222
+    Then I delete endpoint with schema "Schema1", domain "abd.com" and port 2222
     And I logout
 
   Scenario: Editing Endpoint Domain Name To Non-unique Value
@@ -495,7 +496,7 @@ Scenario: Init Security Context for all scenarios
     And I create endpoint with schema "Schema1", domain "abc.com" and port 2222
     When I edit last created endpoint Domain Name to "IApYdQLo4WGsvQ9gSPOIIFFOmkQeIYiGlCEU9zK7e3a9qmMyVSADuM5cJ68H1uEZj4JAML0FbYBXwO32o9AAoqSTsRs3n8tqp4E6YLJUhOnLsGMxrPZ1Rmha4DbNOqweNuvziFkmwTaAc9rIJlUr0VpJEi567JYNvVHSVtK1SdMKAfuLiTQTLOKoGZZIVdp7jwXyhgAEFJxUl3swT1uNz8MOiJHT4ToKCKZ5rwWcN6kYi55XnkMESrjdRKTcSDZmzt8wut7USdPNouIYIMGIzsw1bKDwA2fNx8b9ISsEcDAbX1EWER8GeWkqUAnKBNvNacjYHNEHceeacx72Wchd8uD8Y17w55vdAi98mmA8x7F8fFNZmC4b446Jy8HEgtE42TTOglcgeb0nGCGeUicWqxSeH0DaHf1QFvd7f05NZNli5PYPmeN5WqlVQT6b5bLEala1UD94t5PqWC01o59hHCSAJyD7Zj01gWbyuDy5LmkuARZybDdxige6CzDVWvKBYxLthaLqqE3E7cWQA6wsDPqtyEsfoCycYXuPYGx81M7f1JVvh0I5oj2Eg0VHvYcvGnfUUBXUY3abYzCyvEBf2kZ6pQUkwgJHBaA2p7UBYTqpqt5zfc5w3qn1n6uD1QzyQukvqBvuaVPlXqVobmyz7VTgGBT45cMGevJhs5Td4UrtjifSmzEDbuzBZbQub3cbutLLmJqH2pctG4gtBPz2GNNRCC2Lsx2PsYynkUr5c9aBeENFXmR41BDRLlyEzpKRtzJ6QLEVrZKAvNahm8wvlmzI6JkLB9YZpEm7diq54bmm4EaolSBvs2X9e5EEGPosoIjyQfNsbasognvYY4fGCiNuTchmxnHnPlMyfRcGPas8SWYH7fvQFDWLquEXqX3kHGAn4KsShiyAvbj9OeJ4ao2QmJSHOtP0212nx4iooHGPpMOM8difFRt0i4AYdb68q51cs8OtHaW41IZSlJai6FttoiMl3ln7uAIHp6FrPXNBmwoMxAvUgdn60mXPs1XK"
     Then No exception was thrown
-    And I delete endpoint with schema "Schema1", domain "abc.com" and port 2222
+    And I delete endpoint with schema "IApYdQLo4WGsvQ9gSPOIIFFOmkQeIYiGlCEU9zK7e3a9qmMyVSADuM5cJ68H1uEZj4JAML0FbYBXwO32o9AAoqSTsRs3n8tqp4E6YLJUhOnLsGMxrPZ1Rmha4DbNOqweNuvziFkmwTaAc9rIJlUr0VpJEi567JYNvVHSVtK1SdMKAfuLiTQTLOKoGZZIVdp7jwXyhgAEFJxUl3swT1uNz8MOiJHT4ToKCKZ5rwWcN6kYi55XnkMESrjdRKTcSDZmzt8wut7USdPNouIYIMGIzsw1bKDwA2fNx8b9ISsEcDAbX1EWER8GeWkqUAnKBNvNacjYHNEHceeacx72Wchd8uD8Y17w55vdAi98mmA8x7F8fFNZmC4b446Jy8HEgtE42TTOglcgeb0nGCGeUicWqxSeH0DaHf1QFvd7f05NZNli5PYPmeN5WqlVQT6b5bLEala1UD94t5PqWC01o59hHCSAJyD7Zj01gWbyuDy5LmkuARZybDdxige6CzDVWvKBYxLthaLqqE3E7cWQA6wsDPqtyEsfoCycYXuPYGx81M7f1JVvh0I5oj2Eg0VHvYcvGnfUUBXUY3abYzCyvEBf2kZ6pQUkwgJHBaA2p7UBYTqpqt5zfc5w3qn1n6uD1QzyQukvqBvuaVPlXqVobmyz7VTgGBT45cMGevJhs5Td4UrtjifSmzEDbuzBZbQub3cbutLLmJqH2pctG4gtBPz2GNNRCC2Lsx2PsYynkUr5c9aBeENFXmR41BDRLlyEzpKRtzJ6QLEVrZKAvNahm8wvlmzI6JkLB9YZpEm7diq54bmm4EaolSBvs2X9e5EEGPosoIjyQfNsbasognvYY4fGCiNuTchmxnHnPlMyfRcGPas8SWYH7fvQFDWLquEXqX3kHGAn4KsShiyAvbj9OeJ4ao2QmJSHOtP0212nx4iooHGPpMOM8difFRt0i4AYdb68q51cs8OtHaW41IZSlJai6FttoiMl3ln7uAIHp6FrPXNBmwoMxAvUgdn60mXPs1XK", domain "abc.com" and port 2222
     And I logout
 
   Scenario: Editing Endpoint Domain Name So It Has Min Value
@@ -507,7 +508,7 @@ Scenario: Init Security Context for all scenarios
     And I create endpoint with schema "Schema1", domain "abc.com" and port 2222
     When I edit last created endpoint Domain Name to "a"
     Then No exception was thrown
-    And I delete endpoint with schema "Schema1", domain "abc.com" and port 2222
+    And I delete endpoint with schema "a", domain "abc.com" and port 2222
     And I logout
 
   Scenario: Deleting Endpoint Domain Name And Leaving it Empty
@@ -680,6 +681,7 @@ Scenario: Init Security Context for all scenarios
     And I create endpoint with schema "Schema3", domain "abd.com" and port 2223
     Then I create a generic account with name "Account-1" in current scopeId
     Given I search for all endpoints in current scopeId
+#    THIS TEST NEEDS TO BE CHANGES - WE HAVE TO PROPERLY CHANGE THE SCOPE ID OF THE ACCOUNT!
     Then I find 3 endpoints
     When I try to find endpoint with schema "Schema1", domain "abc.com" and port 2222
     Then I found endpoint with schema "Schema1", domain "abc.com" and port 2222

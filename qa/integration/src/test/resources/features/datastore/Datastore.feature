@@ -13,6 +13,7 @@
 ###############################################################################
 @datastore
 @integration
+@deviceRegistry
 
 Feature: Datastore tests
 
@@ -354,6 +355,7 @@ Feature: Datastore tests
   indexing message date by server timestamp (as default).
 
     Given I delete all indices
+    When I clear all the database caches
     Given I login as user with name "kapua-sys" and password "kapua-password"
     And I select account "kapua-sys"
     And The device "test-device-1"

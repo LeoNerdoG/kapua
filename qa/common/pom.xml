@@ -23,6 +23,20 @@
 
     <artifactId>kapua-qa-common</artifactId>
 
+    <!-- This is required to skip docker container creation in the module, because it's
+already done in the parent module. -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
         <!-- -->
         <!-- Required service interfaces -->
