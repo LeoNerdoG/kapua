@@ -420,7 +420,12 @@ jobs:
       - run: mvn -B -DskipTests install javadoc:jar
 #      - run: bash <(curl -s https://codecov.io/bash)
   code-coverage:
-    needs: build-kapua, test-brokerAcl, test-tag, test-broker, test-device, test-connection, test-datastore, test-user, test-security, test-jobs, test-triggerService, test-account, test-jobEngineStartOfflineDevice, test-jobEngineStartOnlineDevice, test-jobEngineRestartOfflineDevice, test-jobEngineRestartOnlineDevice, test-jobEngineRestartOnlineDeviceSecondPart, test-jobEngineServiceStop, junit-tests, build-javadoc
+    needs: [build-kapua, test-brokerAcl, test-tag, test-broker, test-device,
+        test-connection, test-datastore, test-user, test-security, test-jobs,
+        test-triggerService, test-account, test-jobEngineStartOfflineDevice,
+        test-jobEngineStartOnlineDevice, test-jobEngineRestartOfflineDevice,
+        test-jobEngineRestartOnlineDevice, test-jobEngineRestartOnlineDeviceSecondPart,
+        test-jobEngineServiceStop, junit-tests, build-javadoc]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
