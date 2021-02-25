@@ -24,380 +24,380 @@ jobs:
             ${{ runner.os }}-maven-
       - run: mvn -v
       - run: mvn -B ${BUILD_OPTS} -DskipTests clean install
-  test-brokerAcl:
-    needs: build-kapua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '8'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - uses: nick-invision/retry@v2.4.0
-        with:
-          timeout_minutes: 30
-          retry_on: error
-          max_attempts: 3
-          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @brokerAcl" verify
+#  test-brokerAcl:
+#    needs: build-kapua
+#    runs-on: ubuntu-latest
+#    steps:
 #      - uses: actions/checkout@v2
-#      - uses: codecov/codecov-action@v1
-  test-tag:
-    needs: build-kapua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '8'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - uses: nick-invision/retry@v2.4.0
-        with:
-          timeout_minutes: 30
-          retry_on: error
-          max_attempts: 3
-          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @tag" verify
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: '8'
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
+#      - uses: nick-invision/retry@v2.4.0
+#        with:
+#          timeout_minutes: 30
+#          retry_on: error
+#          max_attempts: 3
+#          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @brokerAcl" verify
+##      - uses: actions/checkout@v2
+##      - uses: codecov/codecov-action@v1
+#  test-tag:
+#    needs: build-kapua
+#    runs-on: ubuntu-latest
+#    steps:
 #      - uses: actions/checkout@v2
-#      - uses: codecov/codecov-action@v1
-  test-broker:
-    needs: build-kapua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '8'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - uses: nick-invision/retry@v2.4.0
-        with:
-          timeout_minutes: 30
-          retry_on: error
-          max_attempts: 3
-          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @broker" verify
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: '8'
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
+#      - uses: nick-invision/retry@v2.4.0
+#        with:
+#          timeout_minutes: 30
+#          retry_on: error
+#          max_attempts: 3
+#          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @tag" verify
+##      - uses: actions/checkout@v2
+##      - uses: codecov/codecov-action@v1
+#  test-broker:
+#    needs: build-kapua
+#    runs-on: ubuntu-latest
+#    steps:
 #      - uses: actions/checkout@v2
-#      - uses: codecov/codecov-action@v1
-  test-device:
-    needs: build-kapua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '8'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - uses: nick-invision/retry@v2.4.0
-        with:
-          timeout_minutes: 30
-          retry_on: error
-          max_attempts: 3
-          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @device" verify
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: '8'
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
+#      - uses: nick-invision/retry@v2.4.0
+#        with:
+#          timeout_minutes: 30
+#          retry_on: error
+#          max_attempts: 3
+#          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @broker" verify
+##      - uses: actions/checkout@v2
+##      - uses: codecov/codecov-action@v1
+#  test-device:
+#    needs: build-kapua
+#    runs-on: ubuntu-latest
+#    steps:
 #      - uses: actions/checkout@v2
-#      - uses: codecov/codecov-action@v1
-  test-connection:
-    needs: build-kapua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '8'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - uses: nick-invision/retry@v2.4.0
-        with:
-          timeout_minutes: 30
-          retry_on: error
-          max_attempts: 3
-          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @connection" verify
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: '8'
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
+#      - uses: nick-invision/retry@v2.4.0
+#        with:
+#          timeout_minutes: 30
+#          retry_on: error
+#          max_attempts: 3
+#          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @device" verify
+##      - uses: actions/checkout@v2
+##      - uses: codecov/codecov-action@v1
+#  test-connection:
+#    needs: build-kapua
+#    runs-on: ubuntu-latest
+#    steps:
 #      - uses: actions/checkout@v2
-#      - uses: codecov/codecov-action@v1
-  test-datastore:
-    needs: build-kapua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '8'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - uses: nick-invision/retry@v2.4.0
-        with:
-          timeout_minutes: 30
-          retry_on: error
-          max_attempts: 3
-          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @datastore" verify
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: '8'
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
+#      - uses: nick-invision/retry@v2.4.0
+#        with:
+#          timeout_minutes: 30
+#          retry_on: error
+#          max_attempts: 3
+#          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @connection" verify
+##      - uses: actions/checkout@v2
+##      - uses: codecov/codecov-action@v1
+#  test-datastore:
+#    needs: build-kapua
+#    runs-on: ubuntu-latest
+#    steps:
 #      - uses: actions/checkout@v2
-#      - uses: codecov/codecov-action@v1
-  test-user:
-    needs: build-kapua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '8'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - uses: nick-invision/retry@v2.4.0
-        with:
-          timeout_minutes: 30
-          retry_on: error
-          max_attempts: 3
-          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @user" verify
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: '8'
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
+#      - uses: nick-invision/retry@v2.4.0
+#        with:
+#          timeout_minutes: 30
+#          retry_on: error
+#          max_attempts: 3
+#          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @datastore" verify
+##      - uses: actions/checkout@v2
+##      - uses: codecov/codecov-action@v1
+#  test-user:
+#    needs: build-kapua
+#    runs-on: ubuntu-latest
+#    steps:
 #      - uses: actions/checkout@v2
-#      - uses: codecov/codecov-action@v1
-  test-security:
-    needs: build-kapua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '8'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - uses: nick-invision/retry@v2.4.0
-        with:
-          timeout_minutes: 30
-          retry_on: error
-          max_attempts: 3
-          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @security" verify
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: '8'
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
+#      - uses: nick-invision/retry@v2.4.0
+#        with:
+#          timeout_minutes: 30
+#          retry_on: error
+#          max_attempts: 3
+#          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @user" verify
+##      - uses: actions/checkout@v2
+##      - uses: codecov/codecov-action@v1
+#  test-security:
+#    needs: build-kapua
+#    runs-on: ubuntu-latest
+#    steps:
 #      - uses: actions/checkout@v2
-#      - uses: codecov/codecov-action@v1
-  test-jobs:
-    needs: build-kapua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '8'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - uses: nick-invision/retry@v2.4.0
-        with:
-          timeout_minutes: 30
-          retry_on: error
-          max_attempts: 3
-          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobs" verify
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: '8'
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
+#      - uses: nick-invision/retry@v2.4.0
+#        with:
+#          timeout_minutes: 30
+#          retry_on: error
+#          max_attempts: 3
+#          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @security" verify
+##      - uses: actions/checkout@v2
+##      - uses: codecov/codecov-action@v1
+#  test-jobs:
+#    needs: build-kapua
+#    runs-on: ubuntu-latest
+#    steps:
 #      - uses: actions/checkout@v2
-#      - uses: codecov/codecov-action@v1
-  test-triggerService:
-    needs: build-kapua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '8'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - uses: nick-invision/retry@v2.4.0
-        with:
-          timeout_minutes: 30
-          retry_on: error
-          max_attempts: 3
-          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @triggerService" verify
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: '8'
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
+#      - uses: nick-invision/retry@v2.4.0
+#        with:
+#          timeout_minutes: 30
+#          retry_on: error
+#          max_attempts: 3
+#          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobs" verify
+##      - uses: actions/checkout@v2
+##      - uses: codecov/codecov-action@v1
+#  test-triggerService:
+#    needs: build-kapua
+#    runs-on: ubuntu-latest
+#    steps:
 #      - uses: actions/checkout@v2
-#      - uses: codecov/codecov-action@v1
-  test-account:
-    needs: build-kapua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '8'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - uses: nick-invision/retry@v2.4.0
-        with:
-          timeout_minutes: 30
-          retry_on: error
-          max_attempts: 3
-          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @account" verify
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: '8'
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
+#      - uses: nick-invision/retry@v2.4.0
+#        with:
+#          timeout_minutes: 30
+#          retry_on: error
+#          max_attempts: 3
+#          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @triggerService" verify
+##      - uses: actions/checkout@v2
+##      - uses: codecov/codecov-action@v1
+#  test-account:
+#    needs: build-kapua
+#    runs-on: ubuntu-latest
+#    steps:
 #      - uses: actions/checkout@v2
-#      - uses: codecov/codecov-action@v1
-  test-jobEngineStartOfflineDevice:
-    needs: build-kapua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '8'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - uses: nick-invision/retry@v2.4.0
-        with:
-          timeout_minutes: 30
-          retry_on: error
-          max_attempts: 3
-          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineStartOfflineDevice" verify
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: '8'
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
+#      - uses: nick-invision/retry@v2.4.0
+#        with:
+#          timeout_minutes: 30
+#          retry_on: error
+#          max_attempts: 3
+#          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @account" verify
+##      - uses: actions/checkout@v2
+##      - uses: codecov/codecov-action@v1
+#  test-jobEngineStartOfflineDevice:
+#    needs: build-kapua
+#    runs-on: ubuntu-latest
+#    steps:
 #      - uses: actions/checkout@v2
-#      - uses: codecov/codecov-action@v1
-  test-jobEngineStartOnlineDevice:
-    needs: build-kapua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '8'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - uses: nick-invision/retry@v2.4.0
-        with:
-          timeout_minutes: 30
-          retry_on: error
-          max_attempts: 3
-          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineStartOnlineDevice" verify
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: '8'
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
+#      - uses: nick-invision/retry@v2.4.0
+#        with:
+#          timeout_minutes: 30
+#          retry_on: error
+#          max_attempts: 3
+#          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineStartOfflineDevice" verify
+##      - uses: actions/checkout@v2
+##      - uses: codecov/codecov-action@v1
+#  test-jobEngineStartOnlineDevice:
+#    needs: build-kapua
+#    runs-on: ubuntu-latest
+#    steps:
 #      - uses: actions/checkout@v2
-#      - uses: codecov/codecov-action@v1
-  test-jobEngineRestartOfflineDevice:
-    needs: build-kapua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '8'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - uses: nick-invision/retry@v2.4.0
-        with:
-          timeout_minutes: 30
-          retry_on: error
-          max_attempts: 3
-          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineRestartOfflineDevice" verify
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: '8'
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
+#      - uses: nick-invision/retry@v2.4.0
+#        with:
+#          timeout_minutes: 30
+#          retry_on: error
+#          max_attempts: 3
+#          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineStartOnlineDevice" verify
+##      - uses: actions/checkout@v2
+##      - uses: codecov/codecov-action@v1
+#  test-jobEngineRestartOfflineDevice:
+#    needs: build-kapua
+#    runs-on: ubuntu-latest
+#    steps:
 #      - uses: actions/checkout@v2
-#      - uses: codecov/codecov-action@v1
-  test-jobEngineRestartOnlineDevice:
-    needs: build-kapua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '8'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - uses: nick-invision/retry@v2.4.0
-        with:
-          timeout_minutes: 30
-          retry_on: error
-          max_attempts: 3
-          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineRestartOnlineDevice" verify
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: '8'
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
+#      - uses: nick-invision/retry@v2.4.0
+#        with:
+#          timeout_minutes: 30
+#          retry_on: error
+#          max_attempts: 3
+#          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineRestartOfflineDevice" verify
+##      - uses: actions/checkout@v2
+##      - uses: codecov/codecov-action@v1
+#  test-jobEngineRestartOnlineDevice:
+#    needs: build-kapua
+#    runs-on: ubuntu-latest
+#    steps:
 #      - uses: actions/checkout@v2
-#      - uses: codecov/codecov-action@v1
-  test-jobEngineRestartOnlineDeviceSecondPart:
-    needs: build-kapua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '8'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - uses: nick-invision/retry@v2.4.0
-        with:
-          timeout_minutes: 30
-          retry_on: error
-          max_attempts: 3
-          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineRestartOnlineDeviceSecondPart" verify
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: '8'
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
+#      - uses: nick-invision/retry@v2.4.0
+#        with:
+#          timeout_minutes: 30
+#          retry_on: error
+#          max_attempts: 3
+#          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineRestartOnlineDevice" verify
+##      - uses: actions/checkout@v2
+##      - uses: codecov/codecov-action@v1
+#  test-jobEngineRestartOnlineDeviceSecondPart:
+#    needs: build-kapua
+#    runs-on: ubuntu-latest
+#    steps:
 #      - uses: actions/checkout@v2
-#      - uses: codecov/codecov-action@v1
-  test-jobEngineServiceStop:
-    needs: build-kapua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '8'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - uses: nick-invision/retry@v2.4.0
-        with:
-          timeout_minutes: 30
-          retry_on: error
-          max_attempts: 3
-          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineServiceStop" verify
-#        - uses: actions/checkout@v2
-#        - uses: codecov/codecov-action@v1
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: '8'
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
+#      - uses: nick-invision/retry@v2.4.0
+#        with:
+#          timeout_minutes: 30
+#          retry_on: error
+#          max_attempts: 3
+#          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineRestartOnlineDeviceSecondPart" verify
+##      - uses: actions/checkout@v2
+##      - uses: codecov/codecov-action@v1
+#  test-jobEngineServiceStop:
+#    needs: build-kapua
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: '8'
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
+#      - uses: nick-invision/retry@v2.4.0
+#        with:
+#          timeout_minutes: 30
+#          retry_on: error
+#          max_attempts: 3
+#          command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='!org.eclipse.kapua.qa.markers.junit.JUnitTests' -Dcucumber.options="--tags @jobEngineServiceStop" verify
+##        - uses: actions/checkout@v2
+##        - uses: codecov/codecov-action@v1
   junit-tests:
     needs: build-kapua
     runs-on: ubuntu-latest
@@ -420,21 +420,21 @@ jobs:
           command: ./ci-output.sh mvn -B ${BUILD_OPTS} ${CONFIG_OVERRIDES} -Dgroups='org.eclipse.kapua.qa.markers.junit.JUnitTests' verify
 #      - uses: actions/checkout@v2
 #      - uses: codecov/codecov-action@v1
-  build-javadoc:
-    needs: build-kapua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '8'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - run: mvn -B -DskipTests install javadoc:jar
+#  build-javadoc:
+#    needs: build-kapua
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: '8'
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
+#      - run: mvn -B -DskipTests install javadoc:jar
 #      - uses: actions/checkout@v2
 #      - uses: codecov/codecov-action@v1
   test-coverage:
@@ -446,6 +446,8 @@ jobs:
             test-jobEngineServiceStop, junit-tests, build-javadoc]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+      - uses: codecov/codecov-action@v1
       - run: bash <(curl -s https://codecov.io/bash)
 
 #    steps:
