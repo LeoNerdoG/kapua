@@ -438,12 +438,7 @@ jobs:
 #      - uses: actions/checkout@v2
 #      - uses: codecov/codecov-action@v1
   test-coverage:
-    needs: [build-kapua, test-brokerAcl, test-tag, test-broker, test-device,
-            test-connection, test-datastore, test-user, test-security, test-jobs,
-            test-triggerService, test-account, test-jobEngineStartOfflineDevice,
-            test-jobEngineStartOnlineDevice, test-jobEngineRestartOfflineDevice,
-            test-jobEngineRestartOnlineDevice, test-jobEngineRestartOnlineDeviceSecondPart,
-            test-jobEngineServiceStop, junit-tests, build-javadoc]
+    needs: [build-kapua, junit-tests]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
