@@ -19,7 +19,7 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.eclipse.kapua.app.api.core.filter.KapuaSessionCleanupFilter;
 import org.eclipse.kapua.commons.security.KapuaSecurityUtils;
 import org.eclipse.kapua.commons.security.KapuaSession;
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +34,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class KapuaSessionCleanupFilterTest extends Assert {
 
     KapuaSessionCleanupFilter kapuaSessionCleanupFilter;

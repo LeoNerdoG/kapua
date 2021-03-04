@@ -13,7 +13,7 @@
 package org.eclipse.kapua.app.api.core.exception.model;
 
 import org.eclipse.kapua.KapuaIllegalNullArgumentException;
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +21,7 @@ import org.junit.experimental.categories.Category;
 
 import javax.ws.rs.core.Response;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class IllegalNullArgumentExceptionInfoTest extends Assert {
 
     Response.Status[] statusList;

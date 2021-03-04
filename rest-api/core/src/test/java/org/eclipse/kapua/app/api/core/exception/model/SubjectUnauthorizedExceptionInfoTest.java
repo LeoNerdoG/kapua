@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.kapua.app.api.core.exception.model;
 
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.eclipse.kapua.service.authorization.permission.Permission;
 import org.eclipse.kapua.service.authorization.shiro.exception.SubjectUnauthorizedException;
 import org.junit.Assert;
@@ -23,7 +23,7 @@ import org.mockito.Mockito;
 
 import javax.ws.rs.core.Response;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class SubjectUnauthorizedExceptionInfoTest extends Assert {
 
     Response.Status[] statusList;

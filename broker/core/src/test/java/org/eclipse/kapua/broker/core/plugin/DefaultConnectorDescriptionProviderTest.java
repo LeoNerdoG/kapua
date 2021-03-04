@@ -12,27 +12,34 @@
  *******************************************************************************/
 package org.eclipse.kapua.broker.core.plugin;
 
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.broker.core.setting.BrokerSetting;
 import org.hamcrest.core.IsInstanceOf;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
 import java.util.HashMap;
 import java.util.Map;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class DefaultConnectorDescriptionProviderTest extends Assert {
 
     String[] connectorName;
     private static final String BROKER_CONN_DESC_DEFAULT_DISABLE_PROP_KEY = "broker.connector.descriptor.default.disable";
     private static final String BROKER_CONN_DESC_CONF_URI_PROP_KEY = "broker.connector.descriptor.configuration.uri";
 
+    @BeforeClass
+    public static void resettingBroker() {
+        BrokerSetting.resetInstance();
+    }
+
     @Before
     public void initialize() {
         connectorName = new String[]{null, "", "connector name", "name1234567890", "connector!@#$%^&*()_<>/"};
     }
+
 
     @Test
     public void getDescriptorTest() {
@@ -57,7 +64,6 @@ public class DefaultConnectorDescriptionProviderTest extends Assert {
 
         Tests.runWithProperties(properties, () -> {
             DefaultConnectorDescriptionProvider defaultConnectorDescriptionProvider = new DefaultConnectorDescriptionProvider();
-
             for (String name : connectorName) {
                 assertNull("Null expected.", defaultConnectorDescriptionProvider.getDescriptor(name));
             }
@@ -86,7 +92,6 @@ public class DefaultConnectorDescriptionProviderTest extends Assert {
 
         Tests.runWithProperties(properties, () -> {
             DefaultConnectorDescriptionProvider defaultConnectorDescriptionProvider = new DefaultConnectorDescriptionProvider();
-
             for (String name : connectorName) {
                 assertThat("Instance of ConnectorDescriptor expected.", defaultConnectorDescriptionProvider.getDescriptor(name), IsInstanceOf.instanceOf(ConnectorDescriptor.class));
             }

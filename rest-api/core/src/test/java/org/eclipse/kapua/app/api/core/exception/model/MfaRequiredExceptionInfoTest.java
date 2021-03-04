@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.kapua.app.api.core.exception.model;
 
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.eclipse.kapua.service.authentication.KapuaAuthenticationErrorCodes;
 import org.eclipse.kapua.service.authentication.shiro.KapuaAuthenticationException;
 import org.junit.Assert;
@@ -22,7 +22,7 @@ import org.junit.experimental.categories.Category;
 
 import javax.ws.rs.core.Response;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class MfaRequiredExceptionInfoTest extends Assert {
 
     Response.Status[] statusList;

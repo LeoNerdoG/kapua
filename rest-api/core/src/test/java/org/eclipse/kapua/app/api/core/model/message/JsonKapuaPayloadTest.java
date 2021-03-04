@@ -14,7 +14,7 @@ package org.eclipse.kapua.app.api.core.model.message;
 
 import org.eclipse.kapua.message.KapuaPayload;
 import org.eclipse.kapua.message.xml.XmlAdaptedMetric;
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +26,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class JsonKapuaPayloadTest extends Assert {
 
     KapuaPayload kapuaPayload;

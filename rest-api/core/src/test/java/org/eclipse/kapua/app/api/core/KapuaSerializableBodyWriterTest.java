@@ -13,7 +13,7 @@
 package org.eclipse.kapua.app.api.core;
 
 import org.eclipse.kapua.KapuaSerializable;
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +33,7 @@ import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class KapuaSerializableBodyWriterTest extends Assert {
 
     KapuaSerializableBodyWriter kapuaSerializableBodyWriter;

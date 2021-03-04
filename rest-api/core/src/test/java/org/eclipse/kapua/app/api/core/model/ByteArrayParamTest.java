@@ -12,12 +12,12 @@
  *******************************************************************************/
 package org.eclipse.kapua.app.api.core.model;
 
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class ByteArrayParamTest extends Assert {
 
     @Test

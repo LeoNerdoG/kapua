@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.kapua.app.api.core.auth;
 
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +22,7 @@ import org.mockito.Mockito;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class KapuaTokenAuthenticationFilterTest extends Assert {
 
     HttpServletRequest request;

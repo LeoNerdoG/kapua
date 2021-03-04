@@ -16,7 +16,7 @@ import org.eclipse.kapua.app.api.core.model.message.JsonKapuaPayload;
 import org.eclipse.kapua.message.KapuaPayload;
 import org.eclipse.kapua.message.KapuaPosition;
 import org.eclipse.kapua.model.id.KapuaId;
-import org.eclipse.kapua.qa.markers.junit.JUnitTests;
+import org.eclipse.kapua.qa.markers.Categories;
 import org.eclipse.kapua.service.device.management.request.message.request.GenericRequestChannel;
 import org.eclipse.kapua.service.device.management.request.message.request.GenericRequestMessage;
 import org.eclipse.kapua.service.device.management.request.message.request.GenericRequestPayload;
@@ -30,7 +30,7 @@ import org.mockito.Mockito;
 import java.util.Date;
 import java.util.UUID;
 
-@Category(JUnitTests.class)
+@Category(Categories.junitTests.class)
 public class JsonGenericRequestMessageTest extends Assert {
 
     GenericRequestMessage genericRequestMessage;
