@@ -54,6 +54,34 @@ public class AboutEntryTest extends Assert {
     }
 
     @Test
+    public void aboutEntryLicenseTest1() {
+        for (String name : names) {
+            for (String text : texts) {
+                for (URL url : urls) {
+                    AboutEntry.License license = new AboutEntry.License(name, text, url);
+                    assertEquals("Expected and actual values should be the same.", name, license.getName());
+                    assertEquals("Expected and actual values should be the same.", text, license.getText());
+                    assertEquals("Expected and actual values should be the same.", url, license.getUrl());
+                }
+            }
+        }
+    }
+
+    @Test
+    public void aboutEntryLicenseTest2() {
+        for (String name : names) {
+            for (String text : texts) {
+                for (URL url : urls) {
+                    AboutEntry.License license = new AboutEntry.License(name, text, url);
+                    assertEquals("Expected and actual values should be the same.", name, license.getName());
+                    assertEquals("Expected and actual values should be the same.", text, license.getText());
+                    assertEquals("Expected and actual values should be the same.", url, license.getUrl());
+                }
+            }
+        }
+    }
+
+    @Test
     public void licenseGetNameTest() {
         for (String name : names) {
             for (String text : texts) {
